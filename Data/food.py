@@ -1,7 +1,7 @@
 import json
 
 # Load the JSON data from the file
-with open('FoodData.json', 'r') as file:
+with open('FoodDataFirst.json', 'r') as file:
     data = json.load(file)
 
 # List of nutrients to keep
@@ -11,7 +11,8 @@ nutrients_to_keep = [
     "Carbohydrate",
     "Calories",
     "Sugars", 
-    "Fiber"
+    "Fiber",
+    "Water"
 ]
 
 # Process each item in the SurveyFoods list
@@ -36,5 +37,5 @@ for food in data.get('Foods', []):
     food.update(filtered_food)
 
 # Save the filtered data back to the JSON file
-with open('FoodData.json', 'w') as file:
+with open('FoodDataFinal.json', 'w') as file:
     json.dump(data, file, indent=4)
