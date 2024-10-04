@@ -524,7 +524,7 @@
             "nutrient": {
                 "id": 1258,
                 "number": "606",
-                "name": "Fatty acids, total saturated",
+                "name": "Saturated fat",
                 "rank": 9700,
                 "unitName": "g"
             },

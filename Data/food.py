@@ -12,7 +12,7 @@ nutrients_to_keep = [
     "Fiber",
     "Water",
     "Cholesterol",
-    "Fatty acids, total saturated"
+    "Saturated fat"
 ]
 
 for food in data.get('Foods', []):
@@ -25,8 +25,7 @@ for food in data.get('Foods', []):
         if nutrient_name in nutrients_to_keep:
             filtered_food['Nutritional data'].append({
                 'name': nutrient_name,
-                'amount': nutrient.get('amount'),
-                'unitName' : nutrient.get('nutrient', {}).get('unitName')
+                'amount': nutrient.get('amount')
             })
     food.clear()
     food.update(filtered_food)
