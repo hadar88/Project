@@ -1,0 +1,40 @@
+{
+    "Units": [
+        {
+            "name": "Protein",
+            "unit": "g"
+        },
+        {
+            "name": "Fat",
+            "unit": "g"
+        },
+        {
+            "name": "Carbohydrate",
+            "unit": "g"
+        },
+        {
+            "name": "Calories",
+            "unit": "kcal"
+        },
+        {
+            "name": "Water",
+            "unit": "g"
+        },
+        {
+            "name": "Sugars",
+            "unit": "g"
+        },
+        {
+            "name": "Fiber",
+            "unit": "g"
+        },
+        {
+            "name": "Cholesterol",
+            "unit": "mg"
+        },
+        {
+            "name": "Saturated fat",
+            "unit": "g"
+        }
+    ]
+}
