@@ -1,13 +1,10 @@
 import torch
 import torch.nn as nn
 import numpy
-import matplotlib
-matplotlib.use('TkAgg')
-import matplotlib.pyplot as plt
 
 # (x, y) -> (10x + 5y + 1, 2.5x + -9.5y + 8)
 X = torch.tensor([[1, 2], [2, 3], [3,5], [4, 8]], dtype = torch.float32)
-Y = torch.tensor([[21, -8.5], [36, -15.5], [56, 32], [81, -58]], dtype = torch.float32)
+Y = torch.tensor([[21, -8.5], [36, -15.5], [56, -32], [81, -58]], dtype = torch.float32)
 
 test = torch.tensor([10, 9], dtype = torch.float32) # (146, -52.5)
 
@@ -25,7 +22,6 @@ class LinearRegression(nn.Module):
         return self.lin(x)
 
 model = LinearRegression(input_size, output_size)
-
 
 loss = nn.MSELoss()
 opt = torch.optim.SGD(model.parameters(), lr=0.01)
