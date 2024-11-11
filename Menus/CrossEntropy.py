@@ -1,8 +1,7 @@
 import torch
 import torch.nn as nn
 
-loss = nn.CrossEntropyLoss()
-
+loss = nn.CrossEntropyLoss() # using softmax
 Y = torch.tensor([2, 0, 1])
 
 Y_pred_good = torch.tensor([[0.1, 1.0, 2.1], [2.0, 1.0, 0.1], [0.1, 3.0, 0.1]])

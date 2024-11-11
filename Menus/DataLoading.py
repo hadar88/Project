@@ -4,7 +4,7 @@ from torch.utils.data import Dataset, DataLoader
 import numpy as np
 import math
 
-class WineDataset(Dataset): 
+class WineDataset(Dataset): # Creating the dataset
 
     def __init__(self, transform=None):
         xy = np.loadtxt('wine.csv', delimiter=",", dtype=np.float32, skiprows=1)
@@ -27,12 +27,12 @@ class WineDataset(Dataset):
         return self.n_sumples
 
 
-class ToTensor:
+class ToTensor: # Transforming the dataset to tensor
     def __call__(self, sample):
         input, targets = sample
         return torch.from_numpy(input), torch.from_numpy(targets)
 
-class MulTransform:
+class MulTransform: 
     def __init__(self, factor):
         self.factor = factor
     
@@ -47,7 +47,8 @@ features, labels = first_data
 print(type(features), type(labels))
 print(features)
 
-composed = torchvision.transforms.Compose([ToTensor(), MulTransform(10)])
+composed = torchvision.transforms.Compose([ToTensor(), MulTransform(10)]) # Composing some transformations
+
 dataset = WineDataset(transform=composed)
 first_data = dataset[0]
 features, labels = first_data
