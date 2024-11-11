@@ -44,19 +44,3 @@ for i in range(n_iter):
             print(f"Parameter value: {param.data}")
         print(f'loss = {l:.8f}, y_pred = {y_pred}, f10 = {model(test)}')
         break
-
-
-"""
-predicted = model(X).detach()
-
-fig = plt.figure()
-ax = fig.add_subplot(111, projection='3d')
-
-ax.scatter(X[:, 0].tolist(), X[:,1].tolist(), Y.squeeze().tolist(), c='r', marker='o')
-ax.scatter(X[:, 0].tolist(), X[:,1].tolist(), predicted, c='b', marker='^')
-
-ax.set_xlabel('Feature 1')
-ax.set_ylabel('Feature 2')
-ax.set_zlabel('Target')
-
-plt.show()"""
