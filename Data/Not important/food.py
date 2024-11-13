@@ -12,7 +12,16 @@ nutrients_to_keep = [
     "Fiber",
     "Water",
     "Cholesterol",
-    "Saturated fat"
+    "Saturated fat",
+    "Calcium",
+    "Iron",
+    "Magnesium",
+    "Vitamin A",
+    "Vitamin B-12",
+    "Vitamin C",
+    "Vitamin D",
+    "Vitamin E",
+    "Vitamin K",
 ]
 
 for food in data.get('Foods', []):

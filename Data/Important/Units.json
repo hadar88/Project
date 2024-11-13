@@ -35,6 +35,42 @@
         {
             "name": "Saturated fat",
             "unit": "g"
+        },
+        {
+            "name": "Calcium",
+            "unit": "mg"
+        },
+        {
+            "name": "Iron",
+            "unit": "mg"
+        },
+        {
+            "name": "Magnesium",
+            "unit": "mg"
+        },
+        {
+            "name": "Vitamin A",
+            "unit": "µg"
+        },
+        {
+            "name": "Vitamin B-12",
+            "unit": "µg"
+        },
+        {
+            "name": "Vitamin C",
+            "unit": "mg"
+        },
+        {
+            "name": "Vitamin D",
+            "unit": "µg"
+        },
+        {
+            "name": "Vitamin E",
+            "unit": "mg"
+        },
+        {
+            "name": "Vitamin K",
+            "unit": "µg"
         }
     ]
 }

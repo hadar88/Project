@@ -128,7 +128,7 @@
             "nutrient": {
                 "id": 1087,
                 "number": "301",
-                "name": "Calcium, Ca",
+                "name": "Calcium",
                 "rank": 5300,
                 "unitName": "mg"
             },
@@ -140,7 +140,7 @@
             "nutrient": {
                 "id": 1089,
                 "number": "303",
-                "name": "Iron, Fe",
+                "name": "Iron",
                 "rank": 5400,
                 "unitName": "mg"
             },
@@ -152,7 +152,7 @@
             "nutrient": {
                 "id": 1090,
                 "number": "304",
-                "name": "Magnesium, Mg",
+                "name": "Magnesium",
                 "rank": 5500,
                 "unitName": "mg"
             },
@@ -248,7 +248,7 @@
             "nutrient": {
                 "id": 1106,
                 "number": "320",
-                "name": "Vitamin A, RAE",
+                "name": "Vitamin A",
                 "rank": 7420,
                 "unitName": "µg"
             },
@@ -284,7 +284,7 @@
             "nutrient": {
                 "id": 1109,
                 "number": "323",
-                "name": "Vitamin E (alpha-tocopherol)",
+                "name": "Vitamin E",
                 "rank": 7905,
                 "unitName": "mg"
             },
@@ -296,7 +296,7 @@
             "nutrient": {
                 "id": 1114,
                 "number": "328",
-                "name": "Vitamin D (D2 + D3)",
+                "name": "Vitamin D",
                 "rank": 8700,
                 "unitName": "µg"
             },
@@ -344,7 +344,7 @@
             "nutrient": {
                 "id": 1162,
                 "number": "401",
-                "name": "Vitamin C, total ascorbic acid",
+                "name": "Vitamin C",
                 "rank": 6300,
                 "unitName": "mg"
             },
@@ -440,7 +440,7 @@
             "nutrient": {
                 "id": 1185,
                 "number": "430",
-                "name": "Vitamin K (phylloquinone)",
+                "name": "Vitamin K",
                 "rank": 8800,
                 "unitName": "µg"
             },
