@@ -1,0 +1,28 @@
+{
+    "Foods": [
+        {
+            "Name": "",
+            "Number": "",
+            "Calories": "",
+            "Carbohydrate": "",
+            "Sugars": "",
+            "Fat": "",
+            "Protein": "",
+            "Vegetarian": "",
+            "Vegan": "",
+            "Egg allergy": "",
+            "Milk allergy": "",
+            "Peanuts allergy": "",
+            "Fish allergy": "",
+            "Sesame allergy": "",
+            "Soy allergy": "",
+            "Nut allergy": "",
+            "Gluten allergy": "",
+            "Fruit": "",
+            "Vegetable": "",
+            "Cheese": "",
+            "Meat": "",
+            "Cereal": ""
+        }
+    ] 
+}
