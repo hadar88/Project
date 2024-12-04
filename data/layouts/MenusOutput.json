@@ -1,0 +1,960 @@
+{
+    "Menus": [
+        {
+            "Sunday": {
+                "Breakfast": {
+                    "Food1": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food2": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food3": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food4": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food5": {
+                        "id": "",
+                        "grams": ""
+                    }
+                },
+                "Lunch": {
+                    "Food1": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food2": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food3": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food4": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food5": {
+                        "id": "",
+                        "grams": ""
+                    }
+                },
+                "Dinner": {
+                    "Food1": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food2": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food3": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food4": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food5": {
+                        "id": "",
+                        "grams": ""
+                    }
+                }
+            },
+            "Monday": {
+                "Breakfast": {
+                    "Food1": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food2": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food3": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food4": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food5": {
+                        "id": "",
+                        "grams": ""
+                    }
+                },
+                "Lunch": {
+                    "Food1": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food2": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food3": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food4": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food5": {
+                        "id": "",
+                        "grams": ""
+                    }
+                },
+                "Dinner": {
+                    "Food1": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food2": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food3": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food4": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food5": {
+                        "id": "",
+                        "grams": ""
+                    }
+                }
+            },
+            "Tuesday": {
+                "Breakfast": {
+                    "Food1": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food2": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food3": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food4": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food5": {
+                        "id": "",
+                        "grams": ""
+                    }
+                },
+                "Lunch": {
+                    "Food1": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food2": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food3": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food4": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food5": {
+                        "id": "",
+                        "grams": ""
+                    }
+                },
+                "Dinner": {
+                    "Food1": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food2": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food3": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food4": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food5": {
+                        "id": "",
+                        "grams": ""
+                    }
+                }
+            },
+            "Wednesday": {
+                "Breakfast": {
+                    "Food1": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food2": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food3": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food4": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food5": {
+                        "id": "",
+                        "grams": ""
+                    }
+                },
+                "Lunch": {
+                    "Food1": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food2": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food3": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food4": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food5": {
+                        "id": "",
+                        "grams": ""
+                    }
+                },
+                "Dinner": {
+                    "Food1": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food2": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food3": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food4": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food5": {
+                        "id": "",
+                        "grams": ""
+                    }
+                }
+            },
+            "Thursday": {
+                "Breakfast": {
+                    "Food1": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food2": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food3": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food4": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food5": {
+                        "id": "",
+                        "grams": ""
+                    }
+                },
+                "Lunch": {
+                    "Food1": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food2": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food3": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food4": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food5": {
+                        "id": "",
+                        "grams": ""
+                    }
+                },
+                "Dinner": {
+                    "Food1": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food2": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food3": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food4": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food5": {
+                        "id": "",
+                        "grams": ""
+                    }
+                }
+            },
+            "Friday": {
+                "Breakfast": {
+                    "Food1": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food2": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food3": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food4": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food5": {
+                        "id": "",
+                        "grams": ""
+                    }
+                },
+                "Lunch": {
+                    "Food1": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food2": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food3": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food4": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food5": {
+                        "id": "",
+                        "grams": ""
+                    }
+                },
+                "Dinner": {
+                    "Food1": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food2": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food3": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food4": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food5": {
+                        "id": "",
+                        "grams": ""
+                    }
+                }
+            },
+            "Saturday": {
+                "Breakfast": {
+                    "Food1": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food2": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food3": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food4": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food5": {
+                        "id": "",
+                        "grams": ""
+                    }
+                },
+                "Lunch": {
+                    "Food1": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food2": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food3": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food4": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food5": {
+                        "id": "",
+                        "grams": ""
+                    }
+                },
+                "Dinner": {
+                    "Food1": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food2": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food3": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food4": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food5": {
+                        "id": "",
+                        "grams": ""
+                    }
+                }
+            }
+        },
+        {
+            "Sunday": {
+                "Breakfast": {
+                    "Food1": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food2": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food3": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food4": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food5": {
+                        "id": "",
+                        "grams": ""
+                    }
+                },
+                "Lunch": {
+                    "Food1": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food2": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food3": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food4": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food5": {
+                        "id": "",
+                        "grams": ""
+                    }
+                },
+                "Dinner": {
+                    "Food1": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food2": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food3": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food4": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food5": {
+                        "id": "",
+                        "grams": ""
+                    }
+                }
+            },
+            "Monday": {
+                "Breakfast": {
+                    "Food1": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food2": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food3": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food4": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food5": {
+                        "id": "",
+                        "grams": ""
+                    }
+                },
+                "Lunch": {
+                    "Food1": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food2": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food3": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food4": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food5": {
+                        "id": "",
+                        "grams": ""
+                    }
+                },
+                "Dinner": {
+                    "Food1": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food2": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food3": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food4": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food5": {
+                        "id": "",
+                        "grams": ""
+                    }
+                }
+            },
+            "Tuesday": {
+                "Breakfast": {
+                    "Food1": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food2": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food3": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food4": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food5": {
+                        "id": "",
+                        "grams": ""
+                    }
+                },
+                "Lunch": {
+                    "Food1": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food2": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food3": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food4": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food5": {
+                        "id": "",
+                        "grams": ""
+                    }
+                },
+                "Dinner": {
+                    "Food1": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food2": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food3": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food4": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food5": {
+                        "id": "",
+                        "grams": ""
+                    }
+                }
+            },
+            "Wednesday": {
+                "Breakfast": {
+                    "Food1": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food2": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food3": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food4": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food5": {
+                        "id": "",
+                        "grams": ""
+                    }
+                },
+                "Lunch": {
+                    "Food1": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food2": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food3": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food4": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food5": {
+                        "id": "",
+                        "grams": ""
+                    }
+                },
+                "Dinner": {
+                    "Food1": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food2": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food3": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food4": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food5": {
+                        "id": "",
+                        "grams": ""
+                    }
+                }
+            },
+            "Thursday": {
+                "Breakfast": {
+                    "Food1": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food2": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food3": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food4": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food5": {
+                        "id": "",
+                        "grams": ""
+                    }
+                },
+                "Lunch": {
+                    "Food1": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food2": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food3": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food4": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food5": {
+                        "id": "",
+                        "grams": ""
+                    }
+                },
+                "Dinner": {
+                    "Food1": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food2": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food3": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food4": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food5": {
+                        "id": "",
+                        "grams": ""
+                    }
+                }
+            },
+            "Friday": {
+                "Breakfast": {
+                    "Food1": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food2": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food3": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food4": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food5": {
+                        "id": "",
+                        "grams": ""
+                    }
+                },
+                "Lunch": {
+                    "Food1": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food2": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food3": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food4": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food5": {
+                        "id": "",
+                        "grams": ""
+                    }
+                },
+                "Dinner": {
+                    "Food1": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food2": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food3": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food4": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food5": {
+                        "id": "",
+                        "grams": ""
+                    }
+                }
+            },
+            "Saturday": {
+                "Breakfast": {
+                    "Food1": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food2": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food3": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food4": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food5": {
+                        "id": "",
+                        "grams": ""
+                    }
+                },
+                "Lunch": {
+                    "Food1": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food2": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food3": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food4": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food5": {
+                        "id": "",
+                        "grams": ""
+                    }
+                },
+                "Dinner": {
+                    "Food1": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food2": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food3": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food4": {
+                        "id": "",
+                        "grams": ""
+                    },
+                    "Food5": {
+                        "id": "",
+                        "grams": ""
+                    }
+                }
+            }
+        }
+    ]
+}

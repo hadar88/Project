@@ -1,0 +1,52 @@
+{
+    "Foods": [
+        {
+            "Name": "",
+            "Id": "",
+            "Calories": "",
+            "Carbohydrate": "",
+            "Sugars": "",
+            "Fat": "",
+            "Protein": "",
+            "Vegetarian": "",
+            "Vegan": "",
+            "Egg allergy": "",
+            "Milk allergy": "",
+            "Peanuts allergy": "",
+            "Fish allergy": "",
+            "Sesame allergy": "",
+            "Soy allergy": "",
+            "Nut allergy": "",
+            "Gluten allergy": "",
+            "Fruit": "",
+            "Vegetable": "",
+            "Cheese": "",
+            "Meat": "",
+            "Cereal": ""
+        },
+        {
+            "Name": "",
+            "Id": "",
+            "Calories": "",
+            "Carbohydrate": "",
+            "Sugars": "",
+            "Fat": "",
+            "Protein": "",
+            "Vegetarian": "",
+            "Vegan": "",
+            "Egg allergy": "",
+            "Milk allergy": "",
+            "Peanuts allergy": "",
+            "Fish allergy": "",
+            "Sesame allergy": "",
+            "Soy allergy": "",
+            "Nut allergy": "",
+            "Gluten allergy": "",
+            "Fruit": "",
+            "Vegetable": "",
+            "Cheese": "",
+            "Meat": "",
+            "Cereal": ""
+        }
+    ] 
+}
