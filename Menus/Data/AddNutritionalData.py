@@ -8,7 +8,11 @@ foods = foods["Foods"]
 
 foodData = foodData["Foods"]
 
+i = 1
+
 for food in foods:
+    food["Id"] = i
+    i += 1
     name = food["Name"]
     for food1 in foodData:
         if name == food1["Food Name"]:
