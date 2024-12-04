@@ -31,7 +31,7 @@ for food in foods:
 
 
 
-with open("Foods.json", "w") as file:
+with open("Foods2.json", "w") as file:
     json.dump({"Foods": foods}, file, indent=4)
 
 

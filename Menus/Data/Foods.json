@@ -1,13 +1,13 @@
 {
     "Foods": [
         {
-            "Name": "Milk, NFS",
-            "Id": 1,
-            "Calories": 52.0,
-            "Carbohydrate": 4.83,
-            "Sugars": 4.88,
-            "Fat": 2.14,
-            "Protein": 3.33,
+            "Name": "",
+            "Id": "",
+            "Calories": "",
+            "Carbohydrate": "",
+            "Sugars": "",
+            "Fat": "",
+            "Protein": "",
             "Vegetarian": "",
             "Vegan": "",
             "Egg allergy": "",
@@ -26,7 +26,7 @@
         },
         {
             "Name": "",
-            "Id": 2,
+            "Id": "",
             "Calories": "",
             "Carbohydrate": "",
             "Sugars": "",
@@ -48,5 +48,5 @@
             "Meat": "",
             "Cereal": ""
         }
-    ]
+    ] 
 }
