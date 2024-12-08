@@ -1362,5 +1362,28 @@
         "Cheese": "0",
         "Meat": "0",
         "Cereal": "0"
+    },
+    "food1": {
+        "ID": 0,
+        "Calories": 0,
+        "Carbohydrate":0,
+        "Sugars": 0,
+        "Fat": 0,
+        "Protein": 5,
+        "Vegetarian": "",
+        "Vegan": "",
+        "Contains eggs": "",
+        "Contains milk": "",
+        "Contains peanuts or nuts": "",
+        "Contains fish": "",
+        "Contains sesame": "",
+        "Contains soy": "",
+        "Contains gluten": "",
+        "Fruit": "",
+        "Vegetable": "",
+        "Cheese": "",
+        "Meat": "",
+        "Cereal": ""
     }
+
 }
