@@ -1,6 +1,5 @@
 {
-    "Egg omelet or scrambled egg, NS as to fat": {
-        "ID": 1,
+    "1": {
         "Calories": 185,
         "Carbohydrate": 0.91,
         "Sugars": 0.2,
@@ -20,10 +19,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Egg omelet or scrambled egg, NS as to fat"
     },
-    "Bread, whole wheat, toasted": {
-        "ID": 2,
+    "2": {
         "Calories": 279,
         "Carbohydrate": 47.4,
         "Sugars": 4.85,
@@ -43,10 +42,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Bread, whole wheat, toasted"
     },
-    "Yogurt, Greek, nonfat milk, plain": {
-        "ID": 3,
+    "3": {
         "Calories": 59.0,
         "Carbohydrate": 3.64,
         "Sugars": 3.27,
@@ -66,10 +65,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Yogurt, Greek, nonfat milk, plain"
     },
-    "Blueberries, raw": {
-        "ID": 4,
+    "4": {
         "Calories": 57.0,
         "Carbohydrate": 14.5,
         "Sugars": 9.96,
@@ -89,10 +88,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Blueberries, raw"
     },
-    "Cashews, NFS": {
-        "ID": 5,
+    "5": {
         "Calories": 574,
         "Carbohydrate": 32.7,
         "Sugars": 5.01,
@@ -112,10 +111,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Cashews, NFS"
     },
-    "Chicken breast, grilled without sauce, skin not eaten": {
-        "ID": 6,
+    "6": {
         "Calories": 176,
         "Carbohydrate": 0.0,
         "Sugars": 0.0,
@@ -135,10 +134,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Chicken breast, grilled without sauce, skin not eaten"
     },
-    "Romaine lettuce, raw": {
-        "ID": 7,
+    "7": {
         "Calories": 15.0,
         "Carbohydrate": 2.87,
         "Sugars": 0.78,
@@ -158,10 +157,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Romaine lettuce, raw"
     },
-    "Strawberries, raw": {
-        "ID": 8,
+    "8": {
         "Calories": 35.0,
         "Carbohydrate": 7.63,
         "Sugars": 5.34,
@@ -181,10 +180,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Strawberries, raw"
     },
-    "Sunflower seeds, NFS": {
-        "ID": 9,
+    "9": {
         "Calories": 582,
         "Carbohydrate": 24.1,
         "Sugars": 2.73,
@@ -204,10 +203,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Sunflower seeds, NFS"
     },
-    "Olive oil": {
-        "ID": 10,
+    "10": {
         "Calories": 900,
         "Carbohydrate": 0.0,
         "Sugars": 0.0,
@@ -227,10 +226,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Olive oil"
     },
-    "Vinegar": {
-        "ID": 11,
+    "11": {
         "Calories": 21.0,
         "Carbohydrate": 0.93,
         "Sugars": 0.4,
@@ -250,10 +249,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Vinegar"
     },
-    "Beef, steak, sirloin, NS as to fat eaten": {
-        "ID": 12,
+    "12": {
         "Calories": 239,
         "Carbohydrate": 0.0,
         "Sugars": 0.0,
@@ -273,10 +272,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Beef, steak, sirloin, NS as to fat eaten"
     },
-    "Potato, baked, NFS": {
-        "ID": 13,
+    "13": {
         "Calories": 93.0,
         "Carbohydrate": 21.4,
         "Sugars": 1.69,
@@ -296,10 +295,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Potato, baked, NFS"
     },
-    "Oats, raw": {
-        "ID": 14,
+    "14": {
         "Calories": 379,
         "Carbohydrate": 67.7,
         "Sugars": 0.99,
@@ -319,10 +318,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Oats, raw"
     },
-    "Almonds, NFS": {
-        "ID": 15,
+    "15": {
         "Calories": 598,
         "Carbohydrate": 21.0,
         "Sugars": 4.86,
@@ -342,10 +341,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Almonds, NFS"
     },
-    "Apple, raw": {
-        "ID": 16,
+    "16": {
         "Calories": 61.0,
         "Carbohydrate": 14.8,
         "Sugars": 12.1,
@@ -365,10 +364,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Apple, raw"
     },
-    "Peanut butter": {
-        "ID": 17,
+    "17": {
         "Calories": 639,
         "Carbohydrate": 22.3,
         "Sugars": 10.5,
@@ -388,10 +387,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Peanut butter"
     },
-    "Fish, tuna, canned": {
-        "ID": 18,
+    "18": {
         "Calories": 85.0,
         "Carbohydrate": 0.08,
         "Sugars": 0.0,
@@ -411,10 +410,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Fish, tuna, canned"
     },
-    "Mayonnaise, regular": {
-        "ID": 19,
+    "19": {
         "Calories": 680,
         "Carbohydrate": 0.57,
         "Sugars": 0.57,
@@ -434,10 +433,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Mayonnaise, regular"
     },
-    "Biscuit, wheat": {
-        "ID": 20,
+    "20": {
         "Calories": 362,
         "Carbohydrate": 43.9,
         "Sugars": 3.71,
@@ -457,10 +456,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Biscuit, wheat"
     },
-    "Broccoli, raw": {
-        "ID": 21,
+    "21": {
         "Calories": 39.0,
         "Carbohydrate": 6.27,
         "Sugars": 1.4,
@@ -480,10 +479,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Broccoli, raw"
     },
-    "Cheese, cottage, NFS": {
-        "ID": 22,
+    "22": {
         "Calories": 82.0,
         "Carbohydrate": 4.31,
         "Sugars": 4.1,
@@ -503,10 +502,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Cheese, cottage, NFS"
     },
-    "Pineapple, canned, NFS": {
-        "ID": 23,
+    "23": {
         "Calories": 55.0,
         "Carbohydrate": 13.9,
         "Sugars": 13.1,
@@ -526,10 +525,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Pineapple, canned, NFS"
     },
-    "Guacamole, NFS": {
-        "ID": 24,
+    "24": {
         "Calories": 155,
         "Carbohydrate": 8.45,
         "Sugars": 0.72,
@@ -549,10 +548,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Guacamole, NFS"
     },
-    "Pepper, sweet, red, raw": {
-        "ID": 25,
+    "25": {
         "Calories": 26.0,
         "Carbohydrate": 6.03,
         "Sugars": 4.2,
@@ -572,10 +571,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Pepper, sweet, red, raw"
     },
-    "Turkey, light and dark meat, roasted, skin not eaten": {
-        "ID": 26,
+    "26": {
         "Calories": 151,
         "Carbohydrate": 0.0,
         "Sugars": 0.0,
@@ -595,10 +594,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Turkey, light and dark meat, roasted, skin not eaten"
     },
-    "Cheese, Provolone": {
-        "ID": 27,
+    "27": {
         "Calories": 351,
         "Carbohydrate": 2.14,
         "Sugars": 0.56,
@@ -618,10 +617,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Cheese, Provolone"
     },
-    "Tortilla, flour": {
-        "ID": 28,
+    "28": {
         "Calories": 306,
         "Carbohydrate": 49.4,
         "Sugars": 3.71,
@@ -641,10 +640,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Tortilla, flour"
     },
-    "Edamame, cooked": {
-        "ID": 29,
+    "29": {
         "Calories": 140,
         "Carbohydrate": 8.63,
         "Sugars": 2.12,
@@ -664,10 +663,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Edamame, cooked"
     },
-    "Carrots, raw": {
-        "ID": 30,
+    "30": {
         "Calories": 41.0,
         "Carbohydrate": 9.58,
         "Sugars": 4.74,
@@ -687,10 +686,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Carrots, raw"
     },
-    "Hamburger, NFS": {
-        "ID": 31,
+    "31": {
         "Calories": 288,
         "Carbohydrate": 20.7,
         "Sugars": 3.0,
@@ -710,10 +709,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Hamburger, NFS"
     },
-    "Bun": {
-        "ID": 32,
+    "32": {
         "Calories": "",
         "Carbohydrate": "",
         "Sugars": "",
@@ -733,10 +732,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Bun"
     },
-    "Tomatoes, raw": {
-        "ID": 33,
+    "33": {
         "Calories": 20.0,
         "Carbohydrate": 4.04,
         "Sugars": 2.63,
@@ -756,10 +755,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Tomatoes, raw"
     },
-    "Ketchup": {
-        "ID": 34,
+    "34": {
         "Calories": 109,
         "Carbohydrate": 27.1,
         "Sugars": 21.5,
@@ -779,10 +778,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Ketchup"
     },
-    "Onions, raw": {
-        "ID": 35,
+    "35": {
         "Calories": 38.0,
         "Carbohydrate": 8.46,
         "Sugars": 5.8,
@@ -802,10 +801,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Onions, raw"
     },
-    "Raspberries, raw": {
-        "ID": 36,
+    "36": {
         "Calories": 52.0,
         "Carbohydrate": 11.9,
         "Sugars": 4.42,
@@ -825,10 +824,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Raspberries, raw"
     },
-    "Egg, whole, boiled or poached": {
-        "ID": 37,
+    "37": {
         "Calories": 143,
         "Carbohydrate": 0.96,
         "Sugars": 0.2,
@@ -848,10 +847,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Egg, whole, boiled or poached"
     },
-    "Cheese, Mozzarella, part skim": {
-        "ID": 38,
+    "38": {
         "Calories": 296,
         "Carbohydrate": 4.44,
         "Sugars": 1.81,
@@ -871,10 +870,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Cheese, Mozzarella, part skim"
     },
-    "Grapes, raw": {
-        "ID": 39,
+    "39": {
         "Calories": 69.0,
         "Carbohydrate": 18.1,
         "Sugars": 15.5,
@@ -894,10 +893,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Grapes, raw"
     },
-    "Corn, canned, cooked, no added fat": {
-        "ID": 40,
+    "40": {
         "Calories": 67.0,
         "Carbohydrate": 14.3,
         "Sugars": 4.44,
@@ -917,10 +916,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Corn, canned, cooked, no added fat"
     },
-    "Black beans, NFS": {
-        "ID": 41,
+    "41": {
         "Calories": 181,
         "Carbohydrate": 22.0,
         "Sugars": 0.3,
@@ -940,10 +939,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Black beans, NFS"
     },
-    "Avocado, raw": {
-        "ID": 42,
+    "42": {
         "Calories": 160,
         "Carbohydrate": 8.53,
         "Sugars": 0.66,
@@ -963,10 +962,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Avocado, raw"
     },
-    "Lime juice, 100%, freshly squeezed": {
-        "ID": 43,
+    "43": {
         "Calories": 25.0,
         "Carbohydrate": 8.42,
         "Sugars": 1.69,
@@ -986,10 +985,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Lime juice, 100%, freshly squeezed"
     },
-    "Cilantro, raw": {
-        "ID": 44,
+    "44": {
         "Calories": 23.0,
         "Carbohydrate": 3.67,
         "Sugars": 0.87,
@@ -1009,10 +1008,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Cilantro, raw"
     },
-    "Noodles, cooked": {
-        "ID": 45,
+    "45": {
         "Calories": 137,
         "Carbohydrate": 25.0,
         "Sugars": 0.4,
@@ -1032,10 +1031,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Noodles, cooked"
     },
-    "Pistachio nuts, NFS": {
-        "ID": 46,
+    "46": {
         "Calories": 572,
         "Carbohydrate": 28.3,
         "Sugars": 7.74,
@@ -1055,10 +1054,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Pistachio nuts, NFS"
     },
-    "Beef, roast": {
-        "ID": 47,
+    "47": {
         "Calories": 206,
         "Carbohydrate": 0.0,
         "Sugars": 0.0,
@@ -1078,10 +1077,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Beef, roast"
     },
-    "Bread, rye": {
-        "ID": 48,
+    "48": {
         "Calories": 259,
         "Carbohydrate": 48.3,
         "Sugars": 3.85,
@@ -1101,10 +1100,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Bread, rye"
     },
-    "Rice, brown, cooked, NS as to fat": {
-        "ID": 49,
+    "49": {
         "Calories": 122,
         "Carbohydrate": 25.4,
         "Sugars": 0.24,
@@ -1124,10 +1123,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Rice, brown, cooked, NS as to fat"
     },
-    "Butter, NFS": {
-        "ID": 50,
+    "50": {
         "Calories": 743,
         "Carbohydrate": 0.06,
         "Sugars": 0.58,
@@ -1147,10 +1146,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Butter, NFS"
     },
-    "Oatmeal, NFS": {
-        "ID": 51,
+    "51": {
         "Calories": 76.0,
         "Carbohydrate": 11.2,
         "Sugars": 0.17,
@@ -1170,10 +1169,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Oatmeal, NFS"
     },
-    "Nutritional powder mix, protein, NFS": {
-        "ID": 52,
+    "52": {
         "Calories": 352,
         "Carbohydrate": 6.25,
         "Sugars": 0.0,
@@ -1193,10 +1192,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Nutritional powder mix, protein, NFS"
     },
-    "Milk, low fat (1%)": {
-        "ID": 53,
+    "53": {
         "Calories": 43.0,
         "Carbohydrate": 5.18,
         "Sugars": 4.96,
@@ -1216,10 +1215,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Milk, low fat (1%)"
     },
-    "Sugar, cinnamon": {
-        "ID": 54,
+    "54": {
         "Calories": 390,
         "Carbohydrate": 98.3,
         "Sugars": 93.0,
@@ -1239,10 +1238,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Sugar, cinnamon"
     },
-    "Peach, raw": {
-        "ID": 55,
+    "55": {
         "Calories": 46.0,
         "Carbohydrate": 10.1,
         "Sugars": 8.39,
@@ -1262,10 +1261,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Peach, raw"
     },
-    "Fish, salmon, grilled": {
-        "ID": 56,
+    "56": {
         "Calories": 259,
         "Carbohydrate": 0.0,
         "Sugars": 0.0,
@@ -1285,10 +1284,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Fish, salmon, grilled"
     },
-    "Asparagus, raw": {
-        "ID": 57,
+    "57": {
         "Calories": 20.0,
         "Carbohydrate": 3.88,
         "Sugars": 1.88,
@@ -1308,10 +1307,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Asparagus, raw"
     },
-    "Egg omelet or scrambled egg, made with oil": {
-        "ID": 58,
+    "58": {
         "Calories": 192,
         "Carbohydrate": 0.9,
         "Sugars": 0.19,
@@ -1331,10 +1330,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Egg omelet or scrambled egg, made with oil"
     },
-    "Mushrooms, raw": {
-        "ID": 59,
+    "59": {
         "Calories": 31.0,
         "Carbohydrate": 4.13,
         "Sugars": 1.98,
@@ -1354,10 +1353,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Mushrooms, raw"
     },
-    "Spinach, raw": {
-        "ID": 60,
+    "60": {
         "Calories": 27.0,
         "Carbohydrate": 2.41,
         "Sugars": 0.42,
@@ -1377,10 +1376,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Spinach, raw"
     },
-    "Banana, raw": {
-        "ID": 61,
+    "61": {
         "Calories": 97.0,
         "Carbohydrate": 22.7,
         "Sugars": 15.8,
@@ -1400,10 +1399,10 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Banana, raw"
     },
-    "Teriyaki sauce": {
-        "ID": 62,
+    "62": {
         "Calories": 89.0,
         "Carbohydrate": 15.6,
         "Sugars": 14.1,
@@ -1423,6 +1422,7 @@
         "Vegetable": "",
         "Cheese": "",
         "Meat": "",
-        "Cereal": ""
+        "Cereal": "",
+        "Name": "Teriyaki sauce"
     }
 }

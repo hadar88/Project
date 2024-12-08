@@ -17,20 +17,21 @@ foods_data_file = open("../../food_data/FoodData.json")
 food_data = json.load(foods_data_file)
 foods_data_file.close()
 
-id = 0
+id = 1
 
 for food_name in foods_by_name:
     data = food_data.get(food_name, None)
 
     if data is None:
-        print(f"{food_name} is not in the dict!")
+        print(f"{food_name} : is not in the dict!")
     else:
-        foods_by_name[food_name]["ID"] = id
         foods_by_name[food_name]["Protein"] = data["Protein"]
         foods_by_name[food_name]["Fat"] = data["Fat"]
         foods_by_name[food_name]["Carbohydrate"] = data["Carbohydrate"]
         foods_by_name[food_name]["Calories"] = data["Calories"]
         foods_by_name[food_name]["Sugars"] = data["Sugars"]
+
+    foods_by_name[food_name]["ID"] = id
 
     foods_by_id[str(id)] = foods_by_name[food_name].copy()
     foods_by_id[str(id)]["Name"] = food_name
