@@ -4,8 +4,8 @@
 
 import json
 
-foods_by_name_file = open("../layouts/FoodsByName.json", "a+")
-foods_by_id_file = open("../layouts/FoodsByID.json", "a+")
+foods_by_name_file = open("../../layouts/FoodsByName.json", "a+")
+foods_by_id_file = open("../../layouts/FoodsByID.json", "a+")
 
 foods_by_name_file.seek(0)
 foods_by_id_file.seek(0)
@@ -13,7 +13,7 @@ foods_by_id_file.seek(0)
 foods_by_name: dict[str, dict] = json.load(foods_by_name_file)
 foods_by_id: dict[str, dict] = dict()
 
-foods_data_file = open("../food_data/FoodDataDict.json")
+foods_data_file = open("../../food_data/FoodData.json")
 food_data = json.load(foods_data_file)
 foods_data_file.close()
 
