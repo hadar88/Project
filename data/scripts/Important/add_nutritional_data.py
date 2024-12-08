@@ -23,7 +23,7 @@ for food_name in foods_by_name:
     data = food_data.get(food_name, None)
 
     if data is None:
-        print(f"Could not find data for {food_name}")
+        print(f"{food_name} is not in the dict!")
     else:
         foods_by_name[food_name]["ID"] = id
         foods_by_name[food_name]["Protein"] = data["Protein"]
@@ -32,11 +32,11 @@ for food_name in foods_by_name:
         foods_by_name[food_name]["Calories"] = data["Calories"]
         foods_by_name[food_name]["Sugars"] = data["Sugars"]
 
-        foods_by_id[str(id)] = foods_by_name[food_name].copy()
-        foods_by_id[str(id)]["Name"] = food_name
-        del foods_by_id[str(id)]["ID"]
+    foods_by_id[str(id)] = foods_by_name[food_name].copy()
+    foods_by_id[str(id)]["Name"] = food_name
+    del foods_by_id[str(id)]["ID"]
 
-        id += 1
+    id += 1
 
 foods_by_name_file.seek(0)
 foods_by_name_file.truncate(0)
