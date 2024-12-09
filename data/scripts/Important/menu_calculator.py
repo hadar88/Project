@@ -4,11 +4,11 @@ data = json.load(foodbyid)
 foodbyid.close()
 ## fiil the data
 
-sunday = {"breakfast": {}, "lunch": {}, "dinner": {}}
-monday = {"breakfast": {}, "lunch": {}, "dinner": {}}
-tuesday = {"breakfast": {}, "lunch": {}, "dinner": {}}
-wednesday = {"breakfast": {}, "lunch": {}, "dinner": {}}
-thursday = {"breakfast": {}, "lunch": {}, "dinner": {}}
+sunday = {"breakfast": {1: 180, 2: 28, 3: 150, 4: 34, 5: 28}, "lunch": {6: 113, 7: 94, 8: 38, 9: 16, 10: 14,11: 15}, "dinner": {12: 113, 13: 130}}
+monday = {"breakfast": {14: 30, 1: 180, 15: 28, 16: 182, 17: 32}, "lunch": {18: 113, 19: 14, 20:30, 52: 30, 15: 28}, "dinner": {6: 170, 21: 156}}
+tuesday = {"breakfast": {22: 170, 23 : 40, 5: 28, 24: 120, 25:150}, "lunch": {26: 170, 27: 28, 28:45, 29: 155, 30: 130}, "dinner": {31: 170, 32: 28, 33: 30, 7:20,34:15, 35:20 }}
+wednesday = {"breakfast": {22: 70, 36: 60, 37:120, 38:28,39:150,30:130 }, "lunch": {6:170, 7:94, 40:40, 41:40,42:40, 43:15, 10:14,44:2, 52:30}, "dinner": {26:170, 45:320}}
+thursday = {"breakfast": {52:30,61:100,17:16, 3:240, 46:30 }, "lunch": {47:113,27:28, 48:32,35:20, 33:30,3:150,15:28,}, "dinner": {6:113,49:100,50:14}}
 friday = {"breakfast": {}, "lunch": {}, "dinner": {}}
 saturday = {"breakfast": {}, "lunch": {}, "dinner": {}}
 

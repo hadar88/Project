@@ -1,22 +1,20 @@
 import json
 
-db = open("FoodData.json")
+db = open("../../layouts/FoodsByName.json")
 
 dictionary = json.load(db)
 
 db.close()
 
-dictionary = dictionary["Foods"]
+onelinedb = open("FoodDataByName2.json", "w")
 
-onelinedb = open("FoodData2.json", "w")
-
-onelinedb.writelines(["{\n", "\"Foods\": [\n"])
+onelinedb.writelines("{\n")
 
 for food in dictionary:
-    if "dressing" not in food["Food Name"]:
-        onelinedb.write(json.dumps(food))
-        onelinedb.write(',\n')
+    onelinedb.write('"' + food + '": ')
+    onelinedb.write(json.dumps(dictionary[food]))
+    onelinedb.write(',\n')
 
-onelinedb.writelines(["]\n", "}\n"])
+onelinedb.writelines(["}\n"])
 
 onelinedb.close()
