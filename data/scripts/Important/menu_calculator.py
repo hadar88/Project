@@ -4,8 +4,8 @@ data = json.load(foodbyid)
 foodbyid.close()
 ## fiil the data
 breakfast = {"4": 100} 
-lunch = {}
-dinner = {}
+lunch = {"3": 100}
+dinner = {"4": 100}
 menu_id = "1"
 ##
 
@@ -76,7 +76,7 @@ for id in breakfast:
 for id in lunch:
     grams = lunch[id]
     food = data[id]
-    Calories1 = Calories1 + food["Calories"] * (grams / 100)
+    Calories = Calories + food["Calories"] * (grams / 100)
     Carbohydrate = Carbohydrate + food["Carbohydrate"] * (grams / 100)
     Sugars = Sugars + food["Sugars"] * (grams / 100)
     Fat = Fat + food["Fat"] * (grams / 100)
@@ -116,7 +116,7 @@ for id in lunch:
 for id in dinner:
     grams = dinner[id]
     food = data[id]
-    Calories2 = Calories2 + food["Calories"] * (grams / 100)
+    Calories = Calories + food["Calories"] * (grams / 100)
     Carbohydrate = Carbohydrate + food["Carbohydrate"] * (grams / 100)
     Sugars = Sugars + food["Sugars"] * (grams / 100)
     Fat = Fat + food["Fat"] * (grams / 100)
@@ -157,7 +157,7 @@ Calories = Calories / 7
 Calories1 = Calories1 / 7
 Calories2 = Calories2 / 7
 Calories3 = Calories3 / 7
-Calories_MSE = (Calories1 - Calories) ** 2 + (Calories2 - Calories) ** 2 + (Calories3 - Calories) ** 2
+## Calories_MSE = 0
 Carbohydrate = Carbohydrate / 7
 Sugars = Sugars / 7
 Fat = Fat / 7
