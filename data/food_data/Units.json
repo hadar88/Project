@@ -1,76 +1,20 @@
 {
-    "Units": [
-        {
-            "name": "Protein",
-            "unit": "g"
-        },
-        {
-            "name": "Fat",
-            "unit": "g"
-        },
-        {
-            "name": "Carbohydrate",
-            "unit": "g"
-        },
-        {
-            "name": "Calories",
-            "unit": "kcal"
-        },
-        {
-            "name": "Water",
-            "unit": "g"
-        },
-        {
-            "name": "Sugars",
-            "unit": "g"
-        },
-        {
-            "name": "Fiber",
-            "unit": "g"
-        },
-        {
-            "name": "Cholesterol",
-            "unit": "mg"
-        },
-        {
-            "name": "Saturated fat",
-            "unit": "g"
-        },
-        {
-            "name": "Calcium",
-            "unit": "mg"
-        },
-        {
-            "name": "Iron",
-            "unit": "mg"
-        },
-        {
-            "name": "Magnesium",
-            "unit": "mg"
-        },
-        {
-            "name": "Vitamin A",
-            "unit": "µg"
-        },
-        {
-            "name": "Vitamin B-12",
-            "unit": "µg"
-        },
-        {
-            "name": "Vitamin C",
-            "unit": "mg"
-        },
-        {
-            "name": "Vitamin D",
-            "unit": "µg"
-        },
-        {
-            "name": "Vitamin E",
-            "unit": "mg"
-        },
-        {
-            "name": "Vitamin K",
-            "unit": "µg"
-        }
-    ]
+    "Protein": "g",
+    "Fat": "g",
+    "Carbohydrate": "g",
+    "Calories": "kcal",
+    "Water": "g",
+    "Sugars": "g",
+    "Fiber": "g",
+    "Cholesterol": "mg",
+    "Saturated fat": "g",
+    "Calcium": "mg",
+    "Iron": "mg",
+    "Magnesium": "mg",
+    "Vitamin A": "µg",
+    "Vitamin B-12": "µg",
+    "Vitamin C": "mg",
+    "Vitamin D": "µg",
+    "Vitamin E": "mg",
+    "Vitamin K": "µg"
 }
