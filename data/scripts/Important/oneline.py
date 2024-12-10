@@ -6,7 +6,7 @@ dictionary = json.load(db)
 
 db.close()
 
-onelinedb = open("../../layouts/FoodsByName2.json", "w")
+onelinedb = open("../../layouts/FoodsByNameOneLine.json", "w")
 
 onelinedb.writelines("{\n")
 
