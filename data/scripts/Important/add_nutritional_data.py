@@ -5,7 +5,7 @@
 import json
 
 foods_by_name_file = open("../../layouts/FoodsByName.json", "a+")
-foods_by_id_file = open("../../layouts/FoodsByID.json", "a+")
+foods_by_id_file = open("../../layouts/FoodsByID.json", "w")
 
 foods_by_name_file.seek(0)
 foods_by_id_file.seek(0)
