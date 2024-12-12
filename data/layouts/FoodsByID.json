@@ -1480,7 +1480,7 @@
         "Fat": 59.2,
         "Protein": 8.61,
         "Vegetarian": 1,
-        "Vegan": 1,
+        "Vegan": 0,
         "Contains eggs": 0,
         "Contains milk": 0,
         "Contains peanuts or nuts": 0,
@@ -3210,5 +3210,27 @@
         "Meat": 0,
         "Cereal": 0,
         "Name": "Pancake syrup"
+    },
+    "147": {
+        "Calories": 632,
+        "Carbohydrate": 4,
+        "Sugars": 0,
+        "Fat": 63,
+        "Protein": 11,
+        "Vegetarian": 1,
+        "Vegan": 1,
+        "Contains eggs": 0,
+        "Contains milk": 0,
+        "Contains peanuts or nuts": 0,
+        "Contains fish": 0,
+        "Contains sesame": 0,
+        "Contains soy": 0,
+        "Contains gluten": 0,
+        "Fruit": 0,
+        "Vegetable": 0,
+        "Cheese": 0,
+        "Meat": 0,
+        "Cereal": 0,
+        "Name": "Vegan pesto sauce"
     }
 }

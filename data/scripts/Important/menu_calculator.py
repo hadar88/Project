@@ -6,10 +6,10 @@ foodbyid.close()
 
 ## fiil the data
 
-sunday = {"breakfast": {}, "lunch": {}, "dinner": {}}
-monday = {"breakfast": {}, "lunch": {}, "dinner": {}}
-tuesday = {"breakfast": {}, "lunch": {}, "dinner": {}}
-wednesday = {"breakfast": {}, "lunch": {}, "dinner": {}}
+sunday = {"breakfast": {2:56, 81:32, 29:155, 30:130}, "lunch": {92:60, 73:120, 33:40, 76:20, 35:20, 127:24, 85:28, 15:28}, "dinner": {116:90, 87:40, 33:40, 35:40, 60:30, 10:5, 134:15}}
+monday = {"breakfast": {52:30, 74:240, 4:140, 61:60, 135:10, 93:10, 9:35}, "lunch": {116:135, 29:35, 76:60, 10:5, 11:15, 25:75, 35:15, 108:28, 17:32, 61:60}, "dinner": {45:140, 147:15, 136:35}}
+tuesday = {"breakfast": {14:40, 74:240, 137:20, 15:28, 46:30}, "lunch": {28:45, 138:60, 41:40, 72:30, 24:120, 25:120}, "dinner": {63:120, 29:75, 90:60, 30:60, 139:5, 140:3, 42:40, }}
+wednesday = {"breakfast": {67:45, 142:30, 143:30, 36:30, 93:40, 39:150}, "lunch": {7:100, 41:80, }, "dinner": {}}
 thursday = {"breakfast": {}, "lunch": {}, "dinner": {}}
 friday = {"breakfast": {}, "lunch": {}, "dinner": {}}
 saturday = {"breakfast": {}, "lunch": {}, "dinner": {}}
