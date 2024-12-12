@@ -170,5 +170,48 @@
             "Contains soy": "",
             "Contains gluten": ""
         }
+    },
+    "5": {
+        "Initial": {
+            "Calories": "",
+            "Carbohydrate": "",
+            "Sugars": "",
+            "Fat": "",
+            "Protein": "",
+            "Vegetarian": "",
+            "Vegan": "",
+            "Contains eggs": "",
+            "Contains milk": "",
+            "Contains peanuts or nuts": "",
+            "Contains fish": "",
+            "Contains sesame": "",
+            "Contains soy": "",
+            "Contains gluten": ""
+        },
+        "Menu": {
+            "Calories": "",
+            "Calories1": "",
+            "Calories2": "",
+            "Calories3": "",
+            "Calories MSE": "",
+            "Carbohydrate": "",
+            "Sugars": "",
+            "Fat": "",
+            "Protein": "",
+            "Fruit": "",
+            "Vegetable": "",
+            "Cheese": "",
+            "Meat": "",
+            "Cereal": "",
+            "Vegetarian": "",
+            "Vegan": "",
+            "Contains eggs": "",
+            "Contains milk": "",
+            "Contains peanuts or nuts": "",
+            "Contains fish": "",
+            "Contains sesame": "",
+            "Contains soy": "",
+            "Contains gluten": ""
+        }
     }
 }
