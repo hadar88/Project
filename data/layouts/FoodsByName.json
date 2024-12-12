@@ -3232,5 +3232,27 @@
         "Cheese": 0,
         "Meat": 0,
         "Cereal": 0
+    },
+    "Beets, canned, cooked, no added fat": {
+        "ID": 148,
+        "Calories": 31.0,
+        "Carbohydrate": 7.21,
+        "Sugars": 5.51,
+        "Fat": 0.14,
+        "Protein": 0.91,
+        "Vegetarian": 1,
+        "Vegan": 1,
+        "Contains eggs": 0,
+        "Contains milk": 0,
+        "Contains peanuts or nuts": 0,
+        "Contains fish": 0,
+        "Contains sesame": 0,
+        "Contains soy": 0,
+        "Contains gluten": 0,
+        "Fruit": 0,
+        "Vegetable": 1,
+        "Cheese": 0,
+        "Meat": 0,
+        "Cereal": 0
     }
 }
