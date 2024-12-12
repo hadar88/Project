@@ -173,6 +173,49 @@
     },
     "5": {
         "Initial": {
+            "Calories": 1979.89,
+            "Carbohydrate": 71.684,
+            "Sugars": 21.596,
+            "Fat": 137.888,
+            "Protein": 119.706,
+            "Vegetarian": 0,
+            "Vegan": 0,
+            "Contains eggs": 1,
+            "Contains milk": 1,
+            "Contains peanuts or nuts": 1,
+            "Contains fish": 1,
+            "Contains sesame": 0,
+            "Contains soy": 0,
+            "Contains gluten": 1
+        },
+        "Menu": {
+            "Calories": 1979.89,
+            "Calories1": 644.249,
+            "Calories2": 725.111,
+            "Calories3": 610.53,
+            "Calories MSE": 57537.456,
+            "Carbohydrate": 71.684,
+            "Sugars": 21.596,
+            "Fat": 137.888,
+            "Protein": 119.706,
+            "Fruit": 9,
+            "Vegetable": 17,
+            "Cheese": 15,
+            "Meat": 19,
+            "Cereal": 3,
+            "Vegetarian": 0,
+            "Vegan": 0,
+            "Contains eggs": 1,
+            "Contains milk": 1,
+            "Contains peanuts or nuts": 1,
+            "Contains fish": 1,
+            "Contains sesame": 0,
+            "Contains soy": 0,
+            "Contains gluten": 1
+        }
+    },
+    "6": {
+        "Initial": {
             "Calories": "",
             "Carbohydrate": "",
             "Sugars": "",
@@ -214,7 +257,7 @@
             "Contains gluten": ""
         }
     },
-    "6": {
+    "7": {
         "Initial": {
             "Calories": "",
             "Carbohydrate": "",
