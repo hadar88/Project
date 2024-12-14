@@ -1,4 +1,4 @@
-def calculate_macros(goal, activity_type, activity_level, daily_calories):
+def calculate_nutritional_data(goal, activity_type, activity_level, daily_calories):
     """
     Calculate carbohydrates, sugars, fats, and proteins.
 
@@ -73,7 +73,7 @@ def calculate_macros(goal, activity_type, activity_level, daily_calories):
     }
 
 # Example
-result = calculate_macros(
+result = calculate_nutritional_data(
     goal="gain",
     activity_type=["cardio", "muscle", "strength"],
     activity_level="active",
