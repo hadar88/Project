@@ -156,3 +156,4 @@ json.dump(menus, menusinput, indent=4)
 menusinput.close()
 
 print("Menu calculated successfully")
+print(daily_calories)
