@@ -3650,5 +3650,27 @@
         "Cheese": 0,
         "Meat": 0,
         "Cereal": 0
+    },
+    "Cereal or granola bar (Quaker Chewy 25% Less Sugar Granola Bar)": {
+        "ID": 167,
+        "Calories": 412,
+        "Carbohydrate": 69.4,
+        "Sugars": 20.8,
+        "Fat": 12.5,
+        "Protein": 5.55,
+        "Vegetarian": 1,
+        "Vegan": 1,
+        "Contains eggs": 0,
+        "Contains milk": 0,
+        "Contains peanuts or nuts": 0,
+        "Contains fish": 0,
+        "Contains sesame": 0,
+        "Contains soy": 0,
+        "Contains gluten": 1,
+        "Fruit": 0,
+        "Vegetable": 0,
+        "Cheese": 0,
+        "Meat": 0,
+        "Cereal": 1
     }
 }
