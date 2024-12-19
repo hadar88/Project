@@ -11,7 +11,7 @@ for food in data:
         amount = data_sodium[food]
         data[food]['Sodium'] = amount
     else:
-        print(food + ", not found in sodium data")
+        print(food)
 
 with open('../../food_data/FoodData.json', 'w') as file1:
     json.dump(data, file1, indent=4)
