@@ -4046,5 +4046,27 @@
         "Meat": 0,
         "Cereal": 0,
         "Name": "Eggplant parmesan casserole, regular"
+    },
+    "185": {
+        "Calories": 164,
+        "Carbohydrate": 11.9,
+        "Sugars": 1.51,
+        "Fat": 11.3,
+        "Protein": 3.84,
+        "Vegetarian": 1,
+        "Vegan": 1,
+        "Contains eggs": 0,
+        "Contains milk": 0,
+        "Contains peanuts or nuts": 0,
+        "Contains fish": 0,
+        "Contains sesame": 0,
+        "Contains soy": 0,
+        "Contains gluten": 0,
+        "Fruit": 0,
+        "Vegetable": 1,
+        "Cheese": 0,
+        "Meat": 0,
+        "Cereal": 0,
+        "Name": "Stuffed pepper, with rice, meatless"
     }
 }
