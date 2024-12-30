@@ -4068,5 +4068,27 @@
         "Meat": 0,
         "Cereal": 0,
         "Name": "Stuffed pepper, with rice, meatless"
+    },
+    "186": {
+        "Calories": 465,
+        "Carbohydrate": 63.5,
+        "Sugars": 4.41,
+        "Fat": 18.3,
+        "Protein": 10.8,
+        "Vegetarian": 1,
+        "Vegan": 1,
+        "Contains eggs": 0,
+        "Contains milk": 0,
+        "Contains peanuts or nuts": 0,
+        "Contains fish": 0,
+        "Contains sesame": 0,
+        "Contains soy": 0,
+        "Contains gluten": 1,
+        "Fruit": 0,
+        "Vegetable": 0,
+        "Cheese": 0,
+        "Meat": 0,
+        "Cereal": 1,
+        "Name": "Croutons"
     }
 }
