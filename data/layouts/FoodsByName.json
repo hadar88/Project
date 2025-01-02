@@ -4200,5 +4200,27 @@
         "Cheese": 0,
         "Meat": 0,
         "Cereal": 0
+    },
+    "Vegan pancakes": {
+        "ID": 192,
+        "Calories": 189,
+        "Carbohydrate": 29,
+        "Sugars": 3,
+        "Fat": 7,
+        "Protein": 3,
+        "Vegetarian": 1,
+        "Vegan": 1,
+        "Contains eggs": 0,
+        "Contains milk": 0,
+        "Contains peanuts or nuts": 0,
+        "Contains fish": 0,
+        "Contains sesame": 0,
+        "Contains soy": 0,
+        "Contains gluten": 1,
+        "Fruit": 0,
+        "Vegetable": 0,
+        "Cheese": 0,
+        "Meat": 0,
+        "Cereal": 0
     }
 }
