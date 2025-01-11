@@ -1,0 +1,1591 @@
+{
+    "1": {
+        "sunday": {
+            "breakfast": {
+                "Egg omelet or scrambled egg, NS as to fat": 180,
+                "Bread, whole wheat, toasted": 28,
+                "Yogurt, Greek, nonfat milk, plain": 150,
+                "Blueberries, raw": 34,
+                "Cashews, NFS": 28
+            },
+            "lunch": {
+                "Chicken breast, grilled without sauce, skin not eaten": 113,
+                "Romaine lettuce, raw": 94,
+                "Strawberries, raw": 38,
+                "Sunflower seeds, NFS": 16,
+                "Olive oil": 14,
+                "Vinegar": 15
+            },
+            "dinner": {
+                "Beef, steak, sirloin, NS as to fat eaten": 113,
+                "Potato, baked, NFS": 130
+            }
+        },
+        "monday": {
+            "breakfast": {
+                "Oats, raw": 30,
+                "Egg omelet or scrambled egg, NS as to fat": 180,
+                "Almonds, NFS": 28,
+                "Apple, raw": 182,
+                "Peanut butter": 32
+            },
+            "lunch": {
+                "Fish, tuna, canned": 113,
+                "Mayonnaise, regular": 14,
+                "Biscuit, wheat": 30,
+                "Nutritional powder mix, protein, NFS": 30,
+                "Almonds, NFS": 28
+            },
+            "dinner": {
+                "Chicken breast, grilled without sauce, skin not eaten": 170,
+                "Broccoli, raw": 156
+            }
+        },
+        "tuesday": {
+            "breakfast": {
+                "Cheese, cottage, NFS": 170,
+                "Pineapple, canned, NFS": 40,
+                "Cashews, NFS": 28,
+                "Guacamole, NFS": 120,
+                "Pepper, sweet, red, raw": 150
+            },
+            "lunch": {
+                "Turkey, light and dark meat, roasted, skin not eaten": 170,
+                "Cheese, Provolone": 28,
+                "Tortilla, flour": 45,
+                "Edamame, cooked": 155,
+                "Carrots, raw": 130
+            },
+            "dinner": {
+                "Hamburger, NFS": 170,
+                "Bun": 28,
+                "Tomatoes, raw": 30,
+                "Romaine lettuce, raw": 20,
+                "Ketchup": 15,
+                "Onions, raw": 20
+            }
+        },
+        "wednesday": {
+            "breakfast": {
+                "Cheese, cottage, NFS": 70,
+                "Raspberries, raw": 60,
+                "Egg, whole, boiled or poached": 120,
+                "Cheese, Mozzarella, part skim": 28,
+                "Grapes, raw": 150,
+                "Carrots, raw": 130
+            },
+            "lunch": {
+                "Chicken breast, grilled without sauce, skin not eaten": 170,
+                "Romaine lettuce, raw": 94,
+                "Corn, canned, cooked, no added fat": 40,
+                "Black beans, NFS": 40,
+                "Avocado, raw": 40,
+                "Lime juice, 100%, freshly squeezed": 15,
+                "Olive oil": 14,
+                "Ice cream, NFS": 2,
+                "Nutritional powder mix, protein, NFS": 30
+            },
+            "dinner": {
+                "Turkey, light and dark meat, roasted, skin not eaten": 170,
+                "Noodles, cooked": 320
+            }
+        },
+        "thursday": {
+            "breakfast": {
+                "Nutritional powder mix, protein, NFS": 30,
+                "Banana, raw": 100,
+                "Peanut butter": 16,
+                "Milk, low fat (1%)": 240,
+                "Pistachio nuts, NFS": 30
+            },
+            "lunch": {
+                "Beef, roast": 113,
+                "Cheese, Provolone": 28,
+                "Bread, rye": 32,
+                "Onions, raw": 20,
+                "Tomatoes, raw": 30,
+                "Yogurt, Greek, nonfat milk, plain": 150,
+                "Almonds, NFS": 28
+            },
+            "dinner": {
+                "Chicken breast, grilled without sauce, skin not eaten": 113,
+                "Rice, brown, cooked, NS as to fat": 100,
+                "Butter, NFS": 14
+            }
+        },
+        "friday": {
+            "breakfast": {
+                "Oatmeal, NFS": 30,
+                "Yogurt, Greek, nonfat milk, plain": 56,
+                "Nutritional powder mix, protein, NFS": 30,
+                "Milk, low fat (1%)": 60,
+                "Edamame, cooked": 155,
+                "Carrots, raw": 130
+            },
+            "lunch": {
+                "Chicken breast, grilled without sauce, skin not eaten": 85,
+                "Tortilla, flour": 45,
+                "Cheese, cottage, NFS": 170,
+                "Peach, raw": 150
+            },
+            "dinner": {
+                "Fish, salmon, grilled": 170,
+                "Asparagus, raw": 120
+            }
+        },
+        "saturday": {
+            "breakfast": {
+                "Egg omelet or scrambled egg, made with oil": 136,
+                "Mushrooms, raw": 18,
+                "Spinach, raw": 30,
+                "Avocado, raw": 40,
+                "Bread, whole wheat, toasted": 28,
+                "Yogurt, Greek, nonfat milk, plain": 160,
+                "Milk, low fat (1%)": 240,
+                "Blueberries, raw": 38,
+                "Banana, raw": 50
+            },
+            "lunch": {
+                "Fish, salmon, grilled": 170,
+                "Asparagus, raw": 120,
+                "Egg, whole, boiled or poached": 120
+            },
+            "dinner": {
+                "Chicken breast, grilled without sauce, skin not eaten": 113,
+                "Rice, white, cooked, NS as to fat": 100,
+                "Teriyaki sauce": 15
+            }
+        }
+    },
+    "2": {
+        "sunday": {
+            "breakfast": {
+                "Yogurt, Greek, nonfat milk, plain": 245,
+                "Cereal, granola": 30,
+                "Blueberries, raw": 75,
+                "Cheese, Cheddar": 28,
+                "Biscuit, wheat": 30,
+                "Grapes, raw": 150
+            },
+            "lunch": {
+                "Fish, tuna, canned": 85,
+                "Mayonnaise, regular": 14,
+                "Tortilla, whole wheat": 50,
+                "Pepper, sweet, red, raw": 150,
+                "Peach, raw": 150,
+                "Walnut": 30,
+                "Egg, whole, boiled or poached": 150
+            },
+            "dinner": {
+                "Chicken breast, grilled without sauce, skin not eaten": 140,
+                "Pesto sauce": 15,
+                "Pasta, whole grain, cooked": 140,
+                "Asparagus, raw": 90,
+                "Olive oil": 14,
+                "Ice cream, NFS": 120
+            }
+        },
+        "monday": {
+            "breakfast": {
+                "Bread, whole wheat, toasted": 28,
+                "Avocado, raw": 75,
+                "Egg, whole, fried with oil": 120,
+                "Apple, raw": 180,
+                "Cherries, raw": 150,
+                "Almonds, NFS": 35
+            },
+            "lunch": {
+                "Black beans, NFS": 130,
+                "Corn, canned, cooked, no added fat": 45,
+                "Cheese, Cheddar": 28,
+                "Tortilla, whole wheat": 50,
+                "Salsa, NFS": 60,
+                "Guacamole, NFS": 60,
+                "Carrots, raw": 60,
+                "Hummus, plain": 60,
+                "Nutritional powder mix, protein, NFS": 60,
+                "Almond milk, unsweetened": 240
+            },
+            "dinner": {
+                "Turkey, light and dark meat, roasted, skin not eaten": 150,
+                "Bun": 50,
+                "Lettuce, raw": 20,
+                "Tomatoes, raw": 30,
+                "Ketchup": 15,
+                "Zucchini, pickled": 200,
+                "Potato, french fries, NFS": 100,
+                "Bagel": 60,
+                "Peanut butter": 30,
+                "Banana, raw": 120
+            }
+        },
+        "tuesday": {
+            "breakfast": {
+                "Oatmeal, NFS": 230,
+                "Peanut butter": 30,
+                "Blueberries, raw": 75,
+                "Mango, dried": 40,
+                "Almonds, NFS": 22,
+                "Nutritional powder mix, protein, NFS": 30,
+                "Almond milk, unsweetened": 240
+            },
+            "lunch": {
+                "Fish, tuna, canned": 113,
+                "Avocado, raw": 40,
+                "Cheese, NFS": 28,
+                "Tomatoes, raw": 20,
+                "Bread, whole wheat": 56,
+                "Pretzels, NFS": 30,
+                "Hummus, plain": 60
+            },
+            "dinner": {
+                "Chicken breast, baked, broiled, or roasted, skin not eaten, from raw": 85,
+                "Tortilla, whole wheat": 50,
+                "Salsa, NFS": 60,
+                "Apple, raw": 180,
+                "Almond butter": 16,
+                "Raisins": 40
+            }
+        },
+        "wednesday": {
+            "breakfast": {
+                "Bread, whole wheat": 28,
+                "Peanut butter": 30,
+                "Banana, raw": 120,
+                "Yogurt, Greek, nonfat milk, plain": 245,
+                "Raspberries, raw": 60,
+                "Cereal, bran flakes, plain": 30
+            },
+            "lunch": {
+                "Chickpea": 85,
+                "Olives, NFS": 40,
+                "Cheese, Feta": 35,
+                "Tomatoes, raw": 50,
+                "Cucumber, raw": 50,
+                "Vinaigrette": 30,
+                "Bread, pita": 60,
+                "Banana chips": 30,
+                "Guacamole, NFS": 60,
+                "Egg, whole, boiled or poached": 100
+            },
+            "dinner": {
+                "Fish, salmon, grilled": 113,
+                "Sweet potato, baked, NS as to fat": 150,
+                "Broccoli, raw": 80,
+                "Dark chocolate": 20,
+                "Nutritional powder mix, protein, NFS": 30,
+                "Almond milk, unsweetened": 240
+            }
+        },
+        "thursday": {
+            "breakfast": {
+                "Bagel": 90,
+                "Cream cheese, regular, plain": 45,
+                "Fish, salmon, smoked": 28,
+                "Apple, raw": 150,
+                "Peanut butter": 16,
+                "Yogurt, Greek, nonfat milk, plain": 200
+            },
+            "lunch": {
+                "Bread, whole wheat, toasted": 56,
+                "Avocado, raw": 75,
+                "Egg, whole, boiled or poached": 120,
+                "Mango, dried": 40,
+                "Almonds, NFS": 22
+            },
+            "dinner": {
+                "Pasta with tomato-based sauce, home recipe": 300,
+                "Zucchini, pickled": 100,
+                "Chicken breast, baked, broiled, or roasted, skin not eaten, from raw": 113,
+                "Ice cream, NFS": 120,
+                "Raspberries, raw": 150
+            }
+        },
+        "friday": {
+            "breakfast": {
+                "Yogurt, Greek, nonfat milk, plain": 245,
+                "Cereal, granola": 30,
+                "Blueberries, raw": 75,
+                "Bread, pita": 60,
+                "Hummus, plain": 60
+            },
+            "lunch": {
+                "Turkey, light and dark meat, roasted, skin not eaten": 113,
+                "Mustard": 15,
+                "Tomatoes, raw": 20,
+                "Lettuce, raw": 10,
+                "Bread, whole wheat": 56,
+                "Carrots, raw": 100,
+                "Cheese, Cheddar": 28,
+                "Nectarine, raw": 150,
+                "Walnut": 30,
+                "Egg, whole, boiled or poached": 100
+            },
+            "dinner": {
+                "Rice noodles, cooked": 140,
+                "Tofu": 113,
+                "Snowpeas, raw": 60,
+                "Peanut sauce": 30,
+                "Cookie, butterscotch, brownie": 50,
+                "Milk, low fat (1%)": 240
+            }
+        },
+        "saturday": {
+            "breakfast": {
+                "Bread, whole wheat": 28,
+                "Avocado, raw": 75,
+                "Egg, whole, fried with oil": 60,
+                "Cranberries, raw": 40
+            },
+            "lunch": {
+                "Hummus, plain": 60,
+                "Lettuce, raw": 20,
+                "Tomatoes, raw": 40,
+                "Cucumber, raw": 40,
+                "Olives, NFS": 40,
+                "Cheese, Feta": 35,
+                "Tortilla, whole wheat": 50,
+                "Bread, whole grain white, toasted": 30,
+                "Grapes, raw": 150
+            },
+            "dinner": {
+                "Rice, brown, cooked, NS as to fat": 150,
+                "Beef, steak, NFS": 85,
+                "Black beans, NFS": 60,
+                "Guacamole, NFS": 60,
+                "Salsa, NFS": 60,
+                "Dark chocolate": 20,
+                "Nutritional powder mix, protein, NFS": 30,
+                "Almond milk, unsweetened": 240
+            }
+        }
+    },
+    "3": {
+        "sunday": {
+            "breakfast": {
+                "Bread, whole wheat": 60,
+                "Avocado, raw": 75,
+                "Egg, whole, fried with oil": 100,
+                "Yogurt, Greek, nonfat milk, plain": 145,
+                "Honeydew melon, raw": 170,
+                "Banana, raw": 120,
+                "Peanut butter": 32
+            },
+            "lunch": {
+                "Fish, tuna, canned": 140,
+                "Mayonnaise, regular": 28,
+                "Tortilla, whole wheat": 70,
+                "Potato chips, NFS": 28,
+                "Tangerine, raw": 100,
+                "Muffin, fruit": 70
+            },
+            "dinner": {
+                "Chicken breast, grilled without sauce, skin not eaten": 113,
+                "Barbecue sauce": 30,
+                "Quinoa, NS as to fat": 185,
+                "Broccoli, raw": 91,
+                "Olive oil": 14,
+                "Date": 96,
+                "Almond butter": 32
+            }
+        },
+        "monday": {
+            "breakfast": {
+                "Yogurt, Greek, whole milk, plain": 245,
+                "Cereal, granola": 55,
+                "Blueberries, raw": 74,
+                "Honey": 14,
+                "Cherries, raw": 90,
+                "Almonds, NFS": 28
+            },
+            "lunch": {
+                "Bean soup, NFS": 375,
+                "Bread, whole wheat": 60,
+                "Cheese, Cheddar": 56,
+                "Tomatoes, raw": 40,
+                "Pita chips": 28,
+                "Carrots, raw": 61,
+                "Hummus, plain": 122
+            },
+            "dinner": {
+                "Turkey, NFS": 113,
+                "Bun": 60,
+                "Zucchini, pickled": 196,
+                "Potato, french fries, NFS": 85,
+                "Olive oil": 14,
+                "Ice cream, NFS": 132,
+                "Chocolate chips": 43
+            }
+        },
+        "tuesday": {
+            "breakfast": {
+                "Oatmeal, NFS": 234,
+                "Milk, reduced fat (2%)": 245,
+                "Peanut butter": 32,
+                "Apple, raw": 150,
+                "Sugar, cinnamon": 2.6,
+                "Peach, raw": 150,
+                "Walnut": 14
+            },
+            "lunch": {
+                "Black beans, NFS": 86,
+                "Corn, canned, cooked, no added fat": 82,
+                "Cheese, Cheddar": 28,
+                "Tortilla, whole wheat": 70,
+                "Salsa, NFS": 61,
+                "Guacamole, NFS": 122,
+                "Yogurt, Greek, whole milk, plain": 245,
+                "Cereal, granola": 28
+            },
+            "dinner": {
+                "Fish, salmon, grilled": 113,
+                "Pasta with tomato-based sauce, home recipe": 332,
+                "Broccoli, raw": 45,
+                "Olive oil": 7,
+                "Cookie, chocolate chip": 90
+            }
+        },
+        "wednesday": {
+            "breakfast": {
+                "Bagel, whole wheat": 90,
+                "Tomatoes, raw": 40,
+                "Cream cheese, regular, plain": 43,
+                "Fish, salmon, smoked": 85,
+                "Apple, raw": 200,
+                "Almonds, NFS": 21,
+                "Mango, dried": 28
+            },
+            "lunch": {
+                "Chickpea": 86,
+                "Olives, NFS": 34,
+                "Cheese, Feta": 28,
+                "Tomatoes, raw": 90,
+                "Cucumber, raw": 52,
+                "Vinaigrette": 30,
+                "Bread, pita": 57,
+                "Hummus, plain": 61,
+                "Cheese, Cheddar": 28,
+                "Biscuit, wheat": 30
+            },
+            "dinner": {
+                "Chicken breast, baked, broiled, or roasted, skin not eaten, from raw": 113,
+                "Rice, brown, cooked, NS as to fat": 195,
+                "Pepper, sweet, red, raw": 119,
+                "Edamame, cooked": 40,
+                "Oats, raw": 32,
+                "Cookie, butterscotch, brownie": 60,
+                "Ice cream, NFS": 60
+            }
+        },
+        "thursday": {
+            "breakfast": {
+                "Bread, whole wheat": 60,
+                "Peanut butter": 32,
+                "Banana, raw": 120,
+                "Egg, whole, boiled or poached": 100,
+                "Muffin, fruit": 70
+            },
+            "lunch": {
+                "Tortilla, whole wheat": 70,
+                "Turkey, NFS": 113,
+                "Cheese, Cheddar": 28,
+                "Mustard": 16,
+                "Mayonnaise, regular": 14,
+                "Watermelon, raw": 154,
+                "Pretzels, NFS": 28,
+                "Tortilla chips, nacho cheese flavor (Doritos)": 28,
+                "Guacamole, NFS": 122
+            },
+            "dinner": {
+                "Beef, steak, NFS": 113,
+                "Potato, mashed, NFS": 210,
+                "Asparagus, raw": 200,
+                "Olive oil": 14,
+                "Popcorn, NFS": 16,
+                "Dark chocolate": 56
+            }
+        },
+        "friday": {
+            "breakfast": {
+                "Yogurt, Greek, whole milk, plain": 245,
+                "Cereal, granola": 55,
+                "Raspberries, raw": 62,
+                "Honey": 14,
+                "Bread, whole wheat": 30,
+                "Peanut butter": 32
+            },
+            "lunch": {
+                "Fish, tuna, canned": 140,
+                "Mayonnaise, regular": 28,
+                "Tortilla, whole wheat": 70,
+                "Potato chips, NFS": 28,
+                "Tangerine, raw": 100,
+                "Tzatziki dip": 45,
+                "Carrots, raw": 61,
+                "Pita chips": 28
+            },
+            "dinner": {
+                "Tofu": 113,
+                "Rice noodles, cooked": 210,
+                "Snowpeas, raw": 50,
+                "Edamame, cooked": 80,
+                "Peanut sauce": 32,
+                "Date": 72,
+                "Almond butter": 32,
+                "Dark chocolate": 28
+            }
+        },
+        "saturday": {
+            "breakfast": {
+                "Bread, whole wheat": 60,
+                "Egg, whole, fried with oil": 100,
+                "Avocado, raw": 75,
+                "Yogurt, Greek, nonfat milk, plain": 245,
+                "Clementine, raw": 74,
+                "Banana, raw": 120,
+                "Peanut butter": 32
+            },
+            "lunch": {
+                "Chickpea": 86,
+                "Olives, NFS": 34,
+                "Cheese, Feta": 28,
+                "Tomatoes, raw": 90,
+                "Cucumber, raw": 52,
+                "Vinaigrette": 30,
+                "Bread, pita": 57,
+                "Hummus, plain": 61,
+                "Almonds, NFS": 21,
+                "Cranberries, dried": 28
+            },
+            "dinner": {
+                "Pasta, whole grain, cooked": 195,
+                "Pesto sauce": 32,
+                "Brussels sprouts, raw": 132,
+                "Olive oil": 14,
+                "Popcorn, NFS": 16,
+                "Cashews, NFS": 28,
+                "Dark chocolate": 28
+            }
+        }
+    },
+    "4": {
+        "sunday": {
+            "breakfast": {
+                "Bread, whole wheat, toasted": 56,
+                "Almond butter": 32,
+                "Edamame, cooked": 155,
+                "Carrots, raw": 130
+            },
+            "lunch": {
+                "Bread, pita": 60,
+                "Hummus, plain": 120,
+                "Tomatoes, raw": 40,
+                "Lettuce, raw": 20,
+                "Onions, raw": 20,
+                "Popcorn, NFS": 24,
+                "Raisins": 28,
+                "Almonds, NFS": 28
+            },
+            "dinner": {
+                "Quinoa, NS as to fat": 90,
+                "Chickpea": 40,
+                "Tomatoes, raw": 40,
+                "Onions, raw": 40,
+                "Spinach, raw": 30,
+                "Olive oil": 5,
+                "Lemon juice, 100%, freshly squeezed": 15
+            }
+        },
+        "monday": {
+            "breakfast": {
+                "Nutritional powder mix, protein, NFS": 30,
+                "Almond milk, unsweetened": 240,
+                "Blueberries, raw": 140,
+                "Banana, raw": 60,
+                "Flax seeds": 10,
+                "Banana chips": 10,
+                "Sunflower seeds, NFS": 35
+            },
+            "lunch": {
+                "Quinoa, NS as to fat": 135,
+                "Edamame, cooked": 35,
+                "Lettuce, raw": 60,
+                "Olive oil": 5,
+                "Vinegar": 15,
+                "Pepper, sweet, red, raw": 75,
+                "Onions, raw": 15,
+                "Bread, whole wheat": 28,
+                "Peanut butter": 32,
+                "Banana, raw": 60
+            },
+            "dinner": {
+                "Noodles, cooked": 140,
+                "Vegan pesto sauce": 15,
+                "Green peas, raw": 35
+            }
+        },
+        "tuesday": {
+            "breakfast": {
+                "Oats, raw": 40,
+                "Almond milk, unsweetened": 240,
+                "Chia seeds": 20,
+                "Almonds, NFS": 28,
+                "Pistachio nuts, NFS": 30
+            },
+            "lunch": {
+                "Tortilla, flour": 45,
+                "Vegan cheese": 60,
+                "Black beans, NFS": 40,
+                "Salsa, NFS": 30,
+                "Guacamole, NFS": 120,
+                "Pepper, sweet, red, raw": 120
+            },
+            "dinner": {
+                "Rice, white, cooked, NS as to fat": 120,
+                "Edamame, cooked": 75,
+                "Cucumber, raw": 60,
+                "Carrots, raw": 60,
+                "Sesame oil": 5,
+                "Sesame seeds": 3,
+                "Avocado, raw": 40
+            }
+        },
+        "wednesday": {
+            "breakfast": {
+                "Tortilla, whole wheat": 45,
+                "Vegan cream cheese": 30,
+                "Jam or jelly, fruit juice sweetened": 30,
+                "Raspberries, raw": 30,
+                "Banana chips": 40,
+                "Grapes, raw": 150
+            },
+            "lunch": {
+                "Romaine lettuce, raw": 100,
+                "Black beans, NFS": 80,
+                "Corn, canned, cooked, no added fat": 40,
+                "Avocado, raw": 40,
+                "Tomatoes, raw": 30,
+                "Onions, raw": 20,
+                "Cilantro, raw": 10,
+                "Lime juice, 100%, freshly squeezed": 15,
+                "Nutritional powder mix, protein, NFS": 30,
+                "Cashews, NFS": 28
+            },
+            "dinner": {
+                "Tofu": 170,
+                "Sweet potato, baked, NS as to fat": 130,
+                "Coconut cream, canned, sweetened": 15,
+                "Broccoli, raw": 150
+            }
+        },
+        "thursday": {
+            "breakfast": {
+                "Quinoa, NS as to fat": 85,
+                "Pancake syrup": 7,
+                "Lime juice, 100%, freshly squeezed": 5,
+                "Cilantro, raw": 4,
+                "Strawberries, raw": 38,
+                "Mango, dried": 40,
+                "Blueberries, raw": 36,
+                "Chia seeds": 30,
+                "Almond milk, unsweetened": 120,
+                "Peanut butter": 30
+            },
+            "lunch": {
+                "Bean soup, NFS": 480,
+                "Chickpea": 40,
+                "Grapes, raw": 151
+            },
+            "dinner": {
+                "Tortilla, flour": 50,
+                "Black beans, NFS": 172,
+                "Salsa, NFS": 60,
+                "Avocado, raw": 50,
+                "Cilantro, raw": 10
+            }
+        },
+        "friday": {
+            "breakfast": {
+                "Bread, whole wheat, toasted": 30,
+                "Peanut butter": 16,
+                "Banana, raw": 60,
+                "Almonds, NFS": 28,
+                "Raisins": 28
+            },
+            "lunch": {
+                "Chickpea": 164,
+                "Tomatoes, raw": 38,
+                "Cucumber, raw": 75,
+                "Pepper, sweet, red, raw": 75,
+                "Cilantro, raw": 8,
+                "Olive oil": 14,
+                "Lemon juice, 100%, freshly squeezed": 15,
+                "Nutritional powder mix, protein, NFS": 30
+            },
+            "dinner": {
+                "Quinoa, NS as to fat": 170,
+                "Sweet potato, baked, NS as to fat": 40,
+                "Avocado, raw": 50,
+                "Beets, canned, cooked, no added fat": 40,
+                "Almonds, NFS": 20,
+                "Lemon juice, 100%, freshly squeezed": 15,
+                "Olive oil": 14
+            }
+        },
+        "saturday": {
+            "breakfast": {
+                "Tofu": 113,
+                "Mango, dried": 165,
+                "Almond milk, unsweetened": 240,
+                "Cashews, NFS": 28,
+                "Blueberries, raw": 36,
+                "Strawberries, raw": 152
+            },
+            "lunch": {
+                "Tortilla, flour": 50,
+                "Hummus, plain": 120,
+                "Avocado, raw": 50,
+                "Tomatoes, raw": 60,
+                "Apple, raw": 182,
+                "Almond butter": 32
+            },
+            "dinner": {
+                "Noodles, cooked": 140,
+                "Spinach, raw": 60,
+                "Broccoli, raw": 91,
+                "Vegan cheese": 30
+            }
+        }
+    },
+    "5": {
+        "sunday": {
+            "breakfast": {
+                "Beef, bacon, cooked": 56,
+                "Egg, whole, raw": 100,
+                "Avocado, raw": 150,
+                "Celery, raw": 40,
+                "Almond butter": 32
+            },
+            "lunch": {
+                "Romaine lettuce, raw": 60,
+                "Chicken breast, grilled without sauce, skin not eaten": 113,
+                "Olive oil": 30,
+                "Vinegar": 15,
+                "Dark chocolate": 28,
+                "Coconut cream, canned, sweetened": 16
+            },
+            "dinner": {
+                "Fish, salmon, grilled": 170,
+                "Asparagus, raw": 90
+            }
+        },
+        "monday": {
+            "breakfast": {
+                "Egg omelet or scrambled egg, made with oil": 200,
+                "Popcorn, NFS": 8,
+                "Coconut, packaged": 20,
+                "Walnut": 28
+            },
+            "lunch": {
+                "Romaine lettuce, raw": 50,
+                "Salsa, NFS": 30,
+                "Cheese, NFS": 56,
+                "Turkey, light and dark meat, roasted, skin not eaten": 113,
+                "Sour cream, regular": 30,
+                "Celery, raw": 40,
+                "Cream cheese, regular, plain": 30,
+                "Salami, NFS": 30
+            },
+            "dinner": {
+                "Olive oil": 5,
+                "Onions, raw": 40,
+                "Spinach, raw": 568,
+                "Cheese, cottage, NFS": 226,
+                "Cheese, Feta": 56,
+                "Cheese, Monterey": 56,
+                "Egg, whole, raw": 100,
+                "Lemon juice, 100%, freshly squeezed": 5,
+                "Cheese, Parmesan, hard": 30
+            }
+        },
+        "tuesday": {
+            "breakfast": {
+                "Meatballs, NS as to type of meat, with sauce": 56,
+                "Egg, whole, raw": 100,
+                "Avocado, raw": 75,
+                "Peanuts, NFS": 35
+            },
+            "lunch": {
+                "Meatballs, NS as to type of meat, with sauce": 112,
+                "Noodles, cooked": 200,
+                "Cheese, Parmesan, hard": 30,
+                "Olive oil": 30,
+                "Avocado, raw": 75
+            },
+            "dinner": {
+                "Chicken breast, grilled without sauce, skin not eaten": 113,
+                "Broccoli, raw": 91,
+                "Olive oil": 15
+            }
+        },
+        "wednesday": {
+            "breakfast": {
+                "Almond butter": 32,
+                "Coconut milk": 240,
+                "Blueberries, raw": 37,
+                "Walnut": 28
+            },
+            "lunch": {
+                "Fish, tuna, canned": 113,
+                "Mayonnaise, regular": 30,
+                "Celery, raw": 80,
+                "Sunflower seeds, NFS": 60
+            },
+            "dinner": {
+                "Beef, steak, sirloin, NS as to fat eaten": 170,
+                "Green beans, raw": 100
+            }
+        },
+        "thursday": {
+            "breakfast": {
+                "Yogurt, Greek, whole milk, plain": 200,
+                "Cream, whipped": 30,
+                "Walnut": 28,
+                "Sugar, cinnamon": 1,
+                "Guacamole, NFS": 120,
+                "Pepper, sweet, red, raw": 150
+            },
+            "lunch": {
+                "Egg, whole, boiled or poached": 100,
+                "Beef, bacon, cooked": 42,
+                "Celery, raw": 40,
+                "Peanut butter": 32
+            },
+            "dinner": {
+                "Shrimp, NFS": 170,
+                "Noodles, cooked": 200,
+                "Butter, NFS": 30,
+                "Cheese, Parmesan, hard": 30
+            }
+        },
+        "friday": {
+            "breakfast": {
+                "Egg, whole, boiled or poached": 100,
+                "Clementine, raw": 74,
+                "Walnut": 28,
+                "Cucumber, raw": 100,
+                "Cheese, Colby Jack": 28,
+                "Salami, NFS": 30
+            },
+            "lunch": {
+                "Romaine lettuce, raw": 100,
+                "Tomatoes, raw": 20,
+                "Chicken breast, grilled without sauce, skin not eaten": 56,
+                "Egg, whole, boiled or poached": 100,
+                "Beef, bacon, cooked": 30,
+                "Avocado, raw": 38,
+                "Cheese, Blue or Roquefort": 28,
+                "Peanuts, NFS": 35
+            },
+            "dinner": {
+                "Stuffed pepper, with rice and meat": 250
+            }
+        },
+        "saturday": {
+            "breakfast": {
+                "Egg, whole, fried with oil": 100,
+                "Beef, bacon, cooked": 42,
+                "Nutritional powder mix, protein, NFS": 30,
+                "Coconut milk": 240,
+                "Flax seeds": 10
+            },
+            "lunch": {
+                "Stuffed pepper, with rice and meat": 250,
+                "Coconut milk": 120,
+                "Sour cream, regular": 120,
+                "Cocoa powder, not reconstituted": 15,
+                "Sugar, cinnamon": 1
+            },
+            "dinner": {
+                "Lasagna, meatless, with vegetables": 250,
+                "Chicken breast, grilled without sauce, skin not eaten": 113
+            }
+        }
+    },
+    "6": {
+        "sunday": {
+            "breakfast": {
+                "Yogurt, Greek, whole milk, plain": 245,
+                "Cereal or granola bar (Quaker Chewy 25% Less Sugar Granola Bar)": 30,
+                "Blueberries, raw": 75,
+                "Cheese, Cheddar": 28,
+                "Biscuit, wheat": 50
+            },
+            "lunch": {
+                "Fish, tuna, canned": 85,
+                "Mayonnaise, regular": 15,
+                "Tortilla, whole wheat": 60,
+                "Pepper, sweet, red, raw": 120,
+                "Peach, raw": 150,
+                "Walnut": 50
+            },
+            "dinner": {
+                "Chicken breast, grilled without sauce, skin not eaten": 85,
+                "Pesto sauce": 15,
+                "Pasta, whole grain, cooked": 200,
+                "Asparagus, raw": 90,
+                "Olive oil": 15,
+                "Ice cream, NFS": 180
+            }
+        },
+        "monday": {
+            "breakfast": {
+                "Bread, whole wheat": 40,
+                "Avocado, raw": 100,
+                "Egg, whole, fried with oil": 50,
+                "Cherries, raw": 90,
+                "Almonds, NFS": 35
+            },
+            "lunch": {
+                "Black beans, NFS": 120,
+                "Corn, canned, cooked, no added fat": 50,
+                "Cheese, Cheddar": 28,
+                "Tortilla, whole wheat": 60,
+                "Salsa, NFS": 60,
+                "Guacamole, NFS": 60,
+                "Carrots, raw": 75,
+                "Hummus, plain": 60
+            },
+            "dinner": {
+                "Hamburger, NFS": 160,
+                "Zucchini, pickled": 120,
+                "Potato, french fries, NFS": 110,
+                "Olive oil": 15,
+                "Ketchup": 15,
+                "Chocolate chips": 50
+            }
+        },
+        "tuesday": {
+            "breakfast": {
+                "Sugar, cinnamon": 240,
+                "Peanut butter": 15,
+                "Blueberries, raw": 75,
+                "Mango, dried": 60,
+                "Almonds, NFS": 35
+            },
+            "lunch": {
+                "Fish, tuna, canned": 113,
+                "Avocado, raw": 50,
+                "Cheese, NFS": 28,
+                "Tomatoes, raw": 50,
+                "Bread, whole wheat": 80,
+                "Pretzels, NFS": 60,
+                "Hummus, plain": 60
+            },
+            "dinner": {
+                "Chicken breast, baked, broiled, or roasted, skin not eaten, from raw": 85,
+                "Cheese, Cheddar": 28,
+                "Tortilla, whole wheat": 60,
+                "Salsa, NFS": 60,
+                "Date": 40,
+                "Almond butter": 15
+            }
+        },
+        "wednesday": {
+            "breakfast": {
+                "Bread, whole wheat": 40,
+                "Peanut butter": 30,
+                "Banana, raw": 118,
+                "Yogurt, Greek, whole milk, plain": 245,
+                "Raspberries, raw": 75
+            },
+            "lunch": {
+                "Chickpea": 120,
+                "Olives, NFS": 60,
+                "Cheese, Feta": 28,
+                "Tomatoes, raw": 50,
+                "Cucumber, raw": 50,
+                "Vinaigrette": 30,
+                "Bread, pita": 50,
+                "Banana chips": 50,
+                "Guacamole, NFS": 60
+            },
+            "dinner": {
+                "Fish, salmon, grilled": 113,
+                "Sweet potato, baked, NS as to fat": 150,
+                "Broccoli, raw": 75,
+                "Olive oil": 15,
+                "Dark chocolate": 30,
+                "Popcorn, NFS": 30
+            }
+        },
+        "thursday": {
+            "breakfast": {
+                "Bagel, whole wheat": 80,
+                "Cream cheese, regular, plain": 45,
+                "Fish, salmon, smoked": 28,
+                "Apple, raw": 182,
+                "Peanut butter": 15
+            },
+            "lunch": {
+                "Bread, whole wheat": 80,
+                "Avocado, raw": 100,
+                "Egg, whole, boiled or poached": 100,
+                "Mango, dried": 60,
+                "Almonds, NFS": 35
+            },
+            "dinner": {
+                "Pasta with tomato-based sauce, home recipe": 495,
+                "Zucchini, pickled": 120,
+                "Olive oil": 15,
+                "Cheese, Parmesan, hard": 30,
+                "Ice cream, NFS": 240
+            }
+        },
+        "friday": {
+            "breakfast": {
+                "Yogurt, Greek, whole milk, plain": 245,
+                "Cereal, granola": 30,
+                "Blueberries, raw": 75,
+                "Bread, pita": 50,
+                "Hummus, plain": 60
+            },
+            "lunch": {
+                "Turkey, light and dark meat, roasted, skin not eaten": 113,
+                "Mustard": 15,
+                "Tomatoes, raw": 50,
+                "Bread, whole wheat": 80,
+                "Carrots, raw": 75,
+                "Nectarine, raw": 150,
+                "Walnut": 50
+            },
+            "dinner": {
+                "Rice noodles, cooked": 200,
+                "Tofu": 85,
+                "Snowpeas, raw": 75,
+                "Peanut sauce": 30,
+                "Cookie, butterscotch, brownie": 50,
+                "Milk, low fat (1%)": 240
+            }
+        },
+        "saturday": {
+            "breakfast": {
+                "Bread, whole wheat": 40,
+                "Avocado, raw": 100,
+                "Egg, whole, fried with oil": 50,
+                "Cucumber, raw": 40
+            },
+            "lunch": {
+                "Hummus, plain": 60,
+                "Lettuce, raw": 33,
+                "Tomatoes, raw": 33,
+                "Cucumber, raw": 33,
+                "Olives, NFS": 60,
+                "Cheese, Feta": 28,
+                "Tortilla, whole wheat": 60,
+                "Popcorn, NFS": 60
+            },
+            "dinner": {
+                "Rice, brown, cooked, NS as to fat": 200,
+                "Beef, steak, NFS": 85,
+                "Black beans, NFS": 80,
+                "Guacamole, NFS": 60,
+                "Salsa, NFS": 60,
+                "Chocolate chips": 60
+            }
+        }
+    },
+    "7": {
+        "sunday": {
+            "breakfast": {
+                "Avocado, raw": 50,
+                "Bread, whole grain white, toasted": 50,
+                "Egg, whole, boiled or poached": 50
+            },
+            "lunch": {
+                "Chicken breast, grilled without sauce, skin not eaten": 100,
+                "Tortilla, whole wheat": 50,
+                "Tomatoes, raw": 50
+            },
+            "dinner": {
+                "Fish, cod, baked or broiled": 150,
+                "Lentils": 100,
+                "Spinach, raw": 100,
+                "Dark chocolate": 20,
+                "Almonds, NFS": 20
+            }
+        },
+        "monday": {
+            "breakfast": {
+                "Oatmeal, NFS": 200
+            },
+            "lunch": {
+                "Chicken breast, grilled without sauce, skin not eaten": 200,
+                "Tomatoes, raw": 25,
+                "Cucumber, raw": 25
+            },
+            "dinner": {
+                "Fish, cod, baked or broiled": 150,
+                "Lentils": 100,
+                "Spinach, raw": 100,
+                "Yogurt, Greek, whole milk, plain": 150
+            }
+        },
+        "tuesday": {
+            "breakfast": {
+                "Egg omelet or scrambled egg, made with oil": 100,
+                "Bread, whole grain white, toasted": 50,
+                "Avocado, raw": 50
+            },
+            "lunch": {
+                "Chicken breast, grilled without sauce, skin not eaten": 150,
+                "Quinoa, NS as to fat": 100,
+                "Tomatoes, raw": 50,
+                "Cucumber, raw": 50
+            },
+            "dinner": {
+                "Fish, salmon, baked or broiled": 150,
+                "Broccoli, raw": 100,
+                "Sweet potato, baked, NS as to fat": 100,
+                "Yogurt, Greek, whole milk, plain": 150,
+                "Berries, NFS": 50
+            }
+        },
+        "wednesday": {
+            "breakfast": {
+                "Oatmeal, NFS": 100,
+                "Banana, raw": 50,
+                "Almonds, NFS": 20
+            },
+            "lunch": {
+                "Turkey, NFS": 100,
+                "Bread, whole grain white, toasted": 50,
+                "Tomatoes, raw": 50,
+                "Cucumber, raw": 50
+            },
+            "dinner": {
+                "Beef, steak, NFS": 150,
+                "Rice, brown, cooked, NS as to fat": 100,
+                "Asparagus, raw": 100,
+                "Hummus, plain": 50,
+                "Carrots, raw": 50
+            }
+        },
+        "thursday": {
+            "breakfast": {
+                "Banana, raw": 50,
+                "Nutritional powder mix, protein, NFS": 30,
+                "Almond milk, unsweetened": 200
+            },
+            "lunch": {
+                "Quinoa, NS as to fat": 100,
+                "Tomatoes, raw": 50,
+                "Cucumber, raw": 50,
+                "Cheese, Feta": 50
+            },
+            "dinner": {
+                "Chicken breast, baked, broiled, or roasted, skin not eaten, from raw": 150,
+                "Tomatoes, raw": 50,
+                "Cucumber, raw": 50,
+                "Noodles, cooked": 50,
+                "Peanuts, NFS": 30
+            }
+        },
+        "friday": {
+            "breakfast": {
+                "Cereal, bran flakes, plain": 50,
+                "Milk, low fat (1%)": 200,
+                "Berries, NFS": 50
+            },
+            "lunch": {
+                "Shrimp, NFS": 150,
+                "Couscous, plain, cooked": 100
+            },
+            "dinner": {
+                "Beef, steak, tenderloin": 150,
+                "Potato, mashed, NFS": 100,
+                "Green beans, raw": 100,
+                "Apple, raw": 100,
+                "Peanut butter": 20
+            }
+        },
+        "saturday": {
+            "breakfast": {
+                "Egg omelet or scrambled egg, made with oil": 150,
+                "Spinach, raw": 100,
+                "Mushrooms, raw": 50
+            },
+            "lunch": {
+                "Fish, tuna, canned": 150,
+                "Lettuce, raw": 50,
+                "Tomatoes, raw": 50,
+                "Cucumber, raw": 50
+            },
+            "dinner": {
+                "Lamb, NS as to cut": 150,
+                "Quinoa, NS as to fat": 100,
+                "Cheese, cottage, NFS": 100,
+                "Pineapple, canned, NFS": 50
+            }
+        }
+    },
+    "8": {
+        "sunday": {
+            "breakfast": {
+                "Fruit juice, acai blend": 150,
+                "Banana, raw": 50,
+                "Cereal, granola": 50
+            },
+            "lunch": {
+                "Peanut butter": 250,
+                "Sweet potato, baked, NS as to fat": 50
+            },
+            "dinner": {
+                "Lasagna, meatless, with vegetables": 350,
+                "Dark chocolate": 30
+            }
+        },
+        "monday": {
+            "breakfast": {
+                "Oatmeal, NFS": 150,
+                "Berries, NFS": 50
+            },
+            "lunch": {
+                "Chicken breast, grilled without sauce, skin not eaten": 250,
+                "Lettuce, raw": 50
+            },
+            "dinner": {
+                "Fish, salmon, baked or broiled": 200,
+                "Broccoli, raw": 50,
+                "Apple, raw": 50,
+                "Peanut butter": 50
+            }
+        },
+        "tuesday": {
+            "breakfast": {
+                "Oatmeal, NFS": 150,
+                "Berries, NFS": 50
+            },
+            "lunch": {
+                "Quinoa, NS as to fat": 100,
+                "Chickpea": 100
+            },
+            "dinner": {
+                "Tofu": 100,
+                "Broccoli, raw": 50,
+                "Rice, brown, cooked, NS as to fat": 100,
+                "Apple, raw": 50,
+                "Peanut butter": 50
+            }
+        },
+        "wednesday": {
+            "breakfast": {
+                "Banana, raw": 100,
+                "Almond milk, unsweetened": 200
+            },
+            "lunch": {
+                "Bean soup, NFS": 200,
+                "Bread, whole grain white, toasted": 50
+            },
+            "dinner": {
+                "Stuffed pepper, with rice, meatless": 300,
+                "Hummus, plain": 75,
+                "Carrots, raw": 25
+            }
+        },
+        "thursday": {
+            "breakfast": {
+                "Pudding, tapioca, ready-to-eat": 150,
+                "Mango, raw": 50
+            },
+            "lunch": {
+                "Hummus, plain": 200,
+                "Bread, pita": 50
+            },
+            "dinner": {
+                "Tofu": 150,
+                "Rice, brown, cooked, NS as to fat": 150,
+                "Peanuts, NFS": 50
+            }
+        },
+        "friday": {
+            "breakfast": {
+                "Avocado, raw": 75,
+                "Bread, whole grain white, toasted": 75
+            },
+            "lunch": {
+                "Sushi roll, avocado": 200
+            },
+            "dinner": {
+                "Curry sauce": 100,
+                "Chickpea": 100,
+                "Rice, white, cooked, NS as to fat": 100,
+                "Olive oil": 150
+            }
+        },
+        "saturday": {
+            "breakfast": {
+                "Pancakes, whole grain": 150,
+                "Pancake syrup": 25,
+                "Blueberries, raw": 25
+            },
+            "lunch": {
+                "Falafel": 100,
+                "Bread, pita": 100,
+                "Tahini": 50
+            },
+            "dinner": {
+                "Eggplant parmesan casserole, regular": 300,
+                "Celery, raw": 50,
+                "Peanut butter": 50
+            }
+        }
+    },
+    "9": {
+        "sunday": {
+            "breakfast": {
+                "Pancakes, whole grain": 110,
+                "Pancake syrup": 10,
+                "Strawberries, raw": 30
+            },
+            "lunch": {
+                "Hummus, plain": 150,
+                "Avocado, raw": 50
+            },
+            "dinner": {
+                "Chicken breast, baked, broiled, or roasted, skin not eaten, from raw": 150,
+                "Potato, mashed, NFS": 75,
+                "Green beans, raw": 25,
+                "Dark chocolate": 20
+            }
+        },
+        "monday": {
+            "breakfast": {
+                "Oatmeal, NFS": 150,
+                "Berries, NFS": 50
+            },
+            "lunch": {
+                "Chicken breast, grilled without sauce, skin not eaten": 200,
+                "Cucumber, raw": 50
+            },
+            "dinner": {
+                "Fish, salmon, baked or broiled": 200,
+                "Broccoli, raw": 100,
+                "Yogurt, Greek, whole milk, plain": 75,
+                "Honey": 25
+            }
+        },
+        "tuesday": {
+            "breakfast": {
+                "Oatmeal, NFS": 150,
+                "Berries, NFS": 50
+            },
+            "lunch": {
+                "Chicken breast, grilled without sauce, skin not eaten": 150,
+                "Lettuce, raw": 30,
+                "Vinaigrette": 20
+            },
+            "dinner": {
+                "Fish, salmon, baked or broiled": 150,
+                "Broccoli, raw": 25,
+                "Quinoa, NS as to fat": 25,
+                "Yogurt, Greek, whole milk, plain": 75,
+                "Honey": 15,
+                "Walnut": 10
+            }
+        },
+        "wednesday": {
+            "breakfast": {
+                "Banana, raw": 100,
+                "Spinach, raw": 100,
+                "Nutritional powder mix, protein, NFS": 100
+            },
+            "lunch": {
+                "Turkey, NFS": 175,
+                "Tortilla, whole wheat": 75
+            },
+            "dinner": {
+                "Tofu": 150,
+                "Rice, brown, cooked, NS as to fat": 150,
+                "Apple, raw": 75,
+                "Almond butter": 25
+            }
+        },
+        "thursday": {
+            "breakfast": {
+                "Avocado, raw": 75,
+                "Bread, whole grain white, toasted": 75
+            },
+            "lunch": {
+                "Quinoa, NS as to fat": 100,
+                "Black beans, NFS": 50,
+                "Corn, canned, cooked, no added fat": 50
+            },
+            "dinner": {
+                "Shrimp, NFS": 150,
+                "Asparagus, raw": 25,
+                "Sweet potato, baked, NS as to fat": 75,
+                "Hummus, plain": 75,
+                "Carrots, raw": 25
+            }
+        },
+        "friday": {
+            "breakfast": {
+                "Date": 125,
+                "Mango, raw": 25
+            },
+            "lunch": {
+                "Chicken breast, baked, broiled, or roasted, skin not eaten, from raw": 150,
+                "Croutons": 50
+            },
+            "dinner": {
+                "Bean soup, NFS": 200,
+                "Bread, whole grain white, toasted": 50,
+                "Peanuts, NFS": 50
+            }
+        },
+        "saturday": {
+            "breakfast": {
+                "Egg omelet or scrambled egg, made with oil": 100,
+                "Spinach, raw": 25,
+                "Cucumber, raw": 25
+            },
+            "lunch": {
+                "Fish, tuna, canned": 170,
+                "Lettuce, raw": 20,
+                "Lemon juice, 100%, freshly squeezed": 10
+            },
+            "dinner": {
+                "Beef, steak, NFS": 200,
+                "Potato, mashed, NFS": 50,
+                "Berries, NFS": 50,
+                "Cheese, cottage, NFS": 50
+            }
+        }
+    },
+    "10": {
+        "sunday": {
+            "breakfast": {
+                "Tofu": 100,
+                "Spinach, raw": 50,
+                "Mushrooms, raw": 50
+            },
+            "lunch": {
+                "Sushi roll, avocado": 250
+            },
+            "dinner": {
+                "Pasta, vegan": 150,
+                "Meatball, meatless": 150,
+                "Banana, raw": 50,
+                "Apple, raw": 50,
+                "Orange, raw": 50
+            }
+        },
+        "monday": {
+            "breakfast": {
+                "Oatmeal, NFS": 150,
+                "Berries, NFS": 50
+            },
+            "lunch": {
+                "Quinoa, NS as to fat": 75,
+                "Chickpea": 75,
+                "Cucumber, raw": 30,
+                "Tomatoes, raw": 30,
+                "Carrots, raw": 20,
+                "Onions, raw": 20
+            },
+            "dinner": {
+                "Tofu": 125,
+                "Rice, brown, cooked, NS as to fat": 125,
+                "Broccoli, raw": 50,
+                "Pistachio nuts, NFS": 15,
+                "Walnut": 15,
+                "Peanuts, NFS": 20
+            }
+        },
+        "tuesday": {
+            "breakfast": {
+                "Oatmeal, NFS": 150,
+                "Berries, NFS": 50
+            },
+            "lunch": {
+                "Quinoa, NS as to fat": 100,
+                "Chickpea": 75,
+                "Avocado, raw": 75
+            },
+            "dinner": {
+                "Tofu": 125,
+                "Rice, brown, cooked, NS as to fat": 125,
+                "Broccoli, raw": 50,
+                "Pistachio nuts, NFS": 15,
+                "Walnut": 15,
+                "Peanuts, NFS": 20
+            }
+        },
+        "wednesday": {
+            "breakfast": {
+                "Almond milk, unsweetened": 150,
+                "Spinach, raw": 50,
+                "Banana, raw": 50
+            },
+            "lunch": {
+                "Bean soup, NFS": 200,
+                "Bread, whole grain white, toasted": 100
+            },
+            "dinner": {
+                "Tofu": 125,
+                "Potato, french fries, NFS": 50,
+                "Carrots, raw": 45,
+                "Onions, raw": 30,
+                "Apple, raw": 75,
+                "Peanut butter": 25
+            }
+        },
+        "thursday": {
+            "breakfast": {
+                "Pudding, tapioca, vegan": 150,
+                "Mango, raw": 50
+            },
+            "lunch": {
+                "Hummus, plain": 100,
+                "Bread, pita": 100
+            },
+            "dinner": {
+                "Risotto": 250,
+                "Asparagus, raw": 50,
+                "Carrots, raw": 60,
+                "Guacamole, NFS": 40
+            }
+        },
+        "friday": {
+            "breakfast": {
+                "Avocado, raw": 50,
+                "Bread, whole wheat, toasted": 75,
+                "Cherry tomatoes": 25
+            },
+            "lunch": {
+                "Black beans, NFS": 125,
+                "Corn, canned, cooked, no added fat": 125
+            },
+            "dinner": {
+                "Vegetable curry": 200,
+                "Chickpea": 50,
+                "Spinach, raw": 50
+            }
+        },
+        "saturday": {
+            "breakfast": {
+                "Vegan pancakes": 150,
+                "Pancake syrup": 10
+            },
+            "lunch": {
+                "Falafel": 75,
+                "Bread, pita": 100,
+                "Tahini": 25
+            },
+            "dinner": {
+                "Stuffed pepper, with rice, meatless": 200
+            }
+        }
+    }
+}
