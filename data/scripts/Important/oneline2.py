@@ -11,10 +11,15 @@ onelinedb = open("../../layouts/menusByNameOneLine.json", "w")
 onelinedb.writelines("{\n")
 
 for id in dict:
-    onelinedb.writelines('"' + id + '": {\n}')
+    onelinedb.writelines('\t"' + id + '": {\n')
     for day in dict[id]:
-        onelinedb.writelines(json.dumps(dict[id][day]) + ",\n")
-    onelinedb.writelines("},\n")
+        onelinedb.writelines('\t"' + day + '": ')
+        onelinedb.writelines(json.dumps(dict[id][day]))
+        if day != "saturday":
+            onelinedb.writelines(",\n")
+        else:
+            onelinedb.writelines("\n")
+    onelinedb.writelines("\t},\n")
 
 onelinedb.writelines("}")
 onelinedb.close()
