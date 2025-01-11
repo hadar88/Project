@@ -32,5 +32,5 @@ This script build a json file which contains foods and their id's and put it in 
 
 # `menusIdToName.py`
 
-This script reates a dictionary with the same structure as `menusById`, but with the food names instead of the food ids
+This script creates a dictionary with the same structure as `menusById`, but with the food names instead of the food ids
 [View Script](./menusIdToName.py)

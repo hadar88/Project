@@ -11,8 +11,6 @@ foodsByid = json.load(foods)
 foods.close()
 
 
-# Create a dictionary with the same structure as menusById, but with the food names instead of the food ids
-
 for menuid in menusById:
     for day in menusById[menuid]:
         for meal in menusById[menuid][day]:
@@ -35,7 +33,7 @@ for menuid in menusById:
                 
 
 
-menusByName = open("../../layouts/menusName.json", "w")
+menusByName = open("../../layouts/menusByName.json", "w")
 json.dump(menusName, menusByName, indent=4)
 menusByName.close()
 
