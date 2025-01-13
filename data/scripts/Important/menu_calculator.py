@@ -1,23 +1,21 @@
 import json
+
 foodbyid = open("../../layouts/FoodsByID.json", "r")
 data = json.load(foodbyid)
 foodbyid.close()
 
+menus = open("../../layouts/menusById.json", "r")
+menu = json.load(menus)
+menus.close()
 
 ## fiil the data
 
-sunday = {"breakfast": {}, "lunch": {}, "dinner": {}}
-monday = {"breakfast": {}, "lunch": {}, "dinner": {}}
-tuesday = {"breakfast": {}, "lunch": {}, "dinner": {}}
-wednesday = {"breakfast": {}, "lunch": {}, "dinner": {}}
-thursday = {"breakfast": {}, "lunch": {}, "dinner": {}}
-friday = {"breakfast": {}, "lunch": {}, "dinner": {}}
-saturday = {"breakfast": {}, "lunch": {}, "dinner": {}}
-menu_id = "11"
+menu_id = input("Id: ")
+
+days = menu[menu_id]
 
 ##
 
-days = [sunday, monday, tuesday, wednesday, thursday, friday, saturday]
 daily_calories = [0, 0, 0, 0, 0, 0, 0]
 
 Calories = 0
@@ -45,9 +43,9 @@ Contains_soy = 0
 Contains_gluten = 0
 
 for i, day in enumerate(days):
-    breakfast = day["breakfast"]
-    lunch = day["lunch"]
-    dinner = day["dinner"]
+    breakfast = days[day]["breakfast"]
+    lunch = days[day]["lunch"]
+    dinner = days[day]["dinner"]
 
     for meal in [breakfast, lunch, dinner]:
         for id in meal:
