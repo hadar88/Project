@@ -4310,5 +4310,27 @@
         "Cheese": 0,
         "Meat": 0,
         "Cereal": 0
+    },
+    "Cookie, vegan": {
+        "ID": 197,
+        "Calories": 421,
+        "Carbohydrate": 61,
+        "Sugars": 37,
+        "Fat": 18,
+        "Protein": 5,
+        "Vegetarian": 1,
+        "Vegan": 1,
+        "Contains eggs": 0,
+        "Contains milk": 0,
+        "Contains peanuts or nuts": 0,
+        "Contains fish": 0,
+        "Contains sesame": 0,
+        "Contains soy": 0,
+        "Contains gluten": 0,
+        "Fruit": 0,
+        "Vegetable": 0,
+        "Cheese": 0,
+        "Meat": 0,
+        "Cereal": 0
     }
 }
