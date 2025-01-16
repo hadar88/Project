@@ -1,6 +1,7 @@
 # `add_nutritional_data.py`
  
 This script adds nutritional data to the `FoodsByName.json` and `FoodsByID.json` files.
+It also build a json file `FoodsByNameOneLine.json` which contains foods and their id's and put it in the file
 [View Script](./add_nutritional_data.py)
 
 # `algorithm.py` 
@@ -15,7 +16,7 @@ This script finds the foods in a certain menu that are vegeterian, vegan or cont
 
 # `menu_calculator.py`
 
-This script calculates the nutritional data of a menu and puts it in the file `MenusInput.json`  
+This script calculates the nutritional data of all the menus and puts it in the file `MenusInput.json`  
 [View Script](./menu_calculator.py)
 
 Use this to make the menu in the correct format: `do all the inside keys, strings`
@@ -25,10 +26,6 @@ Use this to make the menu in the correct format: `do all the inside keys, string
 This script moves data in the file `MenusInput.json` from the `Menu` section to the `Initial` section
 [View Script](./move_menu_data.py)
 
-# `oneline.py`
-
-This script build a json file which contains foods and their id's and put it in the file `FoodByNameOneLine.py`
-[View Script](./oneline.py)
 
 # `menusIdToName.py`
 

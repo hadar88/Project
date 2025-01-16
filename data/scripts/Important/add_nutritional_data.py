@@ -47,3 +47,22 @@ json.dump(foods_by_id, foods_by_id_file, indent=4)
 
 foods_by_name_file.close()
 foods_by_id_file.close()
+
+db = open("../../layouts/FoodsByName.json")
+
+dictionary = json.load(db)
+
+db.close()
+
+onelinedb = open("../../layouts/FoodsByNameOneLine.json", "w")
+
+onelinedb.writelines("{\n")
+
+for food in dictionary:
+    onelinedb.write('"' + food + '": ')
+    onelinedb.write(json.dumps(dictionary[food]["ID"]))
+    onelinedb.write(',\n')
+
+onelinedb.writelines(["}\n"])
+
+onelinedb.close()
