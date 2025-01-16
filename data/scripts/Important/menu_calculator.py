@@ -10,11 +10,8 @@ menus.close()
 
 ## fiil the data
 
-# menu_id = input("Id: ")
-
 for menu_id in menudata:
     days = menudata[menu_id]
-    ##
 
     daily_calories = [0, 0, 0, 0, 0, 0, 0]
 
@@ -153,3 +150,94 @@ for menu_id in menudata:
     json.dump(menus, menusinput, indent=4)
     menusinput.close()
     print(f"Menu {menu_id} calculated successfully")
+
+
+# Move data from the "menu" section to the "Initial" section
+
+menus_input = open("../../layouts/menusInput.json", "a+")
+
+menus_input.seek(0)
+
+menus = json.load(menus_input)
+
+for number in menus:
+    data = menus[number]
+    initial = data.get("Initial")
+    menu = data.get("Menu")
+    
+    initial["Calories"] = menu["Calories"]
+    initial["Carbohydrate"] = menu["Carbohydrate"]
+    initial["Sugars"] = menu["Sugars"]
+    initial["Fat"] = menu["Fat"]
+    initial["Protein"] = menu["Protein"]
+    initial["Vegetarian"] = menu["Vegetarian"]
+    initial["Vegan"] = menu["Vegan"]
+    initial["Contains eggs"] = menu["Contains eggs"]
+    initial["Contains milk"] = menu["Contains milk"]
+    initial["Contains peanuts or nuts"] = menu["Contains peanuts or nuts"]
+    initial["Contains fish"] = menu["Contains fish"]
+    initial["Contains sesame"] = menu["Contains sesame"]
+    initial["Contains soy"] = menu["Contains soy"]
+    initial["Contains gluten"] = menu["Contains gluten"]
+
+menus_input.seek(0)
+menus_input.truncate()
+json.dump(menus, menus_input, indent=4)
+
+menus_input.close()
+
+# menusById to menusByName
+
+menus = open("../../layouts/menusById.json", "r")
+menusById = json.load(menus)
+menusName = {}
+menus.close()
+
+foods = open("../../layouts/FoodsByID.json", "r")
+foodsByid = json.load(foods)
+foods.close()
+
+for menuid in menusById:
+    for day in menusById[menuid]:
+        for meal in menusById[menuid][day]:
+            for foodid in menusById[menuid][day][meal]:
+                if foodid not in foodsByid:
+                    print("Food not found: " + foodid)
+                    continue
+                foodname = foodsByid[foodid]["Name"]
+                amount = menusById[menuid][day][meal][foodid]
+
+                if menuid not in menusName:
+                    menusName[menuid] = {}
+                if day not in menusName[menuid]:
+                    menusName[menuid][day] = {}
+                if meal not in menusName[menuid][day]:
+                    menusName[menuid][day][meal] = {}
+
+                menusName[menuid][day][meal][foodname] = amount
+
+menusByName = open("../../layouts/menusByName.json", "w")
+json.dump(menusName, menusByName, indent=4)
+menusByName.close()
+
+db = open("../../layouts/menusByName.json")
+dict = json.load(db)
+db.close()
+
+onelinedb = open("../../layouts/menusByName.json", "w")
+
+onelinedb.writelines("{\n")
+
+for id in dict:
+    onelinedb.writelines('\t"' + id + '": {\n')
+    for day in dict[id]:
+        onelinedb.writelines('\t\t"' + day + '": ')
+        onelinedb.writelines(json.dumps(dict[id][day]))
+        if day != "saturday":
+            onelinedb.writelines(",\n")
+        else:
+            onelinedb.writelines("\n")
+    onelinedb.writelines("\t},\n")
+
+onelinedb.writelines("}")
+onelinedb.close()

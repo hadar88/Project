@@ -48,6 +48,8 @@ json.dump(foods_by_id, foods_by_id_file, indent=4)
 foods_by_name_file.close()
 foods_by_id_file.close()
 
+# One line
+
 db = open("../../layouts/FoodsByName.json")
 
 dictionary = json.load(db)

@@ -16,16 +16,11 @@ This script finds the foods in a certain menu that are vegeterian, vegan or cont
 
 # `menu_calculator.py`
 
-This script calculates the nutritional data of all the menus and puts it in the file `MenusInput.json`  
+This script calculates the nutritional data of all the menus and puts it in the file `MenusInput.json` 
+It also moves data in the file `MenusInput.json` from the `Menu` section to the `Initial` section 
 [View Script](./menu_calculator.py)
 
 Use this to make the menu in the correct format: `do all the inside keys, strings`
-
-# `move_menu_data.py`
-
-This script moves data in the file `MenusInput.json` from the `Menu` section to the `Initial` section
-[View Script](./move_menu_data.py)
-
 
 # `menusIdToName.py`
 
