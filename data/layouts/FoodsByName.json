@@ -4332,5 +4332,27 @@
         "Cheese": 0,
         "Meat": 0,
         "Cereal": 0
+    },
+    "Eggplant with cheese and tomato sauce": {
+        "ID": 198,
+        "Calories": 90.0,
+        "Carbohydrate": 6.34,
+        "Sugars": 3.39,
+        "Fat": 4.84,
+        "Protein": 6.16,
+        "Vegetarian": 1,
+        "Vegan": 0,
+        "Contains eggs": 0,
+        "Contains milk": 1,
+        "Contains peanuts or nuts": 0,
+        "Contains fish": 0,
+        "Contains sesame": 0,
+        "Contains soy": 0,
+        "Contains gluten": 0,
+        "Fruit": 0,
+        "Vegetable": 1,
+        "Cheese": 1,
+        "Meat": 0,
+        "Cereal": 0
     }
 }
