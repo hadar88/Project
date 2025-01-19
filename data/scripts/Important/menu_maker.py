@@ -6,6 +6,7 @@
 
 import json
 import random
+import copy
 
 # ! Paths relative to the root folder
 MENUS_FILE = "../../layouts/menusById.json"
@@ -31,7 +32,6 @@ def get_alternatives(food_id: int, property: str):
         return alternatives[str(food_id)][property]
 
 
-# ! I did NOT test this
 def convert(property: str, menu_id: int, exhaustive: bool = False) -> dict | list[dict]:
     """
     Covert some menu to a new menu with the desired property.
@@ -50,18 +50,21 @@ def convert(property: str, menu_id: int, exhaustive: bool = False) -> dict | lis
     """
 
     menus = [read_menu(menu_id)]
-    replaced = True
+    good_menus = []
+    good_menus_set = set()
+    made_new_menus = True
 
     # If the property is Vegetarian or Vegan, the positive value is 1, otherwise
     # like in the case of Lactose, the positive value is 0 (no lactose is a restriction).
     desired_property_value = 1 if property in ["Vegetarian", "Vegan"] else 0
 
-    while replaced:
-        replaced = False
+    while made_new_menus:
+        made_new_menus = False
         new_menus = []
 
         while menus:
             menu = menus.pop()
+            changed_menu = False
 
             # day is the name of the day (e.g. "Monday")
             for day in menu:
@@ -80,39 +83,48 @@ def convert(property: str, menu_id: int, exhaustive: bool = False) -> dict | lis
                                     f"No {property} alternatives for food {food_id}"
                                 )
                             
+                            made_new_menus = True
+                            changed_menu = True
+                            
                             if alternatives[0] == -1:
-                                new_menu = menu.copy()
-                                new_meal = meal_foods.copy()
+                                new_menu = copy.deepcopy(menu)
+                                new_meal = copy.deepcopy(meal_foods)
                                 del new_meal[food_id]
+                                new_menu[day][meal] = new_meal
                                 new_menus.append(new_menu)
                                 continue
-
-                            replaced = True
 
                             amount = meal_foods[food_id]
 
                             if exhaustive:
                                 for alternative in alternatives:
                                     # For each alternative, create a new menu with the alternative food.
-                                    new_menu = menu.copy()
-                                    new_meal = meal_foods.copy()
+                                    new_menu = copy.deepcopy(menu)
+                                    new_meal = copy.deepcopy(meal_foods)
                                     del new_meal[food_id]
                                     new_meal[str(alternative)] = amount
                                     new_menu[day][meal] = new_meal
                                     new_menus.append(new_menu)
                             else:
                                 # Choose a random alternative and replace the food with it.
-                                new_menu = menu.copy()
-                                new_meal = meal_foods.copy()
+                                new_menu = copy.deepcopy(menu)
+                                new_meal = copy.deepcopy(meal_foods)
                                 alternative = random.choice(alternatives)
                                 del new_meal[food_id]
                                 new_meal[str(alternative)] = amount
-                                menu[day][meal] = meal_foods
-                                new_menus.append(new_menu)
+                                new_menu[day][meal] = new_meal
+                                new_menus.append(new_menu)     
 
-        menus = new_menus
+            if not changed_menu:
+                menu_str = json.dumps(menu, sort_keys=True)
+                
+                if menu_str not in good_menus_set:
+                    good_menus_set.add(menu_str)
+                    good_menus.append(menu)  
 
-    return menus if exhaustive else menus[0]
+        menus = new_menus                     
+
+    return good_menus if exhaustive else good_menus[0]
 
 properties = ["Vegetarian", "Vegan", "Contains eggs", "Contains milk", "Contains peanuts or nuts", "Contains fish", "Contains sesame", "Contains soy", "Contains gluten"]
 
@@ -123,4 +135,35 @@ for i, name in enumerate(properties):
 
 property_to_fix = int(input("Enter the property to fix: "))
 
-print(convert(properties[property_to_fix], int(menu_to_fix), exhaustive=False))
+org = read_menu(menu_to_fix)
+
+print("{")
+
+for day in org:
+    print(f'"{day}": ', end="")
+    print(json.dumps(org[day]), end="")
+
+    if day != "saturday":
+        print(",")
+
+print("\n}")
+
+print("\n\n")
+print("Fixed menus:")
+print("\n\n")
+
+for i, m in enumerate(convert(properties[property_to_fix], int(menu_to_fix), exhaustive=True)):
+    print(f"Menu {i + 1}:")
+    print("{")
+
+    for day in m:
+        print(f'"{day}": ', end="")
+        print(json.dumps(m[day]), end="")
+
+        if day != "saturday":
+            print(",")
+
+    print("\n}")
+
+    print("\n\n")
+

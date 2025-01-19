@@ -6,7 +6,7 @@
         "Contains milk": [],
         "Contains peanuts or nuts": [],
         "Contains fish": [],
-        "Contains sesame": [189],
+        "Contains sesame": [189, 10],
         "Contains soy": [],
         "Contains gluten": []
     },
