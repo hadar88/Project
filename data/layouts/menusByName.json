@@ -160,5 +160,5 @@
 		"thursday": {"breakfast": {"Avocado, raw": 75, "Bread, whole grain white, toasted": 75}, "lunch": {"Quinoa, NS as to fat": 100, "Black beans, NFS": 50, "Corn, canned, cooked, no added fat": 50}, "dinner": {"Shrimp, NFS": 150, "Asparagus, raw": 25, "Sweet potato, baked, NS as to fat": 75, "Hummus, plain": 75, "Carrots, raw": 25}},
 		"friday": {"breakfast": {"Date": 125, "Mango, raw": 25}, "lunch": {"Chicken breast, baked, broiled, or roasted, skin not eaten, from raw": 150, "Croutons": 50}, "dinner": {"Bean soup, NFS": 200, "Bread, whole grain white, toasted": 50, "Peanuts, NFS": 50}},
 		"saturday": {"breakfast": {"Egg substitute, omelet, scrambled, or fried, fat added": 100, "Spinach, raw": 25, "Cucumber, raw": 25}, "lunch": {"Fish, tuna, canned": 170, "Lettuce, raw": 20, "Lemon juice, 100%, freshly squeezed": 10}, "dinner": {"Beef, steak, NFS": 200, "Potato, mashed, NFS": 50, "Berries, NFS": 50, "Cheese, cottage, NFS": 50}}
-	},
+	}
 }

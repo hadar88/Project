@@ -24,20 +24,20 @@ def read_food(id: int):
         return foods[str(id)]
 
 
-def replace_food(menu_id: int, old_food_id: int, new_food_id: int):
-    menu: dict[str, dict[str, dict[str, int]]] = read_menu(menu_id).copy()
+# def replace_food(menu_id: int, old_food_id: int, new_food_id: int):
+#     menu: dict[str, dict[str, dict[str, int]]] = read_menu(menu_id).copy()
 
-    for day in menu:
-        for meal in menu[day]:
-            meal_foods = menu[day][meal]
+#     for day in menu:
+#         for meal in menu[day]:
+#             meal_foods = menu[day][meal]
 
-            if str(old_food_id) in meal_foods:
-                amount = meal_foods[old_food_id]
-                del meal_foods[old_food_id]
-                meal_foods[new_food_id] = amount
-                menu[day][meal] = meal_foods
+#             if str(old_food_id) in meal_foods:
+#                 amount = meal_foods[old_food_id]
+#                 del meal_foods[old_food_id]
+#                 meal_foods[new_food_id] = amount
+#                 menu[day][meal] = meal_foods
 
-    return menu
+#     return menu
 
 
 # ! I did NOT test this
@@ -110,7 +110,10 @@ def convert(property: str, menu_id: int, exhaustive: bool = False) -> dict | lis
                                 del new_meal[food_id]
                                 new_meal[str(alternative)] = amount
                                 menu[day][meal] = meal_foods
+                                new_menus.append(new_menu)
 
         menus = new_menus
 
     return menus if exhaustive else menus[0]
+
+
