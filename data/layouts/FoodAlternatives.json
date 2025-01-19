@@ -1,0 +1,24 @@
+{
+    "139": {
+        "Vegetarian": [],
+        "Vegan": [],
+        "Contains eggs": [],
+        "Contains milk": [],
+        "Contains peanuts or nuts": [],
+        "Contains fish": [],
+        "Contains sesame": [189],
+        "Contains soy": [],
+        "Contains gluten": []
+    },
+    "140": {
+        "Vegetarian": [],
+        "Vegan": [],
+        "Contains eggs": [],
+        "Contains milk": [],
+        "Contains peanuts or nuts": [],
+        "Contains fish": [],
+        "Contains sesame": [-1],
+        "Contains soy": [],
+        "Contains gluten": []
+    }
+}

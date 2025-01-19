@@ -4354,5 +4354,27 @@
         "Cheese": 1,
         "Meat": 0,
         "Cereal": 0
+    },
+    "Canola oil": {
+        "ID": 199,
+        "Calories": 900,
+        "Carbohydrate": 0,
+        "Sugars": 0,
+        "Fat": 100,
+        "Protein": 0,
+        "Vegetarian": 1,
+        "Vegan": 1,
+        "Contains eggs": 0,
+        "Contains milk": 0,
+        "Contains peanuts or nuts": 0,
+        "Contains fish": 0,
+        "Contains sesame": 0,
+        "Contains soy": 0,
+        "Contains gluten": 0,
+        "Fruit": 0,
+        "Vegetable": 0,
+        "Cheese": 0,
+        "Meat": 0,
+        "Cereal": 0
     }
 }

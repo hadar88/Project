@@ -8,8 +8,9 @@ import json
 import random
 
 # ! Paths relative to the root folder
-MENUS_FILE = "data/layouts/menusById.json"
-FOODS_FILE = "data/layouts/FoodsByIDV2.json"  # ? chnage this name
+MENUS_FILE = "../../layouts/menusById.json"
+FOODS_FILE = "../../layouts/FoodsByID.json"  
+ALTER_FILE = "../../layouts/FoodAlternatives.json" 
 
 
 def read_menu(id: int):
@@ -22,22 +23,12 @@ def read_food(id: int):
     with open(FOODS_FILE, "r") as f:
         foods = json.load(f)
         return foods[str(id)]
+    
 
-
-# def replace_food(menu_id: int, old_food_id: int, new_food_id: int):
-#     menu: dict[str, dict[str, dict[str, int]]] = read_menu(menu_id).copy()
-
-#     for day in menu:
-#         for meal in menu[day]:
-#             meal_foods = menu[day][meal]
-
-#             if str(old_food_id) in meal_foods:
-#                 amount = meal_foods[old_food_id]
-#                 del meal_foods[old_food_id]
-#                 meal_foods[new_food_id] = amount
-#                 menu[day][meal] = meal_foods
-
-#     return menu
+def get_alternatives(food_id: int, property: str):
+    with open(ALTER_FILE, "r") as f:
+        alternatives = json.load(f)
+        return alternatives[str(food_id)][property]
 
 
 # ! I did NOT test this
@@ -82,12 +73,19 @@ def convert(property: str, menu_id: int, exhaustive: bool = False) -> dict | lis
                         food = read_food(food_id)
 
                         if food[property] != desired_property_value:
-                            alternatives = food["Alternatives"][property]
+                            alternatives = get_alternatives(food_id, property)
 
                             if alternatives == []:
                                 raise ValueError(
                                     f"No {property} alternatives for food {food_id}"
                                 )
+                            
+                            if alternatives[0] == -1:
+                                new_menu = menu.copy()
+                                new_meal = meal_foods.copy()
+                                del new_meal[food_id]
+                                new_menus.append(new_menu)
+                                continue
 
                             replaced = True
 
@@ -116,4 +114,13 @@ def convert(property: str, menu_id: int, exhaustive: bool = False) -> dict | lis
 
     return menus if exhaustive else menus[0]
 
+properties = ["Vegetarian", "Vegan", "Contains eggs", "Contains milk", "Contains peanuts or nuts", "Contains fish", "Contains sesame", "Contains soy", "Contains gluten"]
 
+menu_to_fix = input("Enter the menu id to fix: ")
+
+for i, name in enumerate(properties):
+    print(f"{i}) {name}")
+
+property_to_fix = int(input("Enter the property to fix: "))
+
+print(convert(properties[property_to_fix], int(menu_to_fix), exhaustive=False))
