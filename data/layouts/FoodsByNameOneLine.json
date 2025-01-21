@@ -174,7 +174,7 @@
 "Lamb, NS as to cut": 173,
 "Lentils": 174,
 "Fruit juice, acai blend": 175,
-"Veggie burger patty, no bun": 176,
+"Vegan burger patty, no bun": 176,
 "Pudding, tapioca, ready-to-eat": 177,
 "Mango, raw": 178,
 "Sushi roll, avocado": 179,
@@ -204,5 +204,11 @@
 "Yogurt, coconut milk": 203,
 "Hot dog, vegetarian": 204,
 "Corn schnitzel": 205,
-"Cookie, gluten free": 206
+"Cookie, gluten free": 206,
+"Seitan": 207,
+"Tortilla, corn": 208,
+"Ice cream, lactose free": 209,
+"Crackers, matzo": 210,
+"Margarine, NFS": 211,
+"Soy milk": 212
 }

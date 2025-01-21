@@ -275,8 +275,8 @@
         "Contains gluten": []
     },
     "26": {
-        "Vegetarian": [],
-        "Vegan": [],
+        "Vegetarian": [176, 204, 102, 205, 207],
+        "Vegan": [176, 204, 102, 205, 207],
         "Contains eggs": [],
         "Contains milk": [],
         "Contains peanuts or nuts": [],
@@ -287,9 +287,9 @@
     },
     "27": {
         "Vegetarian": [],
-        "Vegan": [],
+        "Vegan": [138],
         "Contains eggs": [],
-        "Contains milk": [],
+        "Contains milk": [138],
         "Contains peanuts or nuts": [],
         "Contains fish": [],
         "Contains sesame": [],
@@ -305,7 +305,7 @@
         "Contains fish": [],
         "Contains sesame": [],
         "Contains soy": [],
-        "Contains gluten": []
+        "Contains gluten": [208]
     },
     "29": {
         "Vegetarian": [],
@@ -330,15 +330,15 @@
         "Contains gluten": []
     },
     "31": {
-        "Vegetarian": [],
-        "Vegan": [],
+        "Vegetarian": [176, 204, 102, 205, 207],
+        "Vegan": [176, 204, 102, 205, 207],
         "Contains eggs": [],
         "Contains milk": [],
         "Contains peanuts or nuts": [],
         "Contains fish": [],
         "Contains sesame": [],
         "Contains soy": [],
-        "Contains gluten": []
+        "Contains gluten": [176]
     },
     "32": {
         "Vegetarian": [],
@@ -349,7 +349,7 @@
         "Contains fish": [],
         "Contains sesame": [],
         "Contains soy": [],
-        "Contains gluten": []
+        "Contains gluten": [-1]
     },
     "33": {
         "Vegetarian": [],
@@ -397,8 +397,8 @@
     },
     "37": {
         "Vegetarian": [],
-        "Vegan": [],
-        "Contains eggs": [],
+        "Vegan": [195],
+        "Contains eggs": [195],
         "Contains milk": [],
         "Contains peanuts or nuts": [],
         "Contains fish": [],
@@ -408,9 +408,9 @@
     },
     "38": {
         "Vegetarian": [],
-        "Vegan": [],
+        "Vegan": [138],
         "Contains eggs": [],
-        "Contains milk": [],
+        "Contains milk": [138],
         "Contains peanuts or nuts": [],
         "Contains fish": [],
         "Contains sesame": [],
@@ -474,9 +474,9 @@
     },
     "44": {
         "Vegetarian": [],
-        "Vegan": [],
+        "Vegan": [209],
         "Contains eggs": [],
-        "Contains milk": [],
+        "Contains milk": [209],
         "Contains peanuts or nuts": [],
         "Contains fish": [],
         "Contains sesame": [],
@@ -492,22 +492,22 @@
         "Contains fish": [],
         "Contains sesame": [],
         "Contains soy": [],
-        "Contains gluten": []
+        "Contains gluten": [101]
     },
     "46": {
         "Vegetarian": [],
         "Vegan": [],
         "Contains eggs": [],
         "Contains milk": [],
-        "Contains peanuts or nuts": [],
+        "Contains peanuts or nuts": [-1],
         "Contains fish": [],
         "Contains sesame": [],
         "Contains soy": [],
         "Contains gluten": []
     },
     "47": {
-        "Vegetarian": [],
-        "Vegan": [],
+        "Vegetarian": [176, 204, 102, 205, 207],
+        "Vegan": [176, 204, 102, 205, 207],
         "Contains eggs": [],
         "Contains milk": [],
         "Contains peanuts or nuts": [],
@@ -525,7 +525,7 @@
         "Contains fish": [],
         "Contains sesame": [],
         "Contains soy": [],
-        "Contains gluten": []
+        "Contains gluten": [210]
     },
     "49": {
         "Vegetarian": [],
@@ -540,9 +540,9 @@
     },
     "50": {
         "Vegetarian": [],
-        "Vegan": [],
+        "Vegan": [211],
         "Contains eggs": [],
-        "Contains milk": [],
+        "Contains milk": [211],
         "Contains peanuts or nuts": [],
         "Contains fish": [],
         "Contains sesame": [],
@@ -558,7 +558,7 @@
         "Contains fish": [],
         "Contains sesame": [],
         "Contains soy": [],
-        "Contains gluten": []
+        "Contains gluten": [-1]
     },
     "52": {
         "Vegetarian": [],
@@ -573,9 +573,9 @@
     },
     "53": {
         "Vegetarian": [],
-        "Vegan": [],
+        "Vegan": [74, 164, 212],
         "Contains eggs": [],
-        "Contains milk": [],
+        "Contains milk": [74, 164, 212],
         "Contains peanuts or nuts": [],
         "Contains fish": [],
         "Contains sesame": [],
