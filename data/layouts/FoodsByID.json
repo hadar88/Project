@@ -1502,7 +1502,7 @@
         "Fat": 1.7,
         "Protein": 5.95,
         "Vegetarian": 1,
-        "Vegan": 1,
+        "Vegan": 0,
         "Contains eggs": 1,
         "Contains milk": 0,
         "Contains peanuts or nuts": 0,
@@ -4662,5 +4662,27 @@
         "Meat": 0,
         "Cereal": 0,
         "Name": "Soy milk"
+    },
+    "213": {
+        "Calories": 179,
+        "Carbohydrate": 38.0,
+        "Sugars": 0,
+        "Fat": 1.0,
+        "Protein": 3.2,
+        "Vegetarian": 1,
+        "Vegan": 0,
+        "Contains eggs": 1,
+        "Contains milk": 0,
+        "Contains peanuts or nuts": 0,
+        "Contains fish": 0,
+        "Contains sesame": 0,
+        "Contains soy": 0,
+        "Contains gluten": 0,
+        "Fruit": 0,
+        "Vegetable": 0,
+        "Cheese": 0,
+        "Meat": 0,
+        "Cereal": 0,
+        "Name": "Pasta, gluten free"
     }
 }
