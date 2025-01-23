@@ -202,7 +202,7 @@
 "Bread, gluten free, toasted": 201,
 "Yogurt, soy": 202,
 "Yogurt, coconut milk": 203,
-"Hot dog, vegetarian": 204,
+"Hot dog, vegan": 204,
 "Corn schnitzel": 205,
 "Cookie, gluten free": 206,
 "Seitan": 207,
@@ -211,5 +211,8 @@
 "Crackers, matzo": 210,
 "Margarine, NFS": 211,
 "Soy milk": 212,
-"Pasta, gluten free": 213
+"Pasta, gluten free": 213,
+"Cake or cupcake, gluten free": 214,
+"Vegetable whipped cream": 215,
+"Lasagna with meat": 216
 }

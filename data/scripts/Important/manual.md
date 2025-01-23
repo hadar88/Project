@@ -20,6 +20,7 @@ It also creates a dictionary with the same structure as `menusById`, but with th
 [View Script](./menu_calculator.py)
 
 ## `menu_maker.py`
+
 This sctipt is used to convert a menu to a new menu with a desired property.
 [View Script](./menu_maker.py)
 
