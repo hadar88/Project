@@ -199,7 +199,7 @@
     },
     "19": {
         "Vegetarian": [],
-        "Vegan": [],
+        "Vegan": [196],
         "Contains eggs": [196],
         "Contains milk": [],
         "Contains peanuts or nuts": [],
@@ -605,7 +605,7 @@
         "Contains gluten": []
     },
     "56": {
-        "Vegetarian": [],
+        "Vegetarian": [205],
         "Vegan": [205],
         "Contains eggs": [],
         "Contains milk": [],
