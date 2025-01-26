@@ -34,4 +34,4 @@ def make_labels(dataset_file_path: str):
 
         return torch.tensor(labels)
     
-# print(make_labels("../../Data/layouts/MenusInput.json"))
+print(make_labels("../../Data/layouts/MenusInput.json"))
