@@ -12,6 +12,8 @@ import copy
 MENUS_FILE = "../../layouts/menusById.json"
 FOODS_FILE = "../../layouts/FoodsByID.json"  
 ALTER_FILE = "../../layouts/FoodAlternatives.json" 
+w = open("new_menus.json", "a")
+
 
 
 def read_menu(id: int):
@@ -153,20 +155,27 @@ def fix_menu_one_step(menu: dict, property, desired_value, exhaustive):
 
 
 def print_menu(menu: dict):
+    global current_menu_id
     print("{")
-
+    w.write(f'"{current_menu_id}": ') 
+    w.write("{\n")
+    current_menu_id = current_menu_id + 1
     for day in menu:
         print(f'"{day}": ', end="")
+        w.write(f'"{day}": ')
         print(json.dumps(menu[day]), end="")
-
+        w.write(json.dumps(menu[day]))
         if day != "saturday":
             print(",")
-
+            w.write(",\n")
+            
     print("\n},")
+    w.write("\n},\n")
+    
     print()
 
 properties = ["Vegetarian", "Vegan", "Contains eggs", "Contains milk", "Contains peanuts or nuts", "Contains fish", "Contains sesame", "Contains soy", "Contains gluten"]
-
+current_menu_id = int(input("Enter the menu id to start from: "))
 menu_to_fix = input("Enter the menu id to fix: ")
 
 for i, name in enumerate(properties):
@@ -192,3 +201,5 @@ print("Fixed menus:")
 print("\n\n")
 
 fix_menu(properties[property_to_fix], int(menu_to_fix), exhaustive=True)
+
+w.close()
