@@ -205,8 +205,6 @@ print("\n")
 # print("\n\n")
 # print("Fixed menus:")
 
-print("\n\n")
-
 fix_menu(properties[property_to_fix], int(menu_to_fix), exhaustive=True)
 
 print(f"Done menu {menu_to_fix}!")
