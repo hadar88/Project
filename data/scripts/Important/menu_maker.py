@@ -155,24 +155,24 @@ def fix_menu_one_step(menu: dict, property, desired_value, exhaustive):
 
 def print_menu(menu: dict):
     global current_menu_id
-    print("{")
+    # print("{")
     w.write(f'"{current_menu_id}": ') 
     w.write("{\n")
     current_menu_id = current_menu_id + 1
     for day in menu:
-        print(f'"{day}": ', end="")
+        # print(f'"{day}": ', end="")
         w.write("\t")
         w.write(f'"{day}": ')
-        print(json.dumps(menu[day]), end="")
+        # print(json.dumps(menu[day]), end="")
         w.write(json.dumps(menu[day]))
         if day != "saturday":
-            print(",")
+            # print(",")
             w.write(",\n")
             
-    print("\n},")
+    # print("\n},")
     w.write("\n},\n")
     
-    print()
+    # print()
 
 properties = ["Vegetarian", "Vegan", "Contains eggs", "Contains milk", "Contains peanuts or nuts", "Contains fish", "Contains sesame", "Contains soy", "Contains gluten"]
 
@@ -190,7 +190,7 @@ property_to_fix = int(input("Enter the property to fix: "))
 
 org = read_menu(menu_to_fix)
 
-print("{")
+
 
 for day in org:
     print(f'"{day}": ', end="")
@@ -199,12 +199,15 @@ for day in org:
     if day != "saturday":
         print(",")
 
-print("\n}")
+print("\n")
 
-print("\n\n")
-print("Fixed menus:")
+# print("\n\n")
+# print("Fixed menus:")
+
 print("\n\n")
 
 fix_menu(properties[property_to_fix], int(menu_to_fix), exhaustive=True)
+
+print("Done!")
 
 w.close()

@@ -1199,7 +1199,7 @@
         "Contains gluten": []
     },
     "110": {
-        "Vegetarian": [],
+        "Vegetarian": [205],
         "Vegan": [205],
         "Contains eggs": [],
         "Contains milk": [],
