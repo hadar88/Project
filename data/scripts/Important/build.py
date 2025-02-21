@@ -47,7 +47,7 @@ def generate_data(start, end):
     
     data = {str(i): template for i in range(start, end + 1)}
     
-    with open("menu_nutrition_data.json", "w") as f:
+    with open("templates.json", "w") as f:
         json.dump(data, f, indent=4)
 
 # Generate data from ID 22 to ID 202
