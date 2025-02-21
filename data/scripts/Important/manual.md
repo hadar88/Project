@@ -4,7 +4,6 @@
  
 This script adds nutritional data to the `FoodsByName.json` and `FoodsByID.json` files.
 It also build a json file `FoodsByNameOneLine.json` which contains foods and their id's and put it in the file.
-It also creates the file `FoodsByIDV2.json`.
 [View Script](./add_nutritional_data.py)
 
 ## `find_in_menu.py` 

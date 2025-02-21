@@ -12,9 +12,8 @@ import copy
 MENUS_FILE = "../../layouts/menusById.json"
 FOODS_FILE = "../../layouts/FoodsByID.json"  
 ALTER_FILE = "../../layouts/FoodAlternatives.json" 
-w = open("new_menus.json", "a")
 
-
+w = open("new_menus.json", "w")
 
 def read_menu(id: int):
     with open(MENUS_FILE, "r") as f:
@@ -162,6 +161,7 @@ def print_menu(menu: dict):
     current_menu_id = current_menu_id + 1
     for day in menu:
         print(f'"{day}": ', end="")
+        w.write("\t")
         w.write(f'"{day}": ')
         print(json.dumps(menu[day]), end="")
         w.write(json.dumps(menu[day]))
@@ -175,7 +175,12 @@ def print_menu(menu: dict):
     print()
 
 properties = ["Vegetarian", "Vegan", "Contains eggs", "Contains milk", "Contains peanuts or nuts", "Contains fish", "Contains sesame", "Contains soy", "Contains gluten"]
-current_menu_id = int(input("Enter the menu id to start from: "))
+
+me = menus = open("../../layouts/menusById.json", "r")
+da = json.load(me)
+current_menu_id = da.__len__() + 1
+me.close()
+
 menu_to_fix = input("Enter the menu id to fix: ")
 
 for i, name in enumerate(properties):
