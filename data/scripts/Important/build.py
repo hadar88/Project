@@ -51,4 +51,6 @@ def generate_data(start, end):
         json.dump(data, f, indent=4)
 
 # Generate data from ID 22 to ID 202
-generate_data(815, 825)
+generate_data(826, 1103)
+
+print("Templates generated successfully!")
