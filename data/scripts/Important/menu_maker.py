@@ -81,7 +81,7 @@ def fix_menu(property: str, menu_id: int, exhaustive: bool = False) -> dict | li
                 fixed_menus.append(current_menu)
                 print_menu(current_menu)
 
-                if len(fixed_menus) >= 10:
+                if len(fixed_menus) >= 30:
                     return fixed_menus
         else:
             invalid_menus.extend(fixed_one_step)
@@ -187,6 +187,7 @@ for i, name in enumerate(properties):
     print(f"{i}) {name}")
 
 property_to_fix = int(input("Enter the property to fix: "))
+print("\n")
 
 org = read_menu(menu_to_fix)
 
@@ -208,6 +209,6 @@ print("\n\n")
 
 fix_menu(properties[property_to_fix], int(menu_to_fix), exhaustive=True)
 
-print("Done!")
+print(f"Done menu {menu_to_fix}!")
 
 w.close()
