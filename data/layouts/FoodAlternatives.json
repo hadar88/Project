@@ -187,12 +187,12 @@
         "Contains gluten": []
     },
     "18": {
-        "Vegetarian": [102],
-        "Vegan": [102],
+        "Vegetarian": [102, 205],
+        "Vegan": [102, 205],
         "Contains eggs": [],
         "Contains milk": [],
         "Contains peanuts or nuts": [],
-        "Contains fish": [],
+        "Contains fish": [102, 205],
         "Contains sesame": [],
         "Contains soy": [],
         "Contains gluten": []
