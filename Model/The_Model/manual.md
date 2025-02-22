@@ -1,4 +1,4 @@
-# `make_dataset`
+# `make_dataset.py`
 
 This script contains the function `make_xs` that gives the initial data of the menus.
 It also contains the function `make_labels` that gives the menu data of the menus.

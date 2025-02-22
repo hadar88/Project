@@ -38,6 +38,7 @@ def menu_tensor_to_dict(menu: torch.Tensor):
 # This function is used to transform the menu to the menu data
 def transform(foods_data_path: str, menu: torch.Tensor):
     menu = menu_tensor_to_dict(menu)
+    print(menu)
     Calories = 0
     Calories1 = 0
     Calories2 = 0
@@ -181,5 +182,8 @@ menu_dict = {
 }
 
 ten = menu_dict_to_tensor(menu_dict)
+print(ten)
+print("\n#######################\n")
 data = transform("../../Data/layouts/FoodsByID.json", ten)
+print("\n#######################\n")
 print(data)
