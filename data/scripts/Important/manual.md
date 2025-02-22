@@ -6,6 +6,11 @@ This script adds nutritional data to the `FoodsByName.json` and `FoodsByID.json`
 It also build a json file `FoodsByNameOneLine.json` which contains foods and their id's and put it in the file.
 [View Script](./add_nutritional_data.py)
 
+## `build.py`
+
+This script build templates of menus for the file `MenusInput.json` with a range of id's.
+[View Script](./build.py)
+
 ## `find_in_menu.py` 
 
 This script finds the foods in a certain menu that are vegeterian, vegan or contain some kind of allergan.
