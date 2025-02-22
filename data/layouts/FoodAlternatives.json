@@ -217,7 +217,7 @@
         "Contains fish": [],
         "Contains sesame": [],
         "Contains soy": [],
-        "Contains gluten": [20]
+        "Contains gluten": [-1]
     },
     "21": {
         "Vegetarian": [],

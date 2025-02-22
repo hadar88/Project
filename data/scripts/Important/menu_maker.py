@@ -81,7 +81,7 @@ def fix_menu(property: str, menu_id: int, exhaustive: bool = False) -> dict | li
                 fixed_menus.append(current_menu)
                 print_menu(current_menu)
 
-                if len(fixed_menus) >= 30:
+                if len(fixed_menus) > 50:
                     return fixed_menus
         else:
             invalid_menus.extend(fixed_one_step)
