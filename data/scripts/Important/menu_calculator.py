@@ -115,7 +115,7 @@ for menu_id in menudata:
     Fat = round(Fat, 3)
     Protein = round(Protein, 3)
 
-    menusinput = open("../../layouts/MenusInput.json", "a+")
+    menusinput = open("../../layouts/MenusInput.json", "r+")
     menusinput.seek(0)
 
     menus = json.load(menusinput)
@@ -149,7 +149,7 @@ for menu_id in menudata:
     menusinput.truncate()
     json.dump(menus, menusinput, indent=4)
     menusinput.close()
-    print(f"Menu {menu_id} calculated successfully")
+    print(menu_id)
 
 
 # Move data from the "menu" section to the "Initial" section
