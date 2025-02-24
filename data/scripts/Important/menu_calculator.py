@@ -10,7 +10,7 @@ menus.close()
 
 ## fiil the data
 
-begin = 2000
+begin = 1990
 end = 2000
 
 for menu_id in range(begin, end + 1):
@@ -152,7 +152,7 @@ for menu_id in range(begin, end + 1):
     menusinput.truncate()
     json.dump(menus, menusinput, indent=4)
     menusinput.close()
-    print(menu_id)
+    print(f'menu_id {menu_id} calculated successfully!')
 
 
 # Move data from the "menu" section to the "Initial" section
