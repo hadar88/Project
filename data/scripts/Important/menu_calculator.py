@@ -10,8 +10,11 @@ menus.close()
 
 ## fiil the data
 
-for menu_id in menudata:
-    days = menudata[menu_id]
+begin = 2000
+end = 2000
+
+for menu_id in range(begin, end + 1):
+    days = menudata[str(menu_id)]
 
     daily_calories = [0, 0, 0, 0, 0, 0, 0]
 
@@ -119,7 +122,7 @@ for menu_id in menudata:
     menusinput.seek(0)
 
     menus = json.load(menusinput)
-    data1 = menus[menu_id]
+    data1 = menus[str(menu_id)]
     Menu = data1.get("Menu")
     Menu["Calories"] = Calories
     Menu["Calories1"] = Calories1
