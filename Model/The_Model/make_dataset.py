@@ -79,3 +79,6 @@ class MenusDataset(Dataset):
     
     def __getitem__(self, index):
         return self.xs[index], self.mids[index], self.ys[index]
+
+# xs = make_xs()
+# print(xs.shape)
