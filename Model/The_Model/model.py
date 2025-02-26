@@ -8,9 +8,11 @@ from tqdm import tqdm
 
 BATCH_SIZE = 64
 
+print("Loading Trainset...")
 training_set = MenusDataset(train=True)
 training_loader = DataLoader(training_set, batch_size=BATCH_SIZE, shuffle=True)
 
+print("Loading Testset...")
 test_set = MenusDataset(train=False)
 test_loader = DataLoader(test_set, batch_size=BATCH_SIZE, shuffle=False)
 
@@ -21,12 +23,14 @@ class MenuGenerator(nn.Module):
 
         # 14 is the number of features in the input (Calories, Carb, ...)
 
-        self.fc1 = nn.Linear(14, 420)
+        self.fc1 = nn.Linear(14, 210)
+        self.fc2 = nn.Linear(210, 420)
 
     def forward(self, x):
-        x = F.relu(self.fc1(x))
-        x = x.reshape(-1, 7, 3, 10, 2)
-        return x
+        y = F.relu(self.fc1(x))
+        y = F.relu(self.fc2(y))
+        y = y.reshape(-1, 7, 3, 10, 2)
+        return y
 
 
 def train_model(dataloader, model, criterion, optimizer, epochs, device):
@@ -61,6 +65,14 @@ device = "cuda" if torch.cuda.is_available() else "cpu"
 
 model = MenuGenerator()
 criterion = nn.MSELoss()
-optimizer = optim.SGD(model.parameters(), lr=0.001)
+optimizer = optim.SGD(model.parameters(), lr=0.01)
 
-train_model(training_loader, model, criterion, optimizer, 1000, device)
+print("Training...")
+train_model(training_loader, model, criterion, optimizer, 500, device)
+
+x, _, _ = training_set[0]
+
+x = x.to(device)
+model.to(device)
+
+print(model(x))
