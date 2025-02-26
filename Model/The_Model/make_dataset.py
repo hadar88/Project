@@ -61,7 +61,6 @@ def make_ys():
         
         return torch.stack(ys)
     
-print(make_ys())
 # The DataSet
 
 class MenusDataset(Dataset):
@@ -80,3 +79,5 @@ class MenusDataset(Dataset):
     def __getitem__(self, index):
         return self.xs[index], self.mids[index], self.ys[index]
 
+# mids = make_mids()
+# print(mids[0])

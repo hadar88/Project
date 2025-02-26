@@ -1,6 +1,8 @@
 import json
 import torch
 
+FOODS_DATA_PATH = "../../Data/layouts/FoodsByID.json"
+
 # This function is used to convert the menu dictionary to a tensor
 def menu_dict_to_tensor(menu_dict: dict):
     ten = []
@@ -36,9 +38,8 @@ def menu_tensor_to_dict(menu: torch.Tensor):
 
 
 # This function is used to transform the menu to the menu data
-def transform(foods_data_path: str, menu: torch.Tensor):
+def transform(menu: torch.Tensor):
     menu = menu_tensor_to_dict(menu)
-    # print(menu)
     Calories = 0
     Calories1 = 0
     Calories2 = 0
@@ -64,7 +65,7 @@ def transform(foods_data_path: str, menu: torch.Tensor):
     Contains_gluten = 0
     daily_calories = [0, 0, 0, 0, 0, 0, 0]
 
-    with open(foods_data_path, "r") as data:
+    with open(FOODS_DATA_PATH, "r") as data:
         data = json.load(data)
         for i, day in enumerate(menu):
             breakfast = menu[day]["breakfast"]
@@ -141,49 +142,31 @@ def transform(foods_data_path: str, menu: torch.Tensor):
         Fat = round(Fat, 3)
         Protein = round(Protein, 3)
         
-        final_data = {
-            "Calories": Calories,
-            "Calories1": Calories1,
-            "Calories2": Calories2,
-            "Calories3": Calories3,
-            "Calories_MSE": Calories_MSE,
-            "Carbohydrate": Carbohydrate,
-            "Sugars": Sugars,
-            "Fat": Fat,
-            "Protein": Protein,
-            "Fruit": Fruit,
-            "Vegetable": Vegetable,
-            "Cheese": Cheese,
-            "Meat": Meat,
-            "Cereal": Cereal,
-            "Vegetarian": Vegetarian,
-            "Vegan": Vegan,
-            "Contains eggs": Contains_eggs,
-            "Contains milk": Contains_milk,
-            "Contains peanuts or nuts": Contains_peanuts_or_nuts,
-            "Contains fish": Contains_fish,
-            "Contains sesame": Contains_sesame,
-            "Contains soy": Contains_soy,
-            "Contains gluten": Contains_gluten
-        }
-        return final_data
+        final_data = [
+            Calories, Calories1, Calories2, Calories3, Calories_MSE,
+            Carbohydrate, Sugars, Fat, Protein, Fruit, Vegetable,
+            Cheese, Meat, Cereal, Vegetarian, Vegan, Contains_eggs,
+            Contains_milk, Contains_peanuts_or_nuts, Contains_fish,
+            Contains_sesame, Contains_soy, Contains_gluten
+        ]
+        return torch.tensor(final_data)
 
 
 
 # Example usage
 
 menu_dict = {
-    "sunday": {"breakfast": {"192": 110, "146": 10, "8": 30}, "lunch": {"73": 150, "42": 50}, "dinner": {"84": 150, "126": 75, "165": 25, "95": 20}},
-    "monday": {"breakfast": {"51": 150, "170": 50}, "lunch": {"6": 200, "90": 50}, "dinner": {"169": 200, "21": 100, "131": 75, "118": 25}},
-    "tuesday": {"breakfast": {"51": 150, "170": 50}, "lunch": {"6": 150, "76": 30, "91": 20}, "dinner": {"169": 150, "21": 25, "116": 25, "131": 75, "118": 15, "100": 10}},
-    "wednesday": {"breakfast": {"61": 100, "60": 100, "52": 100}, "lunch": {"75": 175, "67": 75}, "dinner": {"102": 150, "49": 150, "16": 75, "81": 25}},
-    "thursday": {"breakfast": {"42": 75, "66": 75}, "lunch": {"116": 100, "41": 50, "40": 50}, "dinner": {"158": 150, "57": 25, "94": 75, "73": 75, "30": 25}},
-    "friday": {"breakfast": {"117": 125, "178": 25}, "lunch": {"84": 150, "186": 50}, "dinner": {"119": 200, "66": 50, "163": 50}},
-    "saturday": {"breakfast": {"195": 100, "60": 25, "90": 25}, "lunch": {"18": 170, "76": 20, "134": 10}, "dinner": {"107": 200, "126": 50, "170": 50, "22": 50}}
+    "sunday": {"breakfast": {"1": 180, "2": 28, "3": 150, "4": 34, "5": 28}, "lunch": {"6": 113, "7": 94, "8": 38, "9": 16, "10": 14, "11": 15}, "dinner": {"12": 113, "13": 130}},
+    "monday": {"breakfast": {"14": 30, "1": 180, "15": 28, "16": 182, "17": 32}, "lunch": {"18": 113, "19": 14, "20": 30, "52": 30, "15": 28}, "dinner": {"6": 170, "21": 156}},
+    "tuesday": {"breakfast": {"22": 170, "23": 40, "5": 28, "24": 120, "25": 150}, "lunch": {"26": 170, "27": 28, "28": 45, "29": 155, "30": 130}, "dinner": {"31": 170, "32": 28, "33": 30, "7": 20, "34": 15, "35": 20}},
+    "wednesday": {"breakfast": {"22": 70, "36": 60, "37": 120, "38": 28, "39": 150, "30": 130}, "lunch": {"6": 170, "7": 94, "40": 40, "41": 40, "42": 40, "43": 15, "10": 14, "44": 2, "52": 30}, "dinner": {"26": 170, "45": 320}},
+    "thursday": {"breakfast": {"52": 30, "61": 100, "17": 16, "53": 240, "46": 30}, "lunch": {"47": 113, "27": 28, "48": 32, "35": 20, "33": 30, "3": 150, "15": 28}, "dinner": {"6": 113, "49": 100, "50": 14}},
+    "friday": {"breakfast": {"51": 30, "3": 56, "52": 30, "53": 60, "29": 155, "30": 130}, "lunch": {"6": 85, "28": 45, "22": 170, "55": 150}, "dinner": {"56": 170, "57": 120}},
+    "saturday": {"breakfast": {"58": 136, "59": 18, "60": 30, "42": 40, "2": 28, "3": 160, "53": 240, "4": 38, "61": 50}, "lunch": {"56": 170, "57": 120, "37": 120}, "dinner": {"6": 113, "63": 100, "62": 15}}
 }
 
 # ten = menu_dict_to_tensor(menu_dict)
 # print(ten)
-# data = transform("../../Data/layouts/FoodsByID.json", ten)
+# data = transform(ten)
 # print("\n#######################\n")
 # print(data)

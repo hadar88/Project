@@ -80,10 +80,10 @@ device = "cuda" if torch.cuda.is_available() else "cpu"
 
 model = MenuGenerator()
 criterion = nn.MSELoss()
-optimizer = optim.SGD(model.parameters(), lr=0.005)
+optimizer = optim.SGD(model.parameters(), lr=0.001)
 
 print("Training...")
-train_model(training_loader, model, criterion, optimizer, 500, device)
+train_model(training_loader, model, criterion, optimizer, 100, device)
 
 x, _, _ = training_set[0]
 
