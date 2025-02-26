@@ -1,10 +1,15 @@
 import json
 import torch
+import menu_output_transform as mot
+from torch.utils.data import Dataset
 
-def make_xs(dataset_file_path: str):
+MENUS_INPUT = "../../Data/layouts/MenusInput.json"
+MENUS_BY_ID = "../../Data/layouts/MenusById.json"
+
+def make_xs():
     xs = []
 
-    with open(dataset_file_path, "r") as dataset_file:
+    with open(MENUS_INPUT, "r") as dataset_file:
         dataset = json.load(dataset_file)
 
         for menu_id in dataset:
@@ -18,10 +23,10 @@ def make_xs(dataset_file_path: str):
         return torch.tensor(xs)
 
 
-def make_labels(dataset_file_path: str):
+def make_mids():
     labels = []
 
-    with open(dataset_file_path, "r") as dataset_file:
+    with open(MENUS_INPUT, "r") as dataset_file:
         dataset = json.load(dataset_file)
 
         for menu_id in dataset:
@@ -34,12 +39,43 @@ def make_labels(dataset_file_path: str):
 
         return torch.tensor(labels)
     
-# Example
 
-xs = make_xs("../../Data/layouts/MenusInput.json") 
-print(xs[0])  
+def make_ys():
+    ys = []
+    max_len = 0
 
-print("\n")
+    with open(MENUS_BY_ID, "r") as dataset_file:
+        dataset = json.load(dataset_file)
 
-labels = make_labels("../../Data/layouts/MenusInput.json")
-print(labels[0])
+        for menu_id in dataset:
+            y = dataset[menu_id]
+            y = mot.menu_dict_to_tensor(y)  # shape: 7x3xLx2
+            max_len = max(max_len, y.shape[2])
+            
+            ys.append(y)
+
+        for i in range(len(ys)):
+            y = torch.zeros(7, 3, max_len, 2)
+            y[:, :, :ys[i].shape[2], :] = ys[i]
+            ys[i] = y
+        
+        return torch.stack(ys)
+    
+
+# The DataSet
+
+class MenusDataset(Dataset):
+    def __init__(self, train: bool = True):
+        xs = make_xs()
+        mids = make_mids()
+        ys = make_ys()
+
+        self.xs = xs[:int(0.8 * len(xs))] if train else xs[int(0.8 * len(xs)):]
+        self.mids = mids[:int(0.8 * len(mids))] if train else mids[int(0.8 * len(mids)):]
+        self.ys = ys[:int(0.8 * len(ys))] if train else ys[int(0.8 * len(ys)):]
+
+    def __len__(self):
+        return len(self.xs)
+    
+    def __getitem__(self, index):
+        return self.xs[index], self.mids[index], self.ys[index]

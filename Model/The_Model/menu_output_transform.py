@@ -38,7 +38,7 @@ def menu_tensor_to_dict(menu: torch.Tensor):
 # This function is used to transform the menu to the menu data
 def transform(foods_data_path: str, menu: torch.Tensor):
     menu = menu_tensor_to_dict(menu)
-    print(menu)
+    # print(menu)
     Calories = 0
     Calories1 = 0
     Calories2 = 0
@@ -158,19 +158,20 @@ def transform(foods_data_path: str, menu: torch.Tensor):
             "Cereal": Cereal,
             "Vegetarian": Vegetarian,
             "Vegan": Vegan,
-            "Contains_eggs": Contains_eggs,
-            "Contains_milk": Contains_milk,
-            "Contains_peanuts_or_nuts": Contains_peanuts_or_nuts,
-            "Contains_fish": Contains_fish,
-            "Contains_sesame": Contains_sesame,
-            "Contains_soy": Contains_soy,
-            "Contains_gluten": Contains_gluten
+            "Contains eggs": Contains_eggs,
+            "Contains milk": Contains_milk,
+            "Contains peanuts or nuts": Contains_peanuts_or_nuts,
+            "Contains fish": Contains_fish,
+            "Contains sesame": Contains_sesame,
+            "Contains soy": Contains_soy,
+            "Contains gluten": Contains_gluten
         }
         return final_data
 
 
 
-# Example
+# Example usage
+
 menu_dict = {
     "sunday": {"breakfast": {"192": 110, "146": 10, "8": 30}, "lunch": {"73": 150, "42": 50}, "dinner": {"84": 150, "126": 75, "165": 25, "95": 20}},
     "monday": {"breakfast": {"51": 150, "170": 50}, "lunch": {"6": 200, "90": 50}, "dinner": {"169": 200, "21": 100, "131": 75, "118": 25}},
@@ -181,9 +182,8 @@ menu_dict = {
     "saturday": {"breakfast": {"195": 100, "60": 25, "90": 25}, "lunch": {"18": 170, "76": 20, "134": 10}, "dinner": {"107": 200, "126": 50, "170": 50, "22": 50}}
 }
 
-ten = menu_dict_to_tensor(menu_dict)
-print(ten)
-print("\n#######################\n")
-data = transform("../../Data/layouts/FoodsByID.json", ten)
-print("\n#######################\n")
-print(data)
+# ten = menu_dict_to_tensor(menu_dict)
+# print(ten)
+# data = transform("../../Data/layouts/FoodsByID.json", ten)
+# print("\n#######################\n")
+# print(data)
