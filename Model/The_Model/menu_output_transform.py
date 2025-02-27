@@ -38,118 +38,77 @@ def menu_tensor_to_dict(menu: torch.Tensor):
 
 
 # This function is used to transform the menu to the menu data
-def transform(menu: torch.Tensor):
-    menu = menu_tensor_to_dict(menu)
-    Calories = 0
-    Calories1 = 0
-    Calories2 = 0
-    Calories3 = 0
-    Calories_MSE = 0
-    Carbohydrate = 0
-    Sugars = 0
-    Fat = 0
-    Protein = 0
-    Fruit = 0
-    Vegetable = 0
-    Cheese = 0
-    Meat = 0
-    Cereal = 0
-    Vegetarian = 1
-    Vegan = 1
-    Contains_eggs = 0
-    Contains_milk = 0
-    Contains_peanuts_or_nuts = 0
-    Contains_fish = 0
-    Contains_sesame = 0
-    Contains_soy = 0
-    Contains_gluten = 0
-    daily_calories = [0, 0, 0, 0, 0, 0, 0]
+def transform(menu: torch.Tensor, food_data):
+    output = torch.zeros(23, dtype=torch.int32)
 
-    with open(FOODS_DATA_PATH, "r") as data:
-        data = json.load(data)
-        for i, day in enumerate(menu):
-            breakfast = menu[day]["breakfast"]
-            lunch = menu[day]["lunch"]
-            dinner = menu[day]["dinner"]
+    output[14], output[15] = 1, 1   # vegetarian, vegan
 
-            for meal in [breakfast, lunch, dinner]:
-                for id in meal:
-                    grams = meal[id]
-                    food = data[id]
-                    daily_calories[i] += food["Calories"] * (grams / 100)
-                    Calories = Calories + food["Calories"] * (grams / 100)
-                    Carbohydrate = Carbohydrate + food["Carbohydrate"] * (grams / 100)
-                    Sugars = Sugars + food["Sugars"] * (grams / 100)
-                    Fat = Fat + food["Fat"] * (grams / 100)
-                    Protein = Protein + food["Protein"] * (grams / 100)
+    daily_calories = torch.zeros(7)
 
-                    if meal == breakfast:
-                        Calories1 = Calories1 + food["Calories"] * (grams / 100)
-                    if meal == lunch:
-                        Calories2 = Calories2 + food["Calories"] * (grams / 100)
-                    if meal == dinner:
-                        Calories3 = Calories3 + food["Calories"] * (grams / 100)
+    total_calories, carbs, sugars, fats, proteins = 0, 0, 0, 0, 0
 
-                    if food["Fruit"] == 1:
-                        Fruit = Fruit + 1
-                    if food["Vegetable"] == 1:
-                        Vegetable = Vegetable + 1
-                    if food["Cheese"] == 1:
-                        Cheese = Cheese + 1
-                    if food["Meat"] == 1:
-                        Meat = Meat + 1
-                    if food["Cereal"] == 1:
-                        Cereal = Cereal + 1
-                    if food["Vegetarian"] == 0:
-                        Vegetarian = 0
-                    if food["Vegan"] == 0:
-                        Vegan = 0
-                    if food["Contains eggs"] == 1:
-                        Contains_eggs = 1
-                    if food["Contains milk"] == 1:
-                        Contains_milk = 1
-                    if food["Contains peanuts or nuts"] == 1:
-                        Contains_peanuts_or_nuts = 1
-                    if food["Contains fish"] == 1:
-                        Contains_fish = 1
-                    if food["Contains sesame"] == 1:
-                        Contains_sesame = 1
-                    if food["Contains soy"] == 1:
-                        Contains_soy = 1
-                    if food["Contains gluten"] == 1:
-                        Contains_gluten = 1
+    meal_calories = torch.zeros(3)
 
+    for didx, day in enumerate(menu):
+        for midx, meal in enumerate(day):
+            for fidx, food in enumerate(meal):
+                # food: [id, amount]
 
-        Calories = Calories / 7
-        Calories1 = Calories1 / 7
-        Calories2 = Calories2 / 7
-        Calories3 = Calories3 / 7
+                food_id, food_amount = food
+                food_amount = food_amount.int().item()
+                food_id = food_id.int().item()
 
-        Calories_MSE = 1/7 * sum([(daily_calories[i] - Calories) ** 2 for i in range(7)])
+                if food_id == 0:
+                    continue
 
-        Carbohydrate = Carbohydrate / 7
-        Sugars = Sugars / 7
-        Fat = Fat / 7
-        Protein = Protein / 7
+                food_amount /= 100
 
-        Calories = round(Calories, 3)
-        Calories1 = round(Calories1, 3)
-        Calories2 = round(Calories2, 3)
-        Calories3 = round(Calories3, 3)
-        Calories_MSE = round(Calories_MSE, 3)
-        Carbohydrate = round(Carbohydrate, 3)
-        Sugars = round(Sugars, 3)
-        Fat = round(Fat, 3)
-        Protein = round(Protein, 3)
-        
-        final_data = [
-            Calories, Calories1, Calories2, Calories3, Calories_MSE,
-            Carbohydrate, Sugars, Fat, Protein, Fruit, Vegetable,
-            Cheese, Meat, Cereal, Vegetarian, Vegan, Contains_eggs,
-            Contains_milk, Contains_peanuts_or_nuts, Contains_fish,
-            Contains_sesame, Contains_soy, Contains_gluten
-        ]
-        return torch.tensor(final_data)
+                food_nut = food_data[str(food_id)]
+
+                food_calories = food_nut["Calories"] * food_amount
+
+                daily_calories[didx] += food_calories
+
+                total_calories += food_calories
+
+                carbs += food_nut["Carbohydrate"] * food_amount
+                sugars += food_nut["Sugars"] * food_amount
+                fats += food_nut["Fat"] * food_amount
+                proteins += food_nut["Protein"] * food_amount
+                
+                meal_calories[midx] += food_calories
+
+                output[9] += food_nut["Fruit"]
+                output[10] += food_nut["Vegetable"]
+                output[11] += food_nut["Cheese"]
+                output[12] += food_nut["Meat"]
+                output[13] += food_nut["Cereal"]
+
+                output[14] *= food_nut["Vegetarian"]
+                output[15] *= food_nut["Vegan"]
+
+                output[16] |= food_nut["Contains eggs"]
+                output[17] |= food_nut["Contains milk"]
+                output[18] |= food_nut["Contains peanuts or nuts"]
+                output[19] |= food_nut["Contains fish"]
+                output[20] |= food_nut["Contains sesame"]
+                output[21] |= food_nut["Contains soy"]
+                output[22] |= food_nut["Contains gluten"]
+
+    output[0] = total_calories // 7
+    output[1] = meal_calories[0] // 7
+    output[2] = meal_calories[1] // 7
+    output[3] = meal_calories[2] // 7
+    output[4] = int((1 / 7) * sum((dcal - (total_calories / 7)) ** 2 for dcal in daily_calories))
+    output[5] = carbs // 7
+    output[6] = sugars // 7
+    output[7] = fats // 7
+    output[8] = proteins // 7
+
+    return output.clone().detach().float().requires_grad_(True)
+
+def transform_batch(menu_batch: torch.Tensor, food_data):
+    return torch.stack([transform(menu, food_data) for menu in menu_batch])
 
 
 
@@ -165,8 +124,12 @@ menu_dict = {
     "saturday": {"breakfast": {"58": 136, "59": 18, "60": 30, "42": 40, "2": 28, "3": 160, "53": 240, "4": 38, "61": 50}, "lunch": {"56": 170, "57": 120, "37": 120}, "dinner": {"6": 113, "63": 100, "62": 15}}
 }
 
+# foods = open(FOODS_DATA_PATH, "r")
+# data = json.load(foods)
+
 # ten = menu_dict_to_tensor(menu_dict)
 # print(ten)
-# data = transform(ten)
+# print(ten.shape)
+# data = transform(ten, data)
 # print("\n#######################\n")
 # print(data)

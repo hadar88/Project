@@ -1,6 +1,7 @@
 from make_dataset import MenusDataset
-from menu_output_transform import transform
+from menu_output_transform import transform_batch
 import torch
+import json
 from torch.utils.data import DataLoader
 import torch.nn as nn
 import torch.optim as optim
@@ -8,6 +9,7 @@ import torch.nn.functional as F
 from tqdm import tqdm
 
 BATCH_SIZE = 64
+FOODS_DATA_PATH = "../../Data/layouts/FoodsByID.json"
 
 print("Loading Trainset...")
 training_set = MenusDataset(train=True)
@@ -33,6 +35,9 @@ class MenuGenerator(nn.Module):
         y = F.sigmoid(self.fc2(y))
         y = F.relu(self.fc3(y))
         y = y.reshape(-1, 7, 3, 10, 2)
+
+        y = torch.round(y).to(torch.int)
+        
         return y
 
 ###### Loss ##########
@@ -63,7 +68,10 @@ def train_model(dataloader, model, criterion, optimizer, epochs, device):
 
             y_pred = model(x)
 
-            y_pred_transformed = transform(y_pred)
+            foods = open(FOODS_DATA_PATH, "r")
+            data = json.load(foods)
+
+            y_pred_transformed = transform_batch(y_pred, data)
 
             loss = criterion(y_pred_transformed, m)
             loss.backward()
