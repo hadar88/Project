@@ -57,20 +57,23 @@ def train_model(dataloader, model, criterion, optimizer, epochs, device):
 
     epochs_bar = tqdm(range(epochs))
 
+    foods = open(FOODS_DATA_PATH, "r")
+    data = json.load(foods)
+    foods.close()
+
+    print(device)
+
     for _ in epochs_bar:
         total_loss = 0.0
         num_batches = 0
 
         for x, m, y in dataloader:
+            print("batch")
             x, y = x.to(device), y.to(device)
 
             optimizer.zero_grad()
 
             y_pred = model(x)
-
-            foods = open(FOODS_DATA_PATH, "r")
-            data = json.load(foods)
-
             y_pred_transformed = transform_batch(y_pred, data)
 
             loss = criterion(y_pred_transformed, m)
@@ -94,8 +97,5 @@ print("Training...")
 train_model(training_loader, model, criterion, optimizer, 100, device)
 
 x, _, _ = training_set[0]
-
-x = x.to(device)
-model.to(device)
 
 model(x)

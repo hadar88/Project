@@ -51,12 +51,10 @@ def transform(menu: torch.Tensor, food_data):
 
     for didx, day in enumerate(menu):
         for midx, meal in enumerate(day):
-            for fidx, food in enumerate(meal):
+            for food in meal:
                 # food: [id, amount]
 
-                food_id, food_amount = food
-                food_amount = food_amount.int().item()
-                food_id = food_id.int().item()
+                food_id, food_amount = food.int().tolist()
 
                 if food_id == 0:
                     continue
@@ -128,8 +126,6 @@ menu_dict = {
 # data = json.load(foods)
 
 # ten = menu_dict_to_tensor(menu_dict)
-# print(ten)
-# print(ten.shape)
 # data = transform(ten, data)
 # print("\n#######################\n")
 # print(data)
