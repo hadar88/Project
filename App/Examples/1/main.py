@@ -15,7 +15,7 @@ class SayHello(App):
         self.window.size_hint = (0.6, 0.7)
         self.window.pos_hint = {"center_x": 0.5, "center_y":0.5}
         # changing the background colour
-        Window.clearcolor = get_color_from_hex('#3358ff')
+        Window.clearcolor = get_color_from_hex('#de140d')
         
 
         # image widget
@@ -32,7 +32,7 @@ class SayHello(App):
         # text input widget
         self.user = TextInput(
                     multiline= False,
-                    padding_y= (20,20),
+                    padding= (0, 20, 0, 20),
                     size_hint= (10, 0.4)
                     )
 
@@ -43,7 +43,7 @@ class SayHello(App):
                       text= "GREET",
                       size_hint= (1,0.5),
                       bold= True,
-                      background_color ='#000105',
+                      background_color ='#000000',
                       #remove darker overlay of background colour
                       # background_normal = ""
                       )
