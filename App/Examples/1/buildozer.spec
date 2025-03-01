@@ -21,7 +21,7 @@ source.dir = .
 source.include_exts = py,png,jpg,kv,atlas
 
 # (list) List of inclusions using pattern matching
-source.include_patterns = sayHello.py, logo.png
+source.include_patterns = main.py, logo.png
 
 # (list) Source files to exclude (leave empty to not exclude anything)
 #source.exclude_exts = spec
