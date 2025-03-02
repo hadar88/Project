@@ -23,21 +23,21 @@ def make_xs():
         return torch.tensor(xs)
 
 
-def make_mids():
-    labels = []
+# def make_mids():
+#     labels = []
 
-    with open(MENUS_INPUT, "r") as dataset_file:
-        dataset = json.load(dataset_file)
+#     with open(MENUS_INPUT, "r") as dataset_file:
+#         dataset = json.load(dataset_file)
 
-        for menu_id in dataset:
-            label = []
+#         for menu_id in dataset:
+#             label = []
 
-            for entry in dataset[menu_id]["Menu"]:
-                label.append(dataset[menu_id]["Menu"][entry])
+#             for entry in dataset[menu_id]["Menu"]:
+#                 label.append(dataset[menu_id]["Menu"][entry])
 
-            labels.append(label)
+#             labels.append(label)
 
-        return torch.tensor(labels)
+#         return torch.tensor(labels)
     
 
 def make_ys():
@@ -66,18 +66,19 @@ def make_ys():
 class MenusDataset(Dataset):
     def __init__(self, train: bool = True):
         xs = make_xs()
-        mids = make_mids()
+        # mids = make_mids()
         ys = make_ys()
 
         self.xs = xs[:int(0.8 * len(xs))] if train else xs[int(0.8 * len(xs)):]
-        self.mids = mids[:int(0.8 * len(mids))] if train else mids[int(0.8 * len(mids)):]
+        # self.mids = mids[:int(0.8 * len(mids))] if train else mids[int(0.8 * len(mids)):]
         self.ys = ys[:int(0.8 * len(ys))] if train else ys[int(0.8 * len(ys)):]
 
     def __len__(self):
         return len(self.xs)
     
     def __getitem__(self, index):
-        return self.xs[index], self.mids[index], self.ys[index]
+        # return self.xs[index], self.mids[index], self.ys[index]
+        return self.xs[index], self.ys[index]
 
 # mids = make_mids()
 # print(mids[0])

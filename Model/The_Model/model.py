@@ -7,6 +7,7 @@ import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F
 from tqdm import tqdm
+import numpy as np
 
 BATCH_SIZE = 64
 FOODS_DATA_PATH = "../../Data/layouts/FoodsByID.json"
@@ -17,12 +18,12 @@ foods.close()
 
 print("Loading Trainset...")
 training_set = MenusDataset(train=True)
-training_subset = Subset(training_set, range(200))
-training_loader = DataLoader(training_subset, batch_size=BATCH_SIZE, shuffle=True)
+# training_subset = Subset(training_set, range(1000))
+training_loader = DataLoader(training_set, batch_size=BATCH_SIZE, shuffle=True)
 
-print("Loading Testset...")
-test_set = MenusDataset(train=False)
-test_loader = DataLoader(test_set, batch_size=BATCH_SIZE, shuffle=False)
+# print("Loading Testset...")
+# test_set = MenusDataset(train=False)
+# test_loader = DataLoader(test_set, batch_size=BATCH_SIZE, shuffle=False)
 
 
 class MenuGenerator(nn.Module):
@@ -36,12 +37,12 @@ class MenuGenerator(nn.Module):
         self.fc3 = nn.Linear(210, 420)
 
     def forward(self, x):
-        y = F.relu(self.fc1(x))
-        y = F.sigmoid(self.fc2(y))
-        y = F.relu(self.fc3(y))
+        y = torch.relu(self.fc1(x))
+        y = self.fc2(y)
+        y = torch.relu(self.fc3(y))
         y = y.reshape(-1, 7, 3, 10, 2)
 
-        y = torch.round(y).to(torch.int)
+        y = torch.round(y)
         
         return y
 
@@ -50,11 +51,30 @@ class MenuGenerator(nn.Module):
 class MenuLoss(nn.Module):
     def __init__(self):
         super(MenuLoss, self).__init__()
+        self.ZERO_NONZERO_PENALTY = 1.0
 
     def forward(self, y_pred, y):
-        loss = 0
+        # Penalize the model for predicting zeros when the amount is non-zero or vice versa
+
+        ids = y_pred[..., 0]  # Shape: (batch_size, 7, 3, M)
+        amounts = y_pred[..., 1]  # Shape: (batch_size, 7, 3, M)
+
+        # For (ids == 0) * (amounts != 0)
+        id_zero_mask = 1 - torch.tanh(4 * ids)
+        amount_nonzero_mask = torch.tanh(4 * amounts)  
+        case1 = id_zero_mask * amount_nonzero_mask
         
-        pass
+        # For (ids != 0) * (amounts == 0)
+        id_nonzero_mask = 1 - id_zero_mask  
+        amount_zero_mask = 1 - amount_nonzero_mask 
+        case2 = id_nonzero_mask * amount_zero_mask
+        
+        # Combine both cases
+        zeros_nonzeros = self.ZERO_NONZERO_PENALTY * (case1 + case2)
+
+        # Sum across dimensions and take mean across batch
+        loss = zeros_nonzeros.sum(dim=(1, 2, 3))
+        return loss.mean()
 
 ######################
 
@@ -67,8 +87,8 @@ def train_model(dataloader, model, criterion, optimizer, epochs, device):
         total_loss = 0.0
         num_batches = 0
 
-        for x, m, y in dataloader:
-            x, m, y = x.to(device), m.to(device), y.to(device)
+        for x, y in dataloader:
+            x, y = x.to(device), y.to(device)
 
             optimizer.zero_grad()
 
@@ -96,8 +116,16 @@ optimizer = optim.SGD(model.parameters(), lr=0.001)
 
 
 print("Training...")
-train_model(training_loader, model, myLoss, optimizer, 100, device)
 
-x, _, _ = training_set[0]
+x, _ = training_set[0]
 
-model(x)
+y_pred = model(x.to(device))
+
+print(y_pred)
+
+train_model(training_loader, model, myLoss, optimizer, 200, device)
+
+
+y_pred = model(x.to(device))
+
+print(y_pred)
