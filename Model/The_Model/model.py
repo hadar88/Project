@@ -8,6 +8,7 @@ import torch.optim as optim
 import torch.nn.functional as F
 from tqdm import tqdm
 import numpy as np
+import matplotlib.pyplot as plt
 
 BATCH_SIZE = 64
 FOODS_DATA_PATH = "../../Data/layouts/FoodsByID.json"
@@ -38,11 +39,11 @@ class MenuGenerator(nn.Module):
 
     def forward(self, x):
         y = torch.relu(self.fc1(x))
-        y = self.fc2(y)
+        y = torch.relu(self.fc2(y))
         y = torch.relu(self.fc3(y))
+        y = torch.clamp(y, 0, 222)
         y = y.reshape(-1, 7, 3, 10, 2)
-
-        y = torch.round(y)
+        # y = torch.round(y)
         
         return y
 
