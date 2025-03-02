@@ -8,7 +8,10 @@ import torch.optim as optim
 import torch.nn.functional as F
 from tqdm import tqdm
 import numpy as np
+import matplotlib
+matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
+
 
 BATCH_SIZE = 64
 FOODS_DATA_PATH = "../../Data/layouts/FoodsByID.json"
@@ -83,6 +86,7 @@ def train_model(dataloader, model, criterion, optimizer, epochs, device):
     model.train()
 
     epochs_bar = tqdm(range(epochs))
+    loss_history = []
 
     for _ in epochs_bar:
         total_loss = 0.0
@@ -107,13 +111,18 @@ def train_model(dataloader, model, criterion, optimizer, epochs, device):
         
         epoch_loss = total_loss / num_batches
         epochs_bar.set_postfix_str(f"Loss = {epoch_loss}")
+        loss_history.append(epoch_loss)
+
+    plt.plot(loss_history)
+    # plt.savefig('loss_plot.png')
+    # plt.show()
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 model = MenuGenerator().to(device)
 # criterion = nn.MSELoss()
 myLoss = MenuLoss()
-optimizer = optim.SGD(model.parameters(), lr=0.001)
+optimizer = optim.Adam(model.parameters(), lr=0.001)
 
 
 print("Training...")
@@ -122,11 +131,11 @@ x, _ = training_set[0]
 
 y_pred = model(x.to(device))
 
-print(y_pred)
+#print(y_pred)
 
-train_model(training_loader, model, myLoss, optimizer, 200, device)
+train_model(training_loader, model, myLoss, optimizer, 100, device)
 
 
 y_pred = model(x.to(device))
 
-print(y_pred)
+#print(y_pred)
