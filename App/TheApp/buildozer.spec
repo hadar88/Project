@@ -56,7 +56,7 @@ presplash.filename = %(source.dir)s/menu.jpeg
 
 # (list) Supported orientations
 # Valid options are: landscape, portrait, portrait-reverse or landscape-reverse
-orientation = portrait
+orientation = landscape, portrait, portrait-reverse, landscape-reverse
 
 # (list) List of services to declare
 # This is currently only relevant to Android services.
