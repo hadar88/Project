@@ -18,10 +18,10 @@ package.domain = com.hadar.menu
 source.dir = .
 
 # (list) Source files to include (leave empty to include all the files)
-source.include_exts = py,png,jpg,kv,atlas,jpeg
+source.include_exts = py,png,jpg,kv,atlas,jpeg,ini
 
 # (list) List of inclusions using pattern matching
-source.include_patterns = main.py, burger.jpeg, pizza.jpeg, menu.jpeg
+source.include_patterns = main.py, burger.jpeg, pizza.jpeg, menu.jpeg, config.ini
 
 # (list) Source files to exclude (leave empty to not exclude anything)
 #source.exclude_exts = spec

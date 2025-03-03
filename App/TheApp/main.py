@@ -6,9 +6,13 @@ from kivy.uix.button import Button
 from kivy.uix.textinput import TextInput
 from kivy.core.window import Window
 from kivy.utils import get_color_from_hex
+from kivy.config import ConfigParser
 
 class Menu(App):
     def build(self):
+        self.config = ConfigParser()
+        self.config.read('config.ini')
+
         self.window = GridLayout()
         self.window.cols = 1
         self.window.size_hint = (1, 0.7)
@@ -16,7 +20,7 @@ class Menu(App):
         Window.clearcolor = get_color_from_hex('#34baeb')
 
         self.image = Image(
-            source="burger.jpeg",
+            source=self.config.get('settings', 'image', fallback = "burger.jpeg"),
             size_hint=(0.5, 0.7),
             pos_hint={"center_x": 1, "center_y": 0.5},
             )
@@ -51,10 +55,24 @@ class Menu(App):
     def callback(self, instance):
         if self.answer.text == "pizza":
             self.image.source = "pizza.jpeg"
+            self.saveState()
         elif self.answer.text == "burger":
             self.image.source = "burger.jpeg"
+            self.saveState()
         else:
             self.ask.text = "We don't have that on the menu."
+
+    def saveState(self):
+        if not self.config.has_section('settings'):
+            self.config.add_section('settings') 
+
+        self.config.set('settings', 'image', self.image.source)
+        self.config.write()
+
+
+
+    def on_stop(self):
+        self.saveState()
 
 if __name__ == "__main__":
     Menu().run()
