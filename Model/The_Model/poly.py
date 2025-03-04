@@ -2,7 +2,7 @@ import numpy as np
 from make_dataset import read_foods_tensor, FoodProperties as FP
 import torch
 from numpy.polynomial.chebyshev import Chebyshev
-import torch.
+
 import matplotlib.pyplot as plt
 
 class RoundSTE(torch.autograd.Function):
