@@ -1,4 +1,4 @@
-from make_dataset import MenusDataset
+from make_dataset import MenusDataset, read_foods_tensor, FoodProperties as FP
 from menu_output_transform import transform_batch, transform_batch2
 import torch
 import json
@@ -16,41 +16,6 @@ import matplotlib.pyplot as plt
 BATCH_SIZE = 64
 FOODS_DATA_PATH = "../../Data/layouts/FoodsByID.json"
 
-
-def read_foods_tensor():
-    foods = open(FOODS_DATA_PATH, "r")
-    data = json.load(foods)
-    foods.close()
-
-    data_tensor = torch.zeros(len(data) + 1, len(data["1"]) - 1, dtype=torch.float32)
-
-    for food_id in data:
-        index = int(food_id)
-
-        if index == 0:
-            continue
-
-        data_tensor[index][0] = data[food_id]["Calories"]
-        data_tensor[index][1] = data[food_id]["Carbohydrate"]
-        data_tensor[index][2] = data[food_id]["Sugars"]
-        data_tensor[index][3] = data[food_id]["Fat"]
-        data_tensor[index][4] = data[food_id]["Protein"]
-        data_tensor[index][5] = data[food_id]["Vegetarian"]
-        data_tensor[index][6] = data[food_id]["Vegan"]
-        data_tensor[index][7] = data[food_id]["Contains eggs"]
-        data_tensor[index][8] = data[food_id]["Contains milk"]
-        data_tensor[index][9] = data[food_id]["Contains peanuts or nuts"]
-        data_tensor[index][10] = data[food_id]["Contains fish"]
-        data_tensor[index][11] = data[food_id]["Contains sesame"]
-        data_tensor[index][12] = data[food_id]["Contains soy"]
-        data_tensor[index][13] = data[food_id]["Contains gluten"]
-        data_tensor[index][14] = data[food_id]["Fruit"]
-        data_tensor[index][15] = data[food_id]["Vegetable"]
-        data_tensor[index][16] = data[food_id]["Cheese"]
-        data_tensor[index][17] = data[food_id]["Meat"]
-        data_tensor[index][18] = data[food_id]["Cereal"]
-
-    return data_tensor
 
 print("Loading Trainset...")
 training_set = MenusDataset(train=True)
@@ -93,63 +58,85 @@ class MenuLoss(nn.Module):
         self.HIGHEST_ID = 222
 
     def forward(self, y_pred, y):
-        # Penalize the model for predicting zeros when the amount is non-zero or vice versa
+        pred_ids = y_pred[..., 0]       # Shape: (batch_size, 7, 3, M)
+        pred_amounts = y_pred[..., 1]   
 
-        pred_ids = y_pred[..., 0]  # Shape: (batch_size, 7, 3, M)
-        pred_amounts = y_pred[..., 1]  # Shape: (batch_size, 7, 3, M)
+        true_ids = y[..., 0]            
+        true_amounts = y[..., 1]        
+        valid_pred_ids_mask = (pred_ids > 0) & (pred_ids <= self.HIGHEST_ID)
 
-        true_ids = y[..., 0]  # Shape: (batch_size, 7, 3, M)
-        true_amounts = y[..., 1]  # Shape: (batch_size, 7, 3, M)
+        ### Punish the model if it gives a positive amount for a 0-id food, or vice versa ###
 
-        ### PRED ONLY loss ###
-
-        # For (ids == 0) * (amounts != 0)
-        id_zero_mask = 1 - torch.tanh(4 * pred_ids)
-        amount_nonzero_mask = torch.tanh(4 * pred_amounts)  
+        id_zero_mask = 1 - torch.tanh(4 * pred_ids)         # ids == 0
+        amount_nonzero_mask = torch.tanh(4 * pred_amounts)  # amounts != 0
         case1 = id_zero_mask * amount_nonzero_mask
         
-        # For (ids != 0) * (amounts == 0)
-        id_nonzero_mask = 1 - id_zero_mask  
-        amount_zero_mask = 1 - amount_nonzero_mask 
+        id_nonzero_mask = 1 - id_zero_mask          # ids != 0
+        amount_zero_mask = 1 - amount_nonzero_mask  # amounts == 0
         case2 = id_nonzero_mask * amount_zero_mask
         
-        # Combine both cases
-        zeros_nonzeros = self.ZERO_NONZERO_PENALTY * (case1 + case2)
+        zeros_nonzeros_penalty = self.ZERO_NONZERO_PENALTY * (case1 + case2)            # Combine both cases
+        zeros_nonzeros_penalty = zeros_nonzeros_penalty.sum(dim=(1, 2, 3)).mean()       # Sum and average for all menus in the batch
 
-        # Penalize the model for predicting an id that is not in the dataset
+        ### Penalize the model for predicting an id that is not in the dataset ###
         
-        id_range_mask = F.relu(pred_ids - self.HIGHEST_ID)
+        id_range_penalty = F.relu(pred_ids - self.HIGHEST_ID)
 
-        zeros_nonzeros = zeros_nonzeros.sum(dim=(1, 2, 3)).mean()
-        id_range = id_range_mask.sum(dim=(1, 2, 3)).mean()
+        id_range_penalty = id_range_penalty.sum(dim=(1, 2, 3)).mean()
 
-        ### COMPARE TO TRUE loss ###
+        ### Compute differences in calories, carbs, sugars, fat and proteins ###
 
-        # Calculate the calories in both menus
+        # True:
 
-        calories_for_true_ids = data[true_ids.flatten().long(), 0].reshape(y.size(0), -1)
+        true_amounts = true_amounts.reshape(y.size(0), -1)  # amount of each food in y (the true "label")
+        
+        true_calories = data[true_ids.flatten().long(), FP.CALORIES.value].reshape(y.size(0), -1)   # calories of each food in y (the true "label")
+        calories_in_true_menu = (true_calories * true_amounts / 100).sum(dim=1) / 7
 
-        true_amounts = true_amounts.reshape(y.size(0), -1)
+        true_carbohydrate = data[true_ids.flatten().long(), FP.CARBOHYDRATE.value].reshape(y.size(0), -1)   # calories of each food in y (the true "label")
+        carbohydrate_in_true_menu = (true_carbohydrate * true_amounts / 100).sum(dim=1) / 7
+        
+        true_sugars = data[true_ids.flatten().long(), FP.SUGARS.value].reshape(y.size(0), -1)   # calories of each food in y (the true "label")
+        sugars_in_true_menu = (true_sugars * true_amounts / 100).sum(dim=1) / 7
+        
+        true_fat = data[true_ids.flatten().long(), FP.FAT.value].reshape(y.size(0), -1)   # calories of each food in y (the true "label")
+        fat_in_true_menu = (true_fat * true_amounts / 100).sum(dim=1) / 7
+        
+        true_proteins = data[true_ids.flatten().long(), FP.PROTEIN.value].reshape(y.size(0), -1)   # calories of each food in y (the true "label")
+        proteins_in_true_menu = (true_proteins * true_amounts / 100).sum(dim=1) / 7
 
-        calories_in_true_menu = (calories_for_true_ids * true_amounts / 100).sum(dim=1) / 7
-
-        # ---
-
-        valid_ids_mask = (pred_ids > 0) & (pred_ids <= self.HIGHEST_ID)
-
-        pred_ids_clone = pred_ids.clone()
-
-        pred_ids_clone[~valid_ids_mask] = 0
-
-        calories_for_pred_ids = data[pred_ids_clone.flatten().long(), 0].reshape(y_pred.size(0), -1)
+        # Pred:
 
         pred_amounts = pred_amounts.reshape(y_pred.size(0), -1)
 
-        calories_in_pred_menu = (calories_for_pred_ids * pred_amounts / 100).sum(dim=1) / 7
+        pred_calories = data[(pred_ids * valid_pred_ids_mask).flatten().long(), FP.CALORIES.value].reshape(y_pred.size(0), -1)
+        calories_in_pred_menu = (pred_calories * pred_amounts / 100).sum(dim=1) / 7
+        
+        pred_carbohydrate = data[(pred_ids * valid_pred_ids_mask).flatten().long(), FP.CARBOHYDRATE.value].reshape(y_pred.size(0), -1)
+        carbohydrate_in_pred_menu = (pred_carbohydrate * pred_amounts / 100).sum(dim=1) / 7
+        
+        pred_sugars = data[(pred_ids * valid_pred_ids_mask).flatten().long(), FP.SUGARS.value].reshape(y_pred.size(0), -1)
+        sugars_in_pred_menu = (pred_sugars * pred_amounts / 100).sum(dim=1) / 7
+        
+        pred_fat = data[(pred_ids * valid_pred_ids_mask).flatten().long(), FP.FAT.value].reshape(y_pred.size(0), -1)
+        fat_in_pred_menu = (pred_fat * pred_amounts / 100).sum(dim=1) / 7
+        
+        pred_proteins = data[(pred_ids * valid_pred_ids_mask).flatten().long(), FP.PROTEIN.value].reshape(y_pred.size(0), -1)
+        proteins_in_pred_menu = (pred_proteins * pred_amounts / 100).sum(dim=1) / 7
+
+        # Diff:
 
         calories_diff = ((calories_in_true_menu - calories_in_pred_menu) ** 2).mean()
+        carbohydrate_diff = ((carbohydrate_in_true_menu - carbohydrate_in_pred_menu) ** 2).mean()
+        sugars_diff = ((sugars_in_true_menu - sugars_in_pred_menu) ** 2).mean()
+        fat_diff = ((fat_in_true_menu - fat_in_pred_menu) ** 2).mean()
+        proteins_diff = ((proteins_in_true_menu - proteins_in_pred_menu) ** 2).mean()
+        
+        nutrition_diff = calories_diff + carbohydrate_diff + sugars_diff + fat_diff + proteins_diff
 
-        loss = zeros_nonzeros + id_range + calories_diff
+        ### Compute the total loss ###
+
+        loss = zeros_nonzeros_penalty + id_range_penalty + nutrition_diff
 
         return loss
 
