@@ -82,6 +82,64 @@ class MenuLoss(nn.Module):
         proteins_poly = Chebyshev.fit(x, proteins, 446)
         self.proteins_coeffs = torch.tensor(proteins_poly.coef).to(device)
 
+        self.vegetarian = data[:, FP.VEGETARIAN.value]
+        self.vegan = data[:, FP.VEGAN.value]
+        self.contains_eggs = data[:, FP.CONTAINS_EGGS.value]
+        self.contains_gluten = data[:, FP.CONTAINS_GLUTEN.value]
+        self.contains_milk = data[:, FP.CONTAINS_MILK.value]
+        self.contains_peanuts = data[:, FP.CONTAINS_PEANUTS_OR_NUTS.value]
+        self.contains_fish = data[:, FP.CONTAINS_FISH.value]
+        self.contains_soy = data[:, FP.CONTAINS_SOY.value]
+        self.contains_sesame = data[:, FP.CONTAINS_SESAME.value]
+
+        self.fruits = data[:, FP.FRUIT.value]
+        self.vegetables = data[:, FP.VEGETABLE.value]
+        self.cheese = data[:, FP.CHEESE.value]
+        self.meat = data[:, FP.MEAT.value]
+        self.cereal = data[:, FP.CEREAL.value]
+
+    def is_vegetarian(self, x):
+        return torch.sum(torch.stack([v * torch.exp(-((x - i * v) ** 2) / 0.00001) for i, v in enumerate(self.vegetarian)], dim=0), dim=0)
+    
+    def is_vegan(self, x):
+        return torch.sum(torch.stack([v * torch.exp(-((x - i * v) ** 2) / 0.00001) for i, v in enumerate(self.vegan)], dim=0), dim=0)
+    
+    def is_contains_eggs(self, x):
+        return torch.sum(torch.stack([v * torch.exp(-((x - i * v) ** 2) / 0.00001) for i, v in enumerate(self.contains_eggs)], dim=0), dim=0)
+    
+    def is_contains_gluten(self, x):
+        return torch.sum(torch.stack([v * torch.exp(-((x - i * v) ** 2) / 0.00001) for i, v in enumerate(self.contains_gluten)], dim=0), dim=0)
+    
+    def is_contains_milk(self, x):
+        return torch.sum(torch.stack([v * torch.exp(-((x - i * v) ** 2) / 0.00001) for i, v in enumerate(self.contains_milk)], dim=0), dim=0)
+    
+    def is_contains_peanuts(self, x):
+        return torch.sum(torch.stack([v * torch.exp(-((x - i * v) ** 2) / 0.00001) for i, v in enumerate(self.contains_peanuts)], dim=0), dim=0)
+    
+    def is_contains_fish(self, x):
+        return torch.sum(torch.stack([v * torch.exp(-((x - i * v) ** 2) / 0.00001) for i, v in enumerate(self.contains_fish)], dim=0), dim=0)
+    
+    def is_contains_soy(self, x):
+        return torch.sum(torch.stack([v * torch.exp(-((x - i * v) ** 2) / 0.00001) for i, v in enumerate(self.contains_soy)], dim=0), dim=0)
+    
+    def is_contains_sesame(self, x):
+        return torch.sum(torch.stack([v * torch.exp(-((x - i * v) ** 2) / 0.00001) for i, v in enumerate(self.contains_sesame)], dim=0), dim=0)
+    
+    def is_fruits(self, x):
+        return torch.sum(torch.stack([v * torch.exp(-((x - i * v) ** 2) / 0.00001) for i, v in enumerate(self.fruits)], dim=0), dim=0)
+    
+    def is_vegetables(self, x):
+        return torch.sum(torch.stack([v * torch.exp(-((x - i * v) ** 2) / 0.00001) for i, v in enumerate(self.vegetables)], dim=0), dim=0)
+    
+    def is_cheese(self, x):
+        return torch.sum(torch.stack([v * torch.exp(-((x - i * v) ** 2) / 0.00001) for i, v in enumerate(self.cheese)], dim=0), dim=0)
+    
+    def is_meat(self, x):
+        return torch.sum(torch.stack([v * torch.exp(-((x - i * v) ** 2) / 0.00001) for i, v in enumerate(self.meat)], dim=0), dim=0)
+    
+    def is_cereal(self, x):
+        return torch.sum(torch.stack([v * torch.exp(-((x - i * v) ** 2) / 0.00001) for i, v in enumerate(self.cereal)], dim=0), dim=0)
+
     def forward(self, y_pred, y):
         pred_ids = y_pred[..., 0]       # Shape: (batch_size, 7, 3, M)
         pred_amounts = y_pred[..., 1]   
@@ -249,7 +307,7 @@ if __name__ == "__main__":
 
     #print(y_pred)
 
-    train_model(training_loader, model, myLoss, optimizer, 50, device)
+    train_model(training_loader, model, myLoss, optimizer, 100, device)
 
     y_pred = model(x.to(device))
 

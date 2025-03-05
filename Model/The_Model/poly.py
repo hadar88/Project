@@ -41,22 +41,25 @@ def chebyshev_eval(x, coefficients):
     
     return result
 
-
 print("Reading Data...")
 # Load data
 data = read_foods_tensor()
 
 # Prepare x and y
 x = torch.tensor(range(len(data)))
-y = data[:, FP.CALORIES.value]
+y = data[:, FP.VEGETARIAN.value]
 
+def multiple_bell_curves(x):
+    global y
+
+    return torch.sum(torch.stack([v * torch.exp(-((x - i * v) ** 2) / 0.00001) for i, v in enumerate(y)], dim=0), dim=0)
 
 print("Fitting...")
 # Fit Chebyshev polynomial using NumPy
-coeffs = Chebyshev.fit(x, y, 446)
+# coeffs = Chebyshev.fit(x, y, 446)
 
 # Convert NumPy coefficients to list
-coefficients = torch.tensor(coeffs.coef)
+# coefficients = torch.tensor(coeffs.coef)
 
 # # Generate y values using the PyTorch Chebyshev evaluation
 # y_fit = chebyshev_eval(x, coefficients)
@@ -74,19 +77,25 @@ coefficients = torch.tensor(coeffs.coef)
 # Test with different input values
 # test = torch.tensor([0, 1, 10, 59.8, 100, 178.4, 200, 210, 220, 222, 222.5, 223, 224])
 test = torch.tensor([
-12, 237.45, 0.83, 189, 76.29, 143, 251.67, 45, 112.56, 203,
+6, 12, 237.45, 0.83, 189, 76.29, 143, 251.67, 45, 112.56, 203,
 18.72, 134, 89.34, 211, 5.67, 167, 42.91, 226, 98, 155.23,
 67.45, 11, 242.78, 33, 176.54, 109, 54.12, 201.36, 87, 22.65,
 139, 71.89, 216, 39.47, 184, 62.13, 247, 105, 19.76, 230,
-53, 127.42, 94.56, 172, 7.31, 241, 115, 66.28, 198, 36.95
+53, 127.42, 94.56, 172, 7.31, 241, 115, 66.28, 198, 36.95, 0.00
 ])
 
+
 print("Evaluating...")
-test_fit = chebyshev_eval(compose_them(test), coefficients)
+# test_fit = chebyshev_eval(compose_them(test), coefficients)
 
-printable = [(test[i], test_fit[i]) for i in range(len(test))]
+# printable = [(test[i], test_fit[i]) for i in range(len(test))]
 
-print("Test input:", test)
-# print the results line by line
-for i in range(len(printable)):
-    print(f"Input: {printable[i][0]:.2f}, Fit: {printable[i][1]:.2f}")
+print(compose_them(torch.tensor(241.00)))
+
+for x in test:
+    print(f"{x:.2f} -> {multiple_bell_curves(compose_them(x)):.2f}")
+
+# print("Test input:", test)
+# # print the results line by line
+# for i in range(len(printable)):
+#     print(f"Input: {printable[i][0]:.2f}, Fit: {printable[i][1]:.2f}")
