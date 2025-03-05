@@ -15,7 +15,7 @@ import torch
 from numpy.polynomial.chebyshev import Chebyshev
 
 
-BATCH_SIZE = 64
+BATCH_SIZE = 256
 FOODS_DATA_PATH = "../../Data/layouts/FoodsByID.json"
 
 
@@ -178,21 +178,19 @@ class MenuLoss(nn.Module):
         """ Evaluate a Chebyshev polynomial expansion using PyTorch. """
         # Normalize x to [-1, 1] range for Chebyshev evaluation
         x_norm = x / 111 - 1
-
+        
         # Initialize Chebyshev polynomials
-        T0 = torch.ones_like(x_norm)
-        T1 = x_norm
-
+        T0 = torch.ones_like(x_norm, device=self.device)
+        T1 = x_norm.to(self.device)
+        
         # Compute the polynomial expansion
-        result = coefficients[0] * T0
-        if len(coefficients) > 1:
-            result += coefficients[1] * T1
-
+        result = coefficients[0] * T0 + coefficients[1] * T1
+        
         for n in range(2, len(coefficients)):
             T2 = 2 * x_norm * T1 - T0
             result += coefficients[n] * T2
             T0, T1 = T1, T2
-
+        
         return result
 
 
@@ -251,7 +249,7 @@ if __name__ == "__main__":
 
     #print(y_pred)
 
-    train_model(training_loader, model, myLoss, optimizer, 40, device)
+    train_model(training_loader, model, myLoss, optimizer, 50, device)
 
     y_pred = model(x.to(device))
 
