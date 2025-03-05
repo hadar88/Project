@@ -23,35 +23,21 @@ def compose_them(x):
     return mask(round_ste(x))
 
 def chebyshev_eval(x, coefficients):
-    """
-    Evaluate a Chebyshev polynomial expansion using PyTorch.
-    
-    Parameters:
-    -----------
-    x : torch.Tensor
-        Input tensor for evaluation (assumed to require gradients)
-    coefficients : torch.Tensor
-        Coefficients of the Chebyshev polynomial expansion
-    
-    Returns:
-    --------
-    torch.Tensor
-        Evaluated Chebyshev polynomial expansion
-    """
+    """ Evaluate a Chebyshev polynomial expansion using PyTorch. """
     # Normalize x to [-1, 1] range for Chebyshev evaluation
     x_norm = x / 111 - 1
     
     # Initialize Chebyshev polynomials
-    T = [torch.ones_like(x_norm), x_norm]
-    
-    # Compute additional Chebyshev polynomials up to the highest degree
-    for n in range(2, len(coefficients)):
-        T.append(2 * x_norm * T[n-1] - T[n-2])
+    T0 = torch.ones_like(x_norm)
+    T1 = x_norm
     
     # Compute the polynomial expansion
-    result = coefficients[0] * torch.ones_like(x)
-    for i in range(1, len(coefficients)):
-        result += coefficients[i] * T[i]
+    result = coefficients[0] * T0 + coefficients[1] * T1
+    
+    for n in range(2, len(coefficients)):
+        T2 = 2 * x_norm * T1 - T0
+        result += coefficients[n] * T2
+        T0, T1 = T1, T2
     
     return result
 
@@ -62,7 +48,7 @@ data = read_foods_tensor()
 
 # Prepare x and y
 x = torch.tensor(range(len(data)))
-y = data[:, FP.SUGARS.value]
+y = data[:, FP.CALORIES.value]
 
 
 print("Fitting...")

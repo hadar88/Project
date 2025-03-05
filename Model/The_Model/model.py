@@ -25,12 +25,9 @@ if __name__ == "__main__":
     # training_subset = Subset(training_set, range(1000))
     training_loader = DataLoader(training_set, batch_size=BATCH_SIZE, shuffle=True)
 
-
-
 # print("Loading Testset...")
 # test_set = MenusDataset(train=False)
 # test_loader = DataLoader(test_set, batch_size=BATCH_SIZE, shuffle=False)
-
 
 class MenuGenerator(nn.Module):
     def __init__(self):
@@ -55,18 +52,35 @@ class MenuGenerator(nn.Module):
 ###### Loss ##########
 
 class MenuLoss(nn.Module):
-    def __init__(self):
+    def __init__(self, device):
         super(MenuLoss, self).__init__()
-        self.ZERO_NONZERO_PENALTY = 1.0
+        self.ZERO_PENALTY = 2500.0
         self.HIGHEST_ID = 222
-        
-        # Compute Chebyshev coefficients
+        self.device = device
+
         data = read_foods_tensor()
         x = torch.tensor(range(len(data)))
         
+        # Compute Chebyshev coefficients
         calories = data[:, FP.CALORIES.value]
         calories_poly = Chebyshev.fit(x, calories, 446)
-        self.calories_coeffs = torch.tensor(calories_poly.coef)
+        self.calories_coeffs = torch.tensor(calories_poly.coef).to(device)
+
+        carbohydrate = data[:, FP.CARBOHYDRATE.value]
+        carbohydrate_poly = Chebyshev.fit(x, carbohydrate, 446)
+        self.carbohydrate_coeffs = torch.tensor(carbohydrate_poly.coef).to(device)
+
+        sugars = data[:, FP.SUGARS.value]
+        sugars_poly = Chebyshev.fit(x, sugars, 446)
+        self.sugars_coeffs = torch.tensor(sugars_poly.coef).to(device)
+
+        fat = data[:, FP.FAT.value]
+        fat_poly = Chebyshev.fit(x, fat, 446)
+        self.fat_coeffs = torch.tensor(fat_poly.coef).to(device)
+
+        proteins = data[:, FP.PROTEIN.value]
+        proteins_poly = Chebyshev.fit(x, proteins, 446)
+        self.proteins_coeffs = torch.tensor(proteins_poly.coef).to(device)
 
     def forward(self, y_pred, y):
         pred_ids = y_pred[..., 0]       # Shape: (batch_size, 7, 3, M)
@@ -77,15 +91,10 @@ class MenuLoss(nn.Module):
 
         ### Punish the model if it gives a positive amount for a 0-id food, or vice versa ###
 
-        id_zero_mask = 1 - torch.tanh(4 * pred_ids)         # ids == 0
-        amount_nonzero_mask = torch.tanh(4 * pred_amounts)  # amounts != 0
-        case1 = id_zero_mask * amount_nonzero_mask
+        case1 = 1 - torch.tanh(4 * pred_ids)         # ids == 0
+        case2 = 1 - torch.tanh(4 * pred_amounts)  # amounts == 0
         
-        id_nonzero_mask = 1 - id_zero_mask          # ids != 0
-        amount_zero_mask = 1 - amount_nonzero_mask  # amounts == 0
-        case2 = id_nonzero_mask * amount_zero_mask
-        
-        zeros_nonzeros_penalty = self.ZERO_NONZERO_PENALTY * (case1 + case2)            # Combine both cases
+        zeros_nonzeros_penalty = self.ZERO_PENALTY * case1 * 2 + self.ZERO_PENALTY * case2       # Combine both cases
         zeros_nonzeros_penalty = zeros_nonzeros_penalty.sum(dim=(1, 2, 3)).mean()       # Sum and average for all menus in the batch
 
         ### Penalize the model for predicting an id that is not in the dataset ###
@@ -97,52 +106,48 @@ class MenuLoss(nn.Module):
         ### Compute differences in calories, carbs, sugars, fat and proteins ###
 
         # True:
+        
+        true_calories = self.chebyshev_eval(true_ids, self.calories_coeffs)  # calories of each food in y (the true "label")
+        calories_in_true_menu = (true_calories * true_amounts / 100).sum(dim=(1, 2, 3)) / 7
 
-        true_amounts = true_amounts.reshape(y.size(0), -1)  # amount of each food in y (the true "label")
+        true_carbohydrate = self.chebyshev_eval(true_ids, self.carbohydrate_coeffs)  # calories of each food in y (the true "label")
+        carbohydrate_in_true_menu = (true_carbohydrate * true_amounts / 100).sum(dim=(1, 2, 3)) / 7 
         
-        true_calories = self.chebyshev_eval(true_ids, self.calories_coeffs).reshape(y.size(0), -1)  # calories of each food in y (the true "label")
-        calories_in_true_menu = (true_calories * true_amounts / 100).sum(dim=1) / 7
-
-        # true_carbohydrate = data[true_ids.flatten().long(), FP.CARBOHYDRATE.value].reshape(y.size(0), -1)   # calories of each food in y (the true "label")
-        # carbohydrate_in_true_menu = (true_carbohydrate * true_amounts / 100).sum(dim=1) / 7
+        true_sugars = self.chebyshev_eval(true_ids, self.sugars_coeffs)  # calories of each food in y (the true "label")
+        sugars_in_true_menu = (true_sugars * true_amounts / 100).sum(dim=(1, 2, 3)) / 7
         
-        # true_sugars = data[true_ids.flatten().long(), FP.SUGARS.value].reshape(y.size(0), -1)   # calories of each food in y (the true "label")
-        # sugars_in_true_menu = (true_sugars * true_amounts / 100).sum(dim=1) / 7
+        true_fat = self.chebyshev_eval(true_ids, self.fat_coeffs)  # calories of each food in y (the true "label")
+        fat_in_true_menu = (true_fat * true_amounts / 100).sum(dim=(1, 2, 3)) / 7
         
-        # true_fat = data[true_ids.flatten().long(), FP.FAT.value].reshape(y.size(0), -1)   # calories of each food in y (the true "label")
-        # fat_in_true_menu = (true_fat * true_amounts / 100).sum(dim=1) / 7
-        
-        # true_proteins = data[true_ids.flatten().long(), FP.PROTEIN.value].reshape(y.size(0), -1)   # calories of each food in y (the true "label")
-        # proteins_in_true_menu = (true_proteins * true_amounts / 100).sum(dim=1) / 7
+        true_proteins = self.chebyshev_eval(true_ids, self.proteins_coeffs)  # calories of each food in y (the true "label")
+        proteins_in_true_menu = (true_proteins * true_amounts / 100).sum(dim=(1, 2, 3)) / 7
 
         # Pred:
 
-        pred_amounts = pred_amounts.reshape(y_pred.size(0), -1)
-
-        pred_calories = self.chebyshev_eval(self.round_and_mask(pred_ids), self.calories_coeffs).reshape(y_pred.size(0), -1)
-        calories_in_pred_menu = (pred_calories * pred_amounts / 100).sum(dim=1) / 7
+        pred_calories = self.chebyshev_eval(self.round_and_mask(pred_ids), self.calories_coeffs)
+        calories_in_pred_menu = (pred_calories * pred_amounts / 100).sum(dim=(1, 2, 3)) / 7
         
-        # pred_carbohydrate = data[(pred_ids * valid_pred_ids_mask).flatten().long(), FP.CARBOHYDRATE.value].reshape(y_pred.size(0), -1)
-        # carbohydrate_in_pred_menu = (pred_carbohydrate * pred_amounts / 100).sum(dim=1) / 7
+        pred_carbohydrate = self.chebyshev_eval(self.round_and_mask(pred_ids), self.carbohydrate_coeffs)
+        carbohydrate_in_pred_menu = (pred_carbohydrate * pred_amounts / 100).sum(dim=(1, 2, 3)) / 7
         
-        # pred_sugars = data[(pred_ids * valid_pred_ids_mask).flatten().long(), FP.SUGARS.value].reshape(y_pred.size(0), -1)
-        # sugars_in_pred_menu = (pred_sugars * pred_amounts / 100).sum(dim=1) / 7
+        pred_sugars = self.chebyshev_eval(self.round_and_mask(pred_ids), self.sugars_coeffs)
+        sugars_in_pred_menu = (pred_sugars * pred_amounts / 100).sum(dim=(1, 2, 3)) / 7
         
-        # pred_fat = data[(pred_ids * valid_pred_ids_mask).flatten().long(), FP.FAT.value].reshape(y_pred.size(0), -1)
-        # fat_in_pred_menu = (pred_fat * pred_amounts / 100).sum(dim=1) / 7
+        pred_fat = self.chebyshev_eval(self.round_and_mask(pred_ids), self.fat_coeffs)
+        fat_in_pred_menu = (pred_fat * pred_amounts / 100).sum(dim=(1, 2, 3)) / 7
         
-        # pred_proteins = data[(pred_ids * valid_pred_ids_mask).flatten().long(), FP.PROTEIN.value].reshape(y_pred.size(0), -1)
-        # proteins_in_pred_menu = (pred_proteins * pred_amounts / 100).sum(dim=1) / 7
+        pred_proteins = self.chebyshev_eval(self.round_and_mask(pred_ids), self.proteins_coeffs)
+        proteins_in_pred_menu = (pred_proteins * pred_amounts / 100).sum(dim=(1, 2, 3)) / 7
 
         # Diff:
 
-        calories_diff = ((calories_in_true_menu - calories_in_pred_menu) ** 2).mean()
-        # carbohydrate_diff = ((carbohydrate_in_true_menu - carbohydrate_in_pred_menu) ** 2).mean()
-        # sugars_diff = ((sugars_in_true_menu - sugars_in_pred_menu) ** 2).mean()
-        # fat_diff = ((fat_in_true_menu - fat_in_pred_menu) ** 2).mean()
-        # proteins_diff = ((proteins_in_true_menu - proteins_in_pred_menu) ** 2).mean()
+        calories_diff = (((calories_in_true_menu - calories_in_pred_menu)/100) ** 2).mean()
+        carbohydrate_diff = (((carbohydrate_in_true_menu - carbohydrate_in_pred_menu)/100) ** 2).mean()
+        sugars_diff = ((sugars_in_true_menu - sugars_in_pred_menu) ** 2).mean()
+        fat_diff = ((fat_in_true_menu - fat_in_pred_menu) ** 2).mean()
+        proteins_diff = ((proteins_in_true_menu - proteins_in_pred_menu) ** 2).mean()
         
-        nutrition_diff = calories_diff # + carbohydrate_diff + sugars_diff + fat_diff + proteins_diff
+        nutrition_diff = calories_diff + carbohydrate_diff + sugars_diff + fat_diff + proteins_diff
 
         ### Compute the total loss ###
 
@@ -173,19 +178,21 @@ class MenuLoss(nn.Module):
         """ Evaluate a Chebyshev polynomial expansion using PyTorch. """
         # Normalize x to [-1, 1] range for Chebyshev evaluation
         x_norm = x / 111 - 1
-        
+
         # Initialize Chebyshev polynomials
-        T = [torch.ones_like(x_norm), x_norm]
-        
-        # Compute additional Chebyshev polynomials up to the highest degree
-        for n in range(2, len(coefficients)):
-            T.append(2 * x_norm * T[n-1] - T[n-2])
-        
+        T0 = torch.ones_like(x_norm)
+        T1 = x_norm
+
         # Compute the polynomial expansion
-        result = coefficients[0] * torch.ones_like(x)
-        for i in range(1, len(coefficients)):
-            result += coefficients[i] * T[i]
-        
+        result = coefficients[0] * T0
+        if len(coefficients) > 1:
+            result += coefficients[1] * T1
+
+        for n in range(2, len(coefficients)):
+            T2 = 2 * x_norm * T1 - T0
+            result += coefficients[n] * T2
+            T0, T1 = T1, T2
+
         return result
 
 
@@ -233,8 +240,8 @@ if __name__ == "__main__":
     data = read_foods_tensor().to(device)
 
     model = MenuGenerator().to(device)
-    myLoss = MenuLoss()
-    optimizer = optim.Adam(model.parameters(), lr=0.01)
+    myLoss = MenuLoss(device).to(device)
+    optimizer = optim.Adam(model.parameters(), lr=0.001)
 
     print("Training...")
 
@@ -244,9 +251,8 @@ if __name__ == "__main__":
 
     #print(y_pred)
 
-    train_model(training_loader, model, myLoss, optimizer, 5, device)
+    train_model(training_loader, model, myLoss, optimizer, 40, device)
 
+    y_pred = model(x.to(device))
 
-    # y_pred = model(x.to(device))
-
-    # print(y_pred)
+    print(y_pred)
