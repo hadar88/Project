@@ -1,4 +1,3 @@
-import numpy as np
 from make_dataset import read_foods_tensor, FoodProperties as FP
 import torch
 from numpy.polynomial.chebyshev import Chebyshev
@@ -71,7 +70,7 @@ print("Fitting...")
 coeffs = Chebyshev.fit(x, y, 446)
 
 # Convert NumPy coefficients to list
-coefficients = coeffs.coef.tolist()
+coefficients = torch.tensor(coeffs.coef)
 
 # # Generate y values using the PyTorch Chebyshev evaluation
 # y_fit = chebyshev_eval(x, coefficients)

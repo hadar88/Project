@@ -1,16 +1,18 @@
 from make_dataset import MenusDataset, read_foods_tensor, FoodProperties as FP
 from menu_output_transform import transform_batch, transform_batch2
 import torch
-import json
 from torch.utils.data import DataLoader, Subset
 import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F
 from tqdm import tqdm
-import numpy as np
 import matplotlib
 matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
+import numpy as np
+from make_dataset import read_foods_tensor, FoodProperties as FP
+import torch
+from numpy.polynomial.chebyshev import Chebyshev
 
 
 BATCH_SIZE = 64
@@ -57,6 +59,14 @@ class MenuLoss(nn.Module):
         super(MenuLoss, self).__init__()
         self.ZERO_NONZERO_PENALTY = 1.0
         self.HIGHEST_ID = 222
+        
+        # Compute Chebyshev coefficients
+        data = read_foods_tensor()
+        x = torch.tensor(range(len(data)))
+        
+        calories = data[:, FP.CALORIES.value]
+        calories_poly = Chebyshev.fit(x, calories, 446)
+        self.calories_coeffs = torch.tensor(calories_poly.coef)
 
     def forward(self, y_pred, y):
         pred_ids = y_pred[..., 0]       # Shape: (batch_size, 7, 3, M)
@@ -64,7 +74,6 @@ class MenuLoss(nn.Module):
 
         true_ids = y[..., 0]            
         true_amounts = y[..., 1]        
-        valid_pred_ids_mask = (pred_ids > 0) & (pred_ids <= self.HIGHEST_ID)
 
         ### Punish the model if it gives a positive amount for a 0-id food, or vice versa ###
 
@@ -91,55 +100,93 @@ class MenuLoss(nn.Module):
 
         true_amounts = true_amounts.reshape(y.size(0), -1)  # amount of each food in y (the true "label")
         
-        true_calories = data[true_ids.flatten().long(), FP.CALORIES.value].reshape(y.size(0), -1)   # calories of each food in y (the true "label")
+        true_calories = self.chebyshev_eval(true_ids, self.calories_coeffs).reshape(y.size(0), -1)  # calories of each food in y (the true "label")
         calories_in_true_menu = (true_calories * true_amounts / 100).sum(dim=1) / 7
 
-        true_carbohydrate = data[true_ids.flatten().long(), FP.CARBOHYDRATE.value].reshape(y.size(0), -1)   # calories of each food in y (the true "label")
-        carbohydrate_in_true_menu = (true_carbohydrate * true_amounts / 100).sum(dim=1) / 7
+        # true_carbohydrate = data[true_ids.flatten().long(), FP.CARBOHYDRATE.value].reshape(y.size(0), -1)   # calories of each food in y (the true "label")
+        # carbohydrate_in_true_menu = (true_carbohydrate * true_amounts / 100).sum(dim=1) / 7
         
-        true_sugars = data[true_ids.flatten().long(), FP.SUGARS.value].reshape(y.size(0), -1)   # calories of each food in y (the true "label")
-        sugars_in_true_menu = (true_sugars * true_amounts / 100).sum(dim=1) / 7
+        # true_sugars = data[true_ids.flatten().long(), FP.SUGARS.value].reshape(y.size(0), -1)   # calories of each food in y (the true "label")
+        # sugars_in_true_menu = (true_sugars * true_amounts / 100).sum(dim=1) / 7
         
-        true_fat = data[true_ids.flatten().long(), FP.FAT.value].reshape(y.size(0), -1)   # calories of each food in y (the true "label")
-        fat_in_true_menu = (true_fat * true_amounts / 100).sum(dim=1) / 7
+        # true_fat = data[true_ids.flatten().long(), FP.FAT.value].reshape(y.size(0), -1)   # calories of each food in y (the true "label")
+        # fat_in_true_menu = (true_fat * true_amounts / 100).sum(dim=1) / 7
         
-        true_proteins = data[true_ids.flatten().long(), FP.PROTEIN.value].reshape(y.size(0), -1)   # calories of each food in y (the true "label")
-        proteins_in_true_menu = (true_proteins * true_amounts / 100).sum(dim=1) / 7
+        # true_proteins = data[true_ids.flatten().long(), FP.PROTEIN.value].reshape(y.size(0), -1)   # calories of each food in y (the true "label")
+        # proteins_in_true_menu = (true_proteins * true_amounts / 100).sum(dim=1) / 7
 
         # Pred:
 
         pred_amounts = pred_amounts.reshape(y_pred.size(0), -1)
 
-        pred_calories = data[(pred_ids * valid_pred_ids_mask).flatten().long(), FP.CALORIES.value].reshape(y_pred.size(0), -1)
+        pred_calories = self.chebyshev_eval(self.round_and_mask(pred_ids), self.calories_coeffs).reshape(y_pred.size(0), -1)
         calories_in_pred_menu = (pred_calories * pred_amounts / 100).sum(dim=1) / 7
         
-        pred_carbohydrate = data[(pred_ids * valid_pred_ids_mask).flatten().long(), FP.CARBOHYDRATE.value].reshape(y_pred.size(0), -1)
-        carbohydrate_in_pred_menu = (pred_carbohydrate * pred_amounts / 100).sum(dim=1) / 7
+        # pred_carbohydrate = data[(pred_ids * valid_pred_ids_mask).flatten().long(), FP.CARBOHYDRATE.value].reshape(y_pred.size(0), -1)
+        # carbohydrate_in_pred_menu = (pred_carbohydrate * pred_amounts / 100).sum(dim=1) / 7
         
-        pred_sugars = data[(pred_ids * valid_pred_ids_mask).flatten().long(), FP.SUGARS.value].reshape(y_pred.size(0), -1)
-        sugars_in_pred_menu = (pred_sugars * pred_amounts / 100).sum(dim=1) / 7
+        # pred_sugars = data[(pred_ids * valid_pred_ids_mask).flatten().long(), FP.SUGARS.value].reshape(y_pred.size(0), -1)
+        # sugars_in_pred_menu = (pred_sugars * pred_amounts / 100).sum(dim=1) / 7
         
-        pred_fat = data[(pred_ids * valid_pred_ids_mask).flatten().long(), FP.FAT.value].reshape(y_pred.size(0), -1)
-        fat_in_pred_menu = (pred_fat * pred_amounts / 100).sum(dim=1) / 7
+        # pred_fat = data[(pred_ids * valid_pred_ids_mask).flatten().long(), FP.FAT.value].reshape(y_pred.size(0), -1)
+        # fat_in_pred_menu = (pred_fat * pred_amounts / 100).sum(dim=1) / 7
         
-        pred_proteins = data[(pred_ids * valid_pred_ids_mask).flatten().long(), FP.PROTEIN.value].reshape(y_pred.size(0), -1)
-        proteins_in_pred_menu = (pred_proteins * pred_amounts / 100).sum(dim=1) / 7
+        # pred_proteins = data[(pred_ids * valid_pred_ids_mask).flatten().long(), FP.PROTEIN.value].reshape(y_pred.size(0), -1)
+        # proteins_in_pred_menu = (pred_proteins * pred_amounts / 100).sum(dim=1) / 7
 
         # Diff:
 
         calories_diff = ((calories_in_true_menu - calories_in_pred_menu) ** 2).mean()
-        carbohydrate_diff = ((carbohydrate_in_true_menu - carbohydrate_in_pred_menu) ** 2).mean()
-        sugars_diff = ((sugars_in_true_menu - sugars_in_pred_menu) ** 2).mean()
-        fat_diff = ((fat_in_true_menu - fat_in_pred_menu) ** 2).mean()
-        proteins_diff = ((proteins_in_true_menu - proteins_in_pred_menu) ** 2).mean()
+        # carbohydrate_diff = ((carbohydrate_in_true_menu - carbohydrate_in_pred_menu) ** 2).mean()
+        # sugars_diff = ((sugars_in_true_menu - sugars_in_pred_menu) ** 2).mean()
+        # fat_diff = ((fat_in_true_menu - fat_in_pred_menu) ** 2).mean()
+        # proteins_diff = ((proteins_in_true_menu - proteins_in_pred_menu) ** 2).mean()
         
-        nutrition_diff = calories_diff + carbohydrate_diff + sugars_diff + fat_diff + proteins_diff
+        nutrition_diff = calories_diff # + carbohydrate_diff + sugars_diff + fat_diff + proteins_diff
 
         ### Compute the total loss ###
 
         loss = zeros_nonzeros_penalty + id_range_penalty + nutrition_diff
 
         return loss
+    
+    class RoundSTE(torch.autograd.Function):
+        @staticmethod
+        def forward(ctx, input):
+            return torch.round(input)
+
+        @staticmethod
+        def backward(ctx, grad_output):
+            return grad_output
+    
+    def round_ste(self, input):
+        return self.RoundSTE.apply(input)
+
+    def mask(self, x):
+        """ approx. 0 for any id > 222 and the id itself for any id <= 222. """
+        return x * torch.sigmoid(50 * (222.5 - x))
+
+    def round_and_mask(self, x):
+        return self.mask(self.round_ste(x))
+
+    def chebyshev_eval(self, x, coefficients):
+        """ Evaluate a Chebyshev polynomial expansion using PyTorch. """
+        # Normalize x to [-1, 1] range for Chebyshev evaluation
+        x_norm = x / 111 - 1
+        
+        # Initialize Chebyshev polynomials
+        T = [torch.ones_like(x_norm), x_norm]
+        
+        # Compute additional Chebyshev polynomials up to the highest degree
+        for n in range(2, len(coefficients)):
+            T.append(2 * x_norm * T[n-1] - T[n-2])
+        
+        # Compute the polynomial expansion
+        result = coefficients[0] * torch.ones_like(x)
+        for i in range(1, len(coefficients)):
+            result += coefficients[i] * T[i]
+        
+        return result
 
 
 ######################
@@ -186,7 +233,6 @@ if __name__ == "__main__":
     data = read_foods_tensor().to(device)
 
     model = MenuGenerator().to(device)
-    # criterion = nn.MSELoss()
     myLoss = MenuLoss()
     optimizer = optim.Adam(model.parameters(), lr=0.01)
 
@@ -198,7 +244,7 @@ if __name__ == "__main__":
 
     #print(y_pred)
 
-    train_model(training_loader, model, myLoss, optimizer, 100, device)
+    train_model(training_loader, model, myLoss, optimizer, 5, device)
 
 
     # y_pred = model(x.to(device))
