@@ -93,67 +93,67 @@ class MenuLoss(nn.Module):
 
         ### Punish the model if it gives a positive amount for a 0-id food, or vice versa ###
 
-        case1 = 1 - torch.tanh(4 * pred_ids)  # ids == 0
-        case2 = 1 - torch.tanh(4 * pred_amounts)  # amounts == 0
+        case1 = 1 - torch.tanh(2 * pred_ids)  # ids == 0
+        case2 = 1 - torch.tanh(2 * pred_amounts)  # amounts == 0
 
         zeros_penalty = self.ZERO_PENALTY * (2 * case1 + case2)  # Combine both cases
         zeros_penalty = zeros_penalty.sum(dim=(1, 2, 3)).mean()  # Sum and average for all menus in the batch
 
         ### Penalize the model for predicting an id that is not in the dataset(above 222) ###
 
-        id_range_penalty = (pred_ids * (pred_ids - 222)) / 1000
+        id_range_penalty = torch.relu(pred_ids - 222) / 5
         id_range_penalty = id_range_penalty.sum(dim=(1, 2, 3)).mean()
 
         ### Compute differences in calories, carbs, sugars, fat and proteins ###
 
-        # nutrition_diff = 0.0
-        # preferences_diff = 0.0
-        # ingredients_diff = 0.0
+        nutrition_diff = 0.0
+        preferences_diff = 0.0
+        ingredients_diff = 0.0
 
-        # for fp in [FP.CALORIES, FP.CARBOHYDRATE, FP.SUGARS, FP.FAT, FP.PROTEIN]:
-        #     gold = (self.get_continuous_value(true_ids, fp) * true_amounts / 100).sum(dim=(1, 2, 3)) / 7
-        #     pred = (self.get_continuous_value(self.round_and_mask(pred_ids), fp) * pred_amounts / 100).sum(dim=(1, 2, 3)) / 7
-        #     nutrition_diff += l1loss(pred, gold) / 100
+        for fp in [FP.CALORIES, FP.CARBOHYDRATE, FP.SUGARS, FP.FAT, FP.PROTEIN]:
+            gold = (self.get_continuous_value(true_ids, fp) * true_amounts / 100).sum(dim=(1, 2, 3)) / 7
+            pred = (self.get_continuous_value(self.round_and_mask(pred_ids), fp) * pred_amounts / 100).sum(dim=(1, 2, 3)) / 7
+            nutrition_diff += l1loss(pred, gold) / 100
             
-        # for fp in [FP.VEGETARIAN, FP.VEGAN]:
-        #     gold = (1 - self.get_binary_value(true_ids, fp)).sum(dim=(1, 2, 3))
-        #     pred = (1 - self.get_binary_value(self.round_and_mask(pred_ids), fp)).sum(dim=(1, 2, 3))
-        #     preferences_diff += self.PREF_PENALTY * (torch.exp(-10 * gold) * pred.pow(2)).mean()
+        for fp in [FP.VEGETARIAN, FP.VEGAN]:
+            gold = (1 - self.get_binary_value(true_ids, fp)).sum(dim=(1, 2, 3))
+            pred = (1 - self.get_binary_value(self.round_and_mask(pred_ids), fp)).sum(dim=(1, 2, 3))
+            preferences_diff += self.PREF_PENALTY * (torch.exp(-10 * gold) * pred.pow(2)).mean()
 
-        # for fp in [FP.CONTAINS_EGGS, FP.CONTAINS_GLUTEN, FP.CONTAINS_MILK, FP.CONTAINS_PEANUTS_OR_NUTS, FP.CONTAINS_SOY, FP.CONTAINS_FISH, FP.CONTAINS_SESAME]:
-        #     gold = self.get_binary_value(true_ids, fp).sum(dim=(1, 2, 3))
-        #     pred = self.get_binary_value(self.round_and_mask(pred_ids), fp).sum(dim=(1, 2, 3))
-        #     preferences_diff += self.PREF_PENALTY * (torch.exp(-10 * gold) * pred.pow(2)).mean()
+        for fp in [FP.CONTAINS_EGGS, FP.CONTAINS_GLUTEN, FP.CONTAINS_MILK, FP.CONTAINS_PEANUTS_OR_NUTS, FP.CONTAINS_SOY, FP.CONTAINS_FISH, FP.CONTAINS_SESAME]:
+            gold = self.get_binary_value(true_ids, fp).sum(dim=(1, 2, 3))
+            pred = self.get_binary_value(self.round_and_mask(pred_ids), fp).sum(dim=(1, 2, 3))
+            preferences_diff += self.PREF_PENALTY * (torch.exp(-10 * gold) * pred.pow(2)).mean()
 
-        # for fp in [FP.FRUIT, FP.VEGETABLE, FP.CHEESE, FP.MEAT, FP.CEREAL]:
-        #     gold = self.get_binary_value(true_ids, fp).sum(dim=(1, 2, 3))
-        #     pred = self.get_binary_value(self.round_and_mask(pred_ids), fp).sum(dim=(1, 2, 3))
-        #     ingredients_diff += l1loss(pred, gold) / 100
+        for fp in [FP.FRUIT, FP.VEGETABLE, FP.CHEESE, FP.MEAT, FP.CEREAL]:
+            gold = self.get_binary_value(true_ids, fp).sum(dim=(1, 2, 3))
+            pred = self.get_binary_value(self.round_and_mask(pred_ids), fp).sum(dim=(1, 2, 3))
+            ingredients_diff += l1loss(pred, gold) / 100
 
-        # ### Compute differences in breakfast, lunch and dinner ###
+        ### Compute differences in breakfast, lunch and dinner ###
 
-        # meals_diff = 0.0
+        meals_diff = 0.0
 
-        # for i in range(3):
-        #     gold = (self.get_continuous_value(true_ids[:, :, i], FP.CALORIES) * true_amounts[:, :, i] / 100).sum(dim=(1, 2)) / 7
-        #     pred = (self.get_continuous_value(self.round_and_mask(pred_ids[:, :, i]), FP.CALORIES) * pred_amounts[:, :, i] / 100).sum(dim=(1, 2)) / 7
-        #     meals_diff += l1loss(pred, gold) / 100
+        for i in range(3):
+            gold = (self.get_continuous_value(true_ids[:, :, i], FP.CALORIES) * true_amounts[:, :, i] / 100).sum(dim=(1, 2)) / 7
+            pred = (self.get_continuous_value(self.round_and_mask(pred_ids[:, :, i]), FP.CALORIES) * pred_amounts[:, :, i] / 100).sum(dim=(1, 2)) / 7
+            meals_diff += l1loss(pred, gold) / 100
 
-        # ### Compute the MSE ###
+        ### Compute the MSE ###
 
-        # true_calorie_values = self.get_continuous_value(true_ids, FP.CALORIES) / 100
-        # true_calories_per_day = (true_amounts * true_calorie_values).sum(dim=(2, 3))
-        # true_mses = ((true_calories_per_day - true_calories_per_day.mean(dim=1, keepdim=True)).pow(2)).mean(dim=1)
+        true_calorie_values = self.get_continuous_value(true_ids, FP.CALORIES) / 100
+        true_calories_per_day = (true_amounts * true_calorie_values).sum(dim=(2, 3))
+        true_mses = ((true_calories_per_day - true_calories_per_day.mean(dim=1, keepdim=True)).pow(2)).mean(dim=1)
 
-        # pred_calorie_value = self.get_continuous_value(self.round_and_mask(pred_ids), FP.CALORIES) / 100
-        # pred_calories_per_day = (pred_amounts * pred_calorie_value).sum(dim=(2, 3))
-        # pred_mses = ((pred_calories_per_day - pred_calories_per_day.mean(dim=1, keepdim=True)).pow(2)).mean(dim=1)
+        pred_calorie_value = self.get_continuous_value(self.round_and_mask(pred_ids), FP.CALORIES) / 100
+        pred_calories_per_day = (pred_amounts * pred_calorie_value).sum(dim=(2, 3))
+        pred_mses = ((pred_calories_per_day - pred_calories_per_day.mean(dim=1, keepdim=True)).pow(2)).mean(dim=1)
 
-        # mse_diff = l1loss(pred_mses, true_mses)
+        mse_diff = l1loss(pred_mses, true_mses)
 
         ### Compute the total loss ###
 
-        loss = zeros_penalty + id_range_penalty #+ nutrition_diff + preferences_diff + ingredients_diff + meals_diff + mse_diff
+        loss = zeros_penalty + id_range_penalty + nutrition_diff + preferences_diff + ingredients_diff + meals_diff + mse_diff
 
         return loss
 
@@ -197,6 +197,7 @@ def train_model(dataloader, model, criterion, optimizer, epochs, device):
             y_pred = model(x)
 
             loss = criterion(y_pred, y)
+            
             loss.backward()
 
             optimizer.step()
@@ -226,9 +227,9 @@ if __name__ == "__main__":
 
     x, _ = training_set[0]
 
-    train_model(training_loader, model, myLoss, optimizer, 250, device)
+    train_model(training_loader, model, myLoss, optimizer, 200, device)
 
-    VERSION = 2.0
+    VERSION = 4.0
 
     torch.save(model, f"saved_models/model_v{VERSION}.pth")
 
