@@ -63,7 +63,7 @@ class MenuLoss(nn.Module):
     def get_binary_value(self, x, category: FP):
         return torch.sum(
             torch.stack([
-                    v * torch.exp(-((x - i * v) ** 2) / 0.01)
+                    v * torch.exp(-((x - i * v).pow(2)) / 0.01)
                     for i, v in enumerate(self.data[:, category.value])],
                 dim=0,
             ),
@@ -74,7 +74,7 @@ class MenuLoss(nn.Module):
         return torch.sum(
             torch.stack(
                 [
-                    v * torch.exp(-((x - i) ** 2) / 0.01)
+                    v * torch.exp(-((x - i).pow(2)) / 0.01)
                     for i, v in enumerate(self.data[:, category.value])
                 ],
                 dim=0,
@@ -83,6 +83,8 @@ class MenuLoss(nn.Module):
         )
 
     def forward(self, y_pred, y):
+        l1loss = nn.SmoothL1Loss()
+
         pred_ids = y_pred[..., 0]  # Shape: (batch_size, 7, 3, M)
         pred_amounts = y_pred[..., 1]
 
@@ -94,33 +96,64 @@ class MenuLoss(nn.Module):
         case1 = 1 - torch.tanh(4 * pred_ids)  # ids == 0
         case2 = 1 - torch.tanh(4 * pred_amounts)  # amounts == 0
 
-        zeros_nonzeros_penalty = self.ZERO_PENALTY * (2 * case1 + case2)  # Combine both cases
-        zeros_nonzeros_penalty = zeros_nonzeros_penalty.sum(dim=(1, 2, 3)).mean()  # Sum and average for all menus in the batch
+        zeros_penalty = self.ZERO_PENALTY * (2 * case1 + case2)  # Combine both cases
+        zeros_penalty = zeros_penalty.sum(dim=(1, 2, 3)).mean()  # Sum and average for all menus in the batch
 
-        ### Penalize the model for predicting an id that is not in the dataset ###
+        ### Penalize the model for predicting an id that is not in the dataset(above 222) ###
 
-        id_range_penalty = F.relu(pred_ids - 222)
-
+        id_range_penalty = (pred_ids * (pred_ids - 222)) / 1000
         id_range_penalty = id_range_penalty.sum(dim=(1, 2, 3)).mean()
 
         ### Compute differences in calories, carbs, sugars, fat and proteins ###
 
-        nutrition_diff = 0.0
-        preferences_diff = 0.0
+        # nutrition_diff = 0.0
+        # preferences_diff = 0.0
+        # ingredients_diff = 0.0
 
-        for fp in [FP.CALORIES, FP.CARBOHYDRATE, FP.SUGARS, FP.FAT, FP.PROTEIN]:
-            gold = (self.get_continuous_value(true_ids, fp) * true_amounts / 100).sum(dim=(1, 2, 3)) / 7
-            pred = (self.get_continuous_value(self.round_and_mask(pred_ids), fp) * pred_amounts / 100).sum(dim=(1, 2, 3)) / 7
-            nutrition_diff += (((gold - pred) / 100) ** 2).mean()
+        # for fp in [FP.CALORIES, FP.CARBOHYDRATE, FP.SUGARS, FP.FAT, FP.PROTEIN]:
+        #     gold = (self.get_continuous_value(true_ids, fp) * true_amounts / 100).sum(dim=(1, 2, 3)) / 7
+        #     pred = (self.get_continuous_value(self.round_and_mask(pred_ids), fp) * pred_amounts / 100).sum(dim=(1, 2, 3)) / 7
+        #     nutrition_diff += l1loss(pred, gold) / 100
             
-        for fp in [FP.VEGETARIAN]:
-            gold = (1 - self.get_binary_value(true_ids, fp)).sum(dim=(1, 2, 3))
-            pred = (1 - self.get_binary_value(self.round_and_mask(pred_ids), fp)).sum(dim=(1, 2, 3))
-            preferences_diff += self.PREF_PENALTY * (torch.exp(-10 * gold) * pred.pow(2)).mean()
+        # for fp in [FP.VEGETARIAN, FP.VEGAN]:
+        #     gold = (1 - self.get_binary_value(true_ids, fp)).sum(dim=(1, 2, 3))
+        #     pred = (1 - self.get_binary_value(self.round_and_mask(pred_ids), fp)).sum(dim=(1, 2, 3))
+        #     preferences_diff += self.PREF_PENALTY * (torch.exp(-10 * gold) * pred.pow(2)).mean()
+
+        # for fp in [FP.CONTAINS_EGGS, FP.CONTAINS_GLUTEN, FP.CONTAINS_MILK, FP.CONTAINS_PEANUTS_OR_NUTS, FP.CONTAINS_SOY, FP.CONTAINS_FISH, FP.CONTAINS_SESAME]:
+        #     gold = self.get_binary_value(true_ids, fp).sum(dim=(1, 2, 3))
+        #     pred = self.get_binary_value(self.round_and_mask(pred_ids), fp).sum(dim=(1, 2, 3))
+        #     preferences_diff += self.PREF_PENALTY * (torch.exp(-10 * gold) * pred.pow(2)).mean()
+
+        # for fp in [FP.FRUIT, FP.VEGETABLE, FP.CHEESE, FP.MEAT, FP.CEREAL]:
+        #     gold = self.get_binary_value(true_ids, fp).sum(dim=(1, 2, 3))
+        #     pred = self.get_binary_value(self.round_and_mask(pred_ids), fp).sum(dim=(1, 2, 3))
+        #     ingredients_diff += l1loss(pred, gold) / 100
+
+        # ### Compute differences in breakfast, lunch and dinner ###
+
+        # meals_diff = 0.0
+
+        # for i in range(3):
+        #     gold = (self.get_continuous_value(true_ids[:, :, i], FP.CALORIES) * true_amounts[:, :, i] / 100).sum(dim=(1, 2)) / 7
+        #     pred = (self.get_continuous_value(self.round_and_mask(pred_ids[:, :, i]), FP.CALORIES) * pred_amounts[:, :, i] / 100).sum(dim=(1, 2)) / 7
+        #     meals_diff += l1loss(pred, gold) / 100
+
+        # ### Compute the MSE ###
+
+        # true_calorie_values = self.get_continuous_value(true_ids, FP.CALORIES) / 100
+        # true_calories_per_day = (true_amounts * true_calorie_values).sum(dim=(2, 3))
+        # true_mses = ((true_calories_per_day - true_calories_per_day.mean(dim=1, keepdim=True)).pow(2)).mean(dim=1)
+
+        # pred_calorie_value = self.get_continuous_value(self.round_and_mask(pred_ids), FP.CALORIES) / 100
+        # pred_calories_per_day = (pred_amounts * pred_calorie_value).sum(dim=(2, 3))
+        # pred_mses = ((pred_calories_per_day - pred_calories_per_day.mean(dim=1, keepdim=True)).pow(2)).mean(dim=1)
+
+        # mse_diff = l1loss(pred_mses, true_mses)
 
         ### Compute the total loss ###
 
-        loss = zeros_nonzeros_penalty + id_range_penalty + nutrition_diff + preferences_diff
+        loss = zeros_penalty + id_range_penalty #+ nutrition_diff + preferences_diff + ingredients_diff + meals_diff + mse_diff
 
         return loss
 
@@ -191,10 +224,19 @@ if __name__ == "__main__":
 
     print("Training...")
 
-    x, _ = training_set[8]
+    x, _ = training_set[0]
 
-    train_model(training_loader, model, myLoss, optimizer, 20, device)
+    train_model(training_loader, model, myLoss, optimizer, 250, device)
+
+    VERSION = 2.0
+
+    torch.save(model, f"saved_models/model_v{VERSION}.pth")
 
     y_pred = model(x.to(device))
 
     print(y_pred)
+
+    # model = torch.load(f"saved_models/model_v{VERSION}.pth")
+    # model.eval()
+
+    # print(model(x.to(device)))
