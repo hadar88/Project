@@ -55,6 +55,7 @@ class MenuLoss(nn.Module):
     def __init__(self, device):
         super(MenuLoss, self).__init__()
         self.ZERO_PENALTY = 5000.0
+        self.PREF_PENALTY = 100.0
         self.device = device
 
         self.data = read_foods_tensor().to(device)
@@ -105,15 +106,21 @@ class MenuLoss(nn.Module):
         ### Compute differences in calories, carbs, sugars, fat and proteins ###
 
         nutrition_diff = 0.0
+        preferences_diff = 0.0
 
         for fp in [FP.CALORIES, FP.CARBOHYDRATE, FP.SUGARS, FP.FAT, FP.PROTEIN]:
             gold = (self.get_continuous_value(true_ids, fp) * true_amounts / 100).sum(dim=(1, 2, 3)) / 7
             pred = (self.get_continuous_value(self.round_and_mask(pred_ids), fp) * pred_amounts / 100).sum(dim=(1, 2, 3)) / 7
             nutrition_diff += (((gold - pred) / 100) ** 2).mean()
+            
+        for fp in [FP.VEGETARIAN]:
+            gold = (1 - self.get_binary_value(true_ids, fp)).sum(dim=(1, 2, 3))
+            pred = (1 - self.get_binary_value(self.round_and_mask(pred_ids), fp)).sum(dim=(1, 2, 3))
+            preferences_diff += self.PREF_PENALTY * (torch.exp(-10 * gold) * pred.pow(2)).mean()
 
         ### Compute the total loss ###
 
-        loss = zeros_nonzeros_penalty + id_range_penalty + nutrition_diff
+        loss = zeros_nonzeros_penalty + id_range_penalty + nutrition_diff + preferences_diff
 
         return loss
 
@@ -186,7 +193,7 @@ if __name__ == "__main__":
 
     x, _ = training_set[8]
 
-    train_model(training_loader, model, myLoss, optimizer, 100, device)
+    train_model(training_loader, model, myLoss, optimizer, 20, device)
 
     y_pred = model(x.to(device))
 
