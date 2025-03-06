@@ -54,7 +54,7 @@ class MenuGenerator(nn.Module):
 class MenuLoss(nn.Module):
     def __init__(self, device):
         super(MenuLoss, self).__init__()
-        self.ZERO_PENALTY = 2500.0
+        self.ZERO_PENALTY = 5000.0
         self.device = device
 
         self.data = read_foods_tensor().to(device)
@@ -104,19 +104,12 @@ class MenuLoss(nn.Module):
 
         ### Compute differences in calories, carbs, sugars, fat and proteins ###
 
-        # True:
-
         nutrition_diff = 0.0
 
-        for fp in [FP.CALORIES, FP.CARBOHYDRATE]:
+        for fp in [FP.CALORIES, FP.CARBOHYDRATE, FP.SUGARS, FP.FAT, FP.PROTEIN]:
             gold = (self.get_continuous_value(true_ids, fp) * true_amounts / 100).sum(dim=(1, 2, 3)) / 7
             pred = (self.get_continuous_value(self.round_and_mask(pred_ids), fp) * pred_amounts / 100).sum(dim=(1, 2, 3)) / 7
             nutrition_diff += (((gold - pred) / 100) ** 2).mean()
-
-        for fp in [FP.SUGARS, FP.FAT, FP.PROTEIN]:
-            gold = (self.get_continuous_value(true_ids, fp) * true_amounts / 100).sum(dim=(1, 2, 3)) / 7
-            pred = (self.get_continuous_value(self.round_and_mask(pred_ids), fp) * pred_amounts / 100).sum(dim=(1, 2, 3)) / 7
-            nutrition_diff += ((gold - pred) ** 2).mean()   # TODO: should we divide by 100?
 
         ### Compute the total loss ###
 
@@ -186,14 +179,14 @@ if __name__ == "__main__":
     data = read_foods_tensor().to(device)
 
     model = MenuGenerator().to(device)
-    myLoss = MenuLoss(device).to(device)
+    myLoss = MenuLoss(device).to(device)                                       
     optimizer = optim.Adam(model.parameters(), lr=0.001, weight_decay=0.0001)
 
     print("Training...")
 
-    x, _ = training_set[0]
+    x, _ = training_set[8]
 
-    train_model(training_loader, model, myLoss, optimizer, 500, device)
+    train_model(training_loader, model, myLoss, optimizer, 100, device)
 
     y_pred = model(x.to(device))
 

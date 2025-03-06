@@ -53,7 +53,7 @@ data = read_foods_tensor()
 
 # Prepare x and y
 x = torch.tensor(range(len(data)))
-y = data[:, FP.VEGAN.value]
+y = data[:, FP.CALORIES.value]
 
 
 def multiple_bell_curves(x):
@@ -114,13 +114,13 @@ print("Fitting...")
 # ])
 
 test = torch.range(0, 222.41, 0.7)
-# pred = multiple_bell_curves_mult(compose_them(test))
-pred = multiple_bell_curves(compose_them(test))
+pred = multiple_bell_curves_mult(compose_them(test))
+# pred = multiple_bell_curves(compose_them(test))
 gold = y[torch.round(test).long()]
 
 for t, p, g in zip(test, pred, gold):
     print(
-        f"{t:.2f} -> {p:.2f} vs {g:.2f}\t({abs(p - g)}{" !!!!!!!" if p != g else ''})"
+        f"{t:.2f} -> {p:.2f} vs {g:.2f}\t({abs(p - g)}{'!!!!!!!' if p != g else ''})"
     )
 
 # print("Evaluating...")
