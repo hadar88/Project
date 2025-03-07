@@ -54,7 +54,7 @@ class MenuGenerator(nn.Module):
 class MenuLoss(nn.Module):
     def __init__(self, device):
         super(MenuLoss, self).__init__()
-        self.ZERO_PENALTY = 5000.0
+        self.ZERO_PENALTY = 3000.0
         self.PREF_PENALTY = 100.0
         self.device = device
 
@@ -101,7 +101,7 @@ class MenuLoss(nn.Module):
 
         ### Penalize the model for predicting an id that is not in the dataset(above 222) ###
 
-        id_range_penalty = torch.relu(pred_ids - 222) / 5
+        id_range_penalty = torch.relu(pred_ids - 222)
         id_range_penalty = id_range_penalty.sum(dim=(1, 2, 3)).mean()
 
         ### Compute differences in calories, carbs, sugars, fat and proteins ###
@@ -211,6 +211,7 @@ def train_model(dataloader, model, criterion, optimizer, epochs, device):
 
     plt.plot(loss_history)
     plt.show()
+    plt.savefig("loss_plot.png")
 
 
 if __name__ == "__main__":
@@ -227,9 +228,9 @@ if __name__ == "__main__":
 
     x, _ = training_set[0]
 
-    train_model(training_loader, model, myLoss, optimizer, 200, device)
+    train_model(training_loader, model, myLoss, optimizer, 24, device)
 
-    VERSION = 5.0
+    VERSION = 1.0
 
     torch.save(model, f"saved_models/model_v{VERSION}.pth")
 
