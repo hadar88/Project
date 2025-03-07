@@ -65,72 +65,73 @@ def read_foods_tensor():
 
     return data_tensor
 
-def make_xs():
+def make_xs(split="train"):
     xs = []
+
+    if split not in ["train", "val", "test"]:
+        raise ValueError("Invalid split value. Choose from 'train', 'val', or 'test'.")
 
     with open(MENUS_INPUT, "r") as dataset_file:
         dataset = json.load(dataset_file)
 
-        for menu_id in dataset:
-            x = []
+        total_menus = len(dataset)
+        train_split = int(total_menus * 0.8)  # 80% for training
+        val_split = int(total_menus * 0.9)    # 10% for validation
 
-            for entry in dataset[menu_id]["Initial"]:
-                x.append(dataset[menu_id]["Initial"][entry])
+        for i, menu_id in enumerate(dataset):
+            x = [dataset[menu_id]["Initial"][entry] for entry in dataset[menu_id]["Initial"]]
 
-            xs.append(x)
+            if split == "train" and i < train_split:
+                xs.append(x)
+            elif split == "val" and train_split <= i < val_split:
+                xs.append(x)
+            elif split == "test" and val_split <= i:
+                xs.append(x)
 
-        return torch.tensor(xs)
+    return torch.tensor(xs)
 
-
-# def make_mids():
-#     labels = []
-
-#     with open(MENUS_INPUT, "r") as dataset_file:
-#         dataset = json.load(dataset_file)
-
-#         for menu_id in dataset:
-#             label = []
-
-#             for entry in dataset[menu_id]["Menu"]:
-#                 label.append(dataset[menu_id]["Menu"][entry])
-
-#             labels.append(label)
-
-#         return torch.tensor(labels)
-    
-
-def make_ys():
+def make_ys(split="train"):
     ys = []
-    max_len = 0
+
+    if split not in ["train", "val", "test"]:
+        raise ValueError("Invalid split value. Choose from 'train', 'val', or 'test'.")
 
     with open(MENUS_BY_ID, "r") as dataset_file:
+        max_foods_in_meal = 0
+
         dataset = json.load(dataset_file)
 
-        for menu_id in dataset:
+        total_menus = len(dataset)
+        train_split = int(total_menus * 0.8)  # 80% for training
+        val_split = int(total_menus * 0.9)    # 10% for validation
+
+        # Check what is the maximum number of foods in a meal
+        for i, menu_id in enumerate(dataset):
             y = dataset[menu_id]
-            y = mot.menu_dict_to_tensor(y)  # shape: 7x3xLx2
-            max_len = max(max_len, y.shape[2])
-            
-            ys.append(y)
+            y = mot.menu_dict_to_tensor(y)
+
+            max_foods_in_meal = max(max_foods_in_meal, y.shape[2])
+
+            if split == "train" and i < train_split:
+                ys.append(y)
+            elif split == "val" and train_split <= i < val_split:
+                ys.append(y)
+            elif split == "test" and val_split <= i:
+                ys.append(y)
 
         for i in range(len(ys)):
-            y = torch.zeros(7, 3, max_len, 2)
+            y = torch.zeros(7, 3, max_foods_in_meal, 2)
             y[:, :, :ys[i].shape[2], :] = ys[i]
             ys[i] = y
         
-        return torch.stack(ys)
+    return torch.stack(ys)
     
 # The DataSet
 
 class MenusDataset(Dataset):
-    def __init__(self, train: bool = True):
-        xs = make_xs()
-        # mids = make_mids()
-        ys = make_ys()
-
-        self.xs = xs[:int(0.8 * len(xs))] if train else xs[int(0.8 * len(xs)):]
-        # self.mids = mids[:int(0.8 * len(mids))] if train else mids[int(0.8 * len(mids)):]
-        self.ys = ys[:int(0.8 * len(ys))] if train else ys[int(0.8 * len(ys)):]
+    def __init__(self, split="train"):
+        self.xs = make_xs(split)
+        self.ys = make_ys(split)
 
     def __len__(self):
         return len(self.xs)
@@ -139,5 +140,9 @@ class MenusDataset(Dataset):
         # return self.xs[index], self.mids[index], self.ys[index]
         return self.xs[index], self.ys[index]
 
-# mids = make_mids()
-# print(mids[0])
+if __name__ == "__main__":
+    xs = make_xs("test")
+    ys = make_ys("test")
+
+    print(xs.shape)
+    print(ys.shape)
