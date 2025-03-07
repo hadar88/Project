@@ -229,7 +229,7 @@ if __name__ == "__main__":
 
     train_model(training_loader, model, myLoss, optimizer, 200, device)
 
-    VERSION = 4.0
+    VERSION = 5.0
 
     torch.save(model, f"saved_models/model_v{VERSION}.pth")
 
