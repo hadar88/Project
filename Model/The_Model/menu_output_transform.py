@@ -423,5 +423,10 @@ if __name__ == "__main__":
             [24.5345,  6.4614],
             [10.7857, 29.9506]]]]])
 
-    data = transform_batch2(ten, data, device)
-    print(data)
+    # data = transform_batch2(ten, data, device)
+    # printing = ["Calories", "Calories1", "Calories2", "Calories3", "Calories MSE", "Carbohydrate", 
+    #             "Sugars", "Fat", "Protein", "Fruit", "Vegetable", "Cheese", "Meat", "Cereal", 
+    #             "Vegetarian", "Vegan", "Contains eggs", "Contains milk", "Contains peanuts or nuts", 
+    #             "Contains fish", "Contains sesame", "Contains soy", "Contains gluten"]
+    # for i, v in enumerate(data[0]):
+    #     print(f"{printing[i]}: {v.item():.0f}")
