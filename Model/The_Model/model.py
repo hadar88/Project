@@ -44,10 +44,13 @@ def main():
         ### Train and save the model ###
 
         print("Training...")
-        train_model(dataloader, model, myLoss, optimizer, 24, device, True)
+        train_model(dataloader, model, myLoss, optimizer, 30, device, True)
 
         torch.save(model.state_dict(), f"saved_models/model_v{MODEL_VERSION}.pth")
         print(f"Model saved as saved_models/model_v{MODEL_VERSION}.pth")
+
+        evaluate_on_random_sample(dataloader, model, device)
+
     elif split == "val" or split == "test":
         ### Load the model and evaluate it ###
 
@@ -71,18 +74,21 @@ class MenuGenerator(nn.Module):
 
     def forward(self, x):
         y = torch.relu(self.fc1(x))
-        y = torch.relu(self.fc2(y))
-        y = torch.relu(self.fc3(y))
-        y = y.reshape(-1, 7, 3, 10, 2)
 
+        y = torch.relu(self.fc2(y))
+
+        y = torch.relu(self.fc3(y))
+
+        y = y.reshape(-1, 7, 3, 10, 2)
+        
         return y
 
 class MenuLoss(nn.Module):
     def __init__(self, device):
         super(MenuLoss, self).__init__()
 
-        self.ZERO_NONZERO_PENALTY = 2
-        self.OUT_OF_RANGE_PENALTY = 3
+        self.ZERO_NONZERO_PENALTY = 3
+        self.OUT_OF_RANGE_PENALTY = 2
         self.NUTRITION_PENALTY = 2
         self.PREF_PENALTY = 2
         self.ALERGENS_PENALTY = 3
@@ -96,6 +102,7 @@ class MenuLoss(nn.Module):
 
     def forward(self, y_pred, y):
         l1loss = nn.L1Loss()
+        mseloss = nn.MSELoss()
 
         pred_ids = y_pred[..., 0]       # Shape: (batch_size, 7, 3, M)
         pred_amounts = y_pred[..., 1]
@@ -110,11 +117,11 @@ class MenuLoss(nn.Module):
 
         zero_nonzero_penalty = l1loss(zero_id, zero_amount) # TODO: fix without l1loss
 
-        ### Penalize the model for predicting an out-of-range IDs ###
+        ### Penalize the model for predicting an out-of-range IDs but keeping good diversity of the IDs ###
 
-        # id_range_penalty = torch.relu(pred_ids - 222)
-        id_range_penalty = (torch.tanh(4 * (pred_ids - 222.5)) + 1) / 2
-        id_range_penalty =  id_range_penalty.sum(dim=(1, 2, 3)).mean()
+        id_out_of_range = torch.relu(pred_ids - 222)
+        id_out_of_range = 1 - self.zero_mask(id_out_of_range)
+        id_range_penalty =  id_out_of_range.sum(dim=(1, 2, 3)).mean()
 
         ### Compute the difference between y_pred and y ###
 
@@ -150,7 +157,7 @@ class MenuLoss(nn.Module):
         for i in range(3):
             gold = (self.get_continuous_value(true_ids[:, :, i], FP.CALORIES) * true_amounts[:, :, i] / 100).sum(dim=(1, 2)) / 7
             pred = (self.get_continuous_value(self.round_and_bound(pred_ids[:, :, i]), FP.CALORIES) * pred_amounts[:, :, i] / 100).sum(dim=(1, 2)) / 7
-            meals_diff += l1loss(pred, gold) / 100  # TODO: fix without l1loss
+            meals_diff += l1loss(pred, gold) / 100
 
         ### Compute the MSE ###
 
@@ -162,6 +169,8 @@ class MenuLoss(nn.Module):
 
         loss = self.ZERO_NONZERO_PENALTY * zero_nonzero_penalty
         loss += self.OUT_OF_RANGE_PENALTY * id_range_penalty
+        loss += 100 * self.entropy_penalty(pred_ids)
+
         loss += self.NUTRITION_PENALTY * nutrition_diff
         loss += self.PREF_PENALTY * preferences_diff
         loss += self.ALERGENS_PENALTY * alergens_diff
@@ -170,6 +179,15 @@ class MenuLoss(nn.Module):
         loss += self.MSE_PENALTY * pred_mses.mean()
 
         return loss
+    
+    def entropy_penalty(self, pred_ids):
+        # Apply softmax to the predicted logits (IDs)
+        softmax_probs = torch.nn.functional.softmax(pred_ids, dim=-1)
+        
+        # Compute entropy (the higher the entropy, the more uniform the distribution)
+        entropy = -torch.sum(softmax_probs * torch.log(softmax_probs + 1e-8), dim=-1).mean()
+        
+        return entropy
 
     def get_binary_value(self, x, category: FP):
         return torch.sum(
@@ -213,7 +231,8 @@ class MenuLoss(nn.Module):
         return self.bound(self.round_ste(x))
     
     def zero_mask(self, x):
-        return -1 * torch.tanh(4 * x) + 1
+        return torch.exp(-4 * x)
+    
 
 def train_model(dataloader, model, criterion, optimizer, epochs, device, plot_loss=True):
     model.train()
