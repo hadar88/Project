@@ -26,31 +26,31 @@ def main():
 
     ### Load the dataset ###
 
-    split = SPLIT if args is None else args.split
+    split = SPLIT if args.split is None else args.split
 
     print(f"Loading {split} set...")
     menus = MenusDataset(split=SPLIT)
     # menus = Subset(menus, range(10))
     dataloader = DataLoader(menus, batch_size=BATCH_SIZE, shuffle=(SPLIT == "train"))
+    
+    model = MenuGenerator().to(device)
 
     if split == "train":
         ### Define the model, loss function and optimizer ###
 
-        model = MenuGenerator().to(device)
         myLoss = MenuLoss(device).to(device)                                       
         optimizer = optim.Adam(model.parameters(), lr=0.0001, weight_decay=0.0001)
 
         ### Train and save the model ###
 
         print("Training...")
-        train_model(dataloader, model, myLoss, optimizer, 100, device, True)
+        train_model(dataloader, model, myLoss, optimizer, 24, device, True)
 
         torch.save(model.state_dict(), f"saved_models/model_v{MODEL_VERSION}.pth")
         print(f"Model saved as saved_models/model_v{MODEL_VERSION}.pth")
     elif split == "val" or split == "test":
         ### Load the model and evaluate it ###
 
-        model = MenuGenerator().to(device)
         model.load_state_dict(torch.load(f"saved_models/model_v{MODEL_VERSION}.pth", weights_only=True))
         model.eval()
 
@@ -95,7 +95,7 @@ class MenuLoss(nn.Module):
         self.data = read_foods_tensor().to(device)
 
     def forward(self, y_pred, y):
-        l1loss = nn.SmoothL1Loss()
+        l1loss = nn.L1Loss()
 
         pred_ids = y_pred[..., 0]       # Shape: (batch_size, 7, 3, M)
         pred_amounts = y_pred[..., 1]
@@ -108,13 +108,13 @@ class MenuLoss(nn.Module):
         zero_id = self.zero_mask(pred_ids)
         zero_amount = self.zero_mask(pred_amounts)
 
-        zero_nonzero_penalty = l1loss(zero_id, zero_amount)
+        zero_nonzero_penalty = l1loss(zero_id, zero_amount) # TODO: fix without l1loss
 
         ### Penalize the model for predicting an out-of-range IDs ###
 
         # id_range_penalty = torch.relu(pred_ids - 222)
-        id_range_penalty = (torch.tanh(2 * (pred_ids - 222.5)) + 1) / 2
-        id_range_penalty = self.OUT_OF_RANGE_PENALTY * id_range_penalty.sum().mean()
+        id_range_penalty = (torch.tanh(4 * (pred_ids - 222.5)) + 1) / 2
+        id_range_penalty =  id_range_penalty.sum(dim=(1, 2, 3)).mean()
 
         ### Compute the difference between y_pred and y ###
 
@@ -124,39 +124,39 @@ class MenuLoss(nn.Module):
         ingredients_diff = 0.0  # Fruit, Vegetable, Cheese, Meat, Cereal
 
         for fp in [FP.CALORIES, FP.CARBOHYDRATE, FP.SUGARS, FP.FAT, FP.PROTEIN]:
-            gold = (self.get_continuous_value(true_ids, fp) * true_amounts / 100).sum()
-            pred = (self.get_continuous_value(self.round_and_bound(pred_ids), fp) * pred_amounts / 100).sum()
-            nutrition_diff += l1loss(pred, gold)
+            gold = (self.get_continuous_value(true_ids, fp) * true_amounts / 100).sum(dim=(1, 2, 3)) / 7
+            pred = (self.get_continuous_value(self.round_and_bound(pred_ids), fp) * pred_amounts / 100).sum(dim=(1, 2, 3)) / 7
+            nutrition_diff += l1loss(pred, gold) / 100  # TODO: fix without l1loss
             
         for fp in [FP.VEGETARIAN, FP.VEGAN]:
             gold = (1 - self.get_binary_value(true_ids, fp)).sum(dim=(1, 2, 3))
-            pred = (1 - self.get_binary_value(self.round_and_bound(pred_ids), fp)).sum()
+            pred = (1 - self.get_binary_value(self.round_and_bound(pred_ids), fp)).sum(dim=(1, 2, 3))
             preferences_diff += (torch.exp(-10 * gold) * pred.pow(2)).mean()
 
         for fp in [FP.CONTAINS_EGGS, FP.CONTAINS_GLUTEN, FP.CONTAINS_MILK, FP.CONTAINS_PEANUTS_OR_NUTS, FP.CONTAINS_SOY, FP.CONTAINS_FISH, FP.CONTAINS_SESAME]:
-            gold = self.get_binary_value(true_ids, fp).sum()
-            pred = self.get_binary_value(self.round_and_bound(pred_ids), fp).sum()
-            alergens_diff += torch.exp(-10 * gold) * pred.pow(2).mean()
+            gold = self.get_binary_value(true_ids, fp).sum(dim=(1, 2, 3))
+            pred = self.get_binary_value(self.round_and_bound(pred_ids), fp).sum(dim=(1, 2, 3))
+            alergens_diff += (torch.exp(-10 * gold) * pred.pow(2)).mean()
 
         for fp in [FP.FRUIT, FP.VEGETABLE, FP.CHEESE, FP.MEAT, FP.CEREAL]:
-            gold = self.get_binary_value(true_ids, fp).sum()
-            pred = self.get_binary_value(self.round_and_bound(pred_ids), fp).sum()
-            ingredients_diff += l1loss(pred, gold)
+            gold = self.get_binary_value(true_ids, fp).sum(dim=(1, 2, 3))
+            pred = self.get_binary_value(self.round_and_bound(pred_ids), fp).sum(dim=(1, 2, 3))
+            ingredients_diff += l1loss(pred, gold) / 100    # TODO: fix without l1loss
 
         ### Compute differences in calories in breakfast, lunch and dinner ###
 
         meals_diff = 0.0
 
         for i in range(3):
-            gold = (self.get_continuous_value(true_ids[:, :, i], FP.CALORIES) * true_amounts[:, :, i] / 100).sum(dim=(1, 2))
-            pred = (self.get_continuous_value(self.round_and_bound(pred_ids[:, :, i]), FP.CALORIES) * pred_amounts[:, :, i] / 100).sum(dim=(1, 2))
-            meals_diff += l1loss(pred, gold)
+            gold = (self.get_continuous_value(true_ids[:, :, i], FP.CALORIES) * true_amounts[:, :, i] / 100).sum(dim=(1, 2)) / 7
+            pred = (self.get_continuous_value(self.round_and_bound(pred_ids[:, :, i]), FP.CALORIES) * pred_amounts[:, :, i] / 100).sum(dim=(1, 2)) / 7
+            meals_diff += l1loss(pred, gold) / 100  # TODO: fix without l1loss
 
         ### Compute the MSE ###
 
-        pred_calorie_value = self.get_continuous_value(self.round_and_bound(pred_ids), FP.CALORIES)
+        pred_calorie_value = self.get_continuous_value(self.round_and_bound(pred_ids), FP.CALORIES) / 100
         pred_calories_per_day = (pred_amounts * pred_calorie_value).sum(dim=(2, 3))
-        pred_mses = ((pred_calories_per_day - pred_calories_per_day.mean(dim=1, keepdim=True)).pow(2)).mean()
+        pred_mses = ((pred_calories_per_day - pred_calories_per_day.mean(dim=1, keepdim=True)).pow(2)).mean(dim=1)
 
         ### Compute the total loss ###
 
@@ -167,7 +167,7 @@ class MenuLoss(nn.Module):
         loss += self.ALERGENS_PENALTY * alergens_diff
         loss += self.INGREDIENTS_PENALTY * ingredients_diff
         loss += self.MEAL_PENALTY * meals_diff
-        loss += self.MSE_PENALTY * pred_mses
+        loss += self.MSE_PENALTY * pred_mses.mean()
 
         return loss
 
@@ -213,7 +213,7 @@ class MenuLoss(nn.Module):
         return self.bound(self.round_ste(x))
     
     def zero_mask(self, x):
-        return (torch.tanh(4 * x) + 1) / 2
+        return -1 * torch.tanh(4 * x) + 1
 
 def train_model(dataloader, model, criterion, optimizer, epochs, device, plot_loss=True):
     model.train()
