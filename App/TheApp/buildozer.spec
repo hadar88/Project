@@ -6,13 +6,13 @@
 [app]
 
 # (str) Title of your application
-title = Menu
+title = NutriPlan
 
 # (str) Package name
-package.name = Menu
+package.name = NutriPlan
 
 # (str) Package domain (needed for android/ios packaging)
-package.domain = com.hadar.menu
+package.domain = com.hadar.NutriPlan
 
 # (str) Source code where the main.py live
 source.dir = .
@@ -21,8 +21,8 @@ source.dir = .
 source.include_exts = py,png,jpg,kv,atlas,jpeg,ini
 
 # (list) List of inclusions using pattern matching
-source.include_patterns = main.py, burger.jpeg, pizza.jpeg, menu.jpeg, config.ini
-
+source.include_patterns = main.py, config.ini
+//
 # (list) Source files to exclude (leave empty to not exclude anything)
 #source.exclude_exts = spec
 
@@ -49,7 +49,7 @@ requirements = python3,kivy
 # requirements.source.kivy = ../../kivy
 
 # (str) Presplash of the application
-presplash.filename = %(source.dir)s/menu.jpeg
+#presplash.filename = %(source.dir)s/
 
 # (str) Icon of the application
 #icon.filename = %(source.dir)s/
