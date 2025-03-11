@@ -18,7 +18,7 @@ package.domain = hadar
 source.dir = .
 
 # (list) Source files to include (leave empty to include all the files)
-source.include_exts = py,png,jpg,kv,atlas,jpeg,ini
+source.include_exts = py,png,jpg,kv,atlas,jpeg,ini,ttf
 
 # (list) List of inclusions using pattern matching
 source.include_patterns = main.py, config.ini
@@ -42,7 +42,7 @@ version = 0.1
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3, kivy, requests, google-auth, google-auth-oauthlib, kivymd, pyjnius
+requirements = python3, kivy, requests, google-auth, google-auth-oauthlib, kivymd, pyjnius, google-auth-httplib2
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
@@ -103,7 +103,7 @@ fullscreen = 1
 
 # (list) Permissions
 # (See https://python-for-android.readthedocs.io/en/latest/buildoptions.html for all the supported syntaxes and properties)
-android.permissions = android.permission.INTERNET, (name=android.permission.WRITE_EXTERNAL_STORAGE;maxSdkVersion=18), INTERNET
+android.permissions = INTERNET, READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE
 
 # (list) features (adds uses-feature -tags to manifest)
 #android.features = android.hardware.usb.host
@@ -244,7 +244,7 @@ android.api = 31
 #android.ouya.icon.filename = %(source.dir)s/data/ouya_icon.png
 
 # (str) XML file to include as an intent filters in <activity> tag
-android.manifest.intent_filters = %(source.dir)s/intent_filters.xml
+#android.manifest.intent_filters = %(source.dir)s/
 
 # (list) Copy these files to src/main/res/xml/ (used for example with intent-filters)
 #android.res_xml = PATH_TO_FILE,
