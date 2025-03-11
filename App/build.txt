@@ -1,3 +1,7 @@
 buildozer init
 
 buildozer android debug
+
+keystore password: 090304Hg
+
+Client ID : 211621332597-dlidmr7mb13fc20nln7p42lpn05h6srn.apps.googleusercontent.com
