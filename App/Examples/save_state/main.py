@@ -1,3 +1,4 @@
+import json
 from kivy.app import App
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
@@ -6,12 +7,15 @@ from kivy.uix.button import Button
 from kivy.uix.textinput import TextInput
 from kivy.core.window import Window
 from kivy.utils import get_color_from_hex
-from kivy.config import ConfigParser
+
+DATA_PATH = "data.json"
+
 
 class Menu(App):
     def build(self):
-        self.config = ConfigParser()
-        self.config.read('config.ini')
+        d = open(DATA_PATH, "r")
+        self.data = json.load(d)
+        d.close()
 
         self.window = GridLayout()
         self.window.cols = 1
@@ -20,7 +24,7 @@ class Menu(App):
         Window.clearcolor = get_color_from_hex('#34baeb')
 
         self.image = Image(
-            source=self.config.get('settings', 'image', fallback = "burger.jpeg"),
+            source=self.data.get("image", "burger.jpeg"),
             size_hint=(0.5, 0.7),
             pos_hint={"center_x": 1, "center_y": 0.5},
             )
@@ -55,24 +59,17 @@ class Menu(App):
     def callback(self, instance):
         if self.answer.text == "pizza":
             self.image.source = "pizza.jpeg"
-            self.saveState()
+            self.data["image"] = "pizza.jpeg"
         elif self.answer.text == "burger":
             self.image.source = "burger.jpeg"
-            self.saveState()
+            self.data["image"] = "burger.jpeg"
         else:
             self.ask.text = "We don't have that on the menu."
 
-    def saveState(self):
-        if not self.config.has_section('settings'):
-            self.config.add_section('settings') 
-
-        self.config.set('settings', 'image', self.image.source)
-        self.config.write()
-
-
-
     def on_stop(self):
-        self.saveState()
+        d = open(DATA_PATH, "w")
+        json.dump(self.data, d)
+        d.close()
 
 if __name__ == "__main__":
     Menu().run()
