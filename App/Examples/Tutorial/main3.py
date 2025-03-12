@@ -1,9 +1,9 @@
 from kivy.app import App
-
+from kivy.uix.floatlayout import FloatLayout
 
 class Main3App(App):
-    def builf(self):
-        return
+    def build(self):
+        return FloatLayout()
     
 
 if __name__ == "__main__":
