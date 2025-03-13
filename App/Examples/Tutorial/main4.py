@@ -1,16 +1,25 @@
 from kivy.app import App
 from kivy.uix.widget import Widget
+from kivy.graphics import Rectangle, Color, Line
 
 class Touch(Widget):
+    def __init__(self, **kwargs):
+        super(Touch, self).__init__(**kwargs)
+
+        with self.canvas:
+            Color(0, 1, 0, 0.5, mode = 'rgba')
+            self.line = Line(points = (50, 50, 300, 300))
+            Color(1, 0, 0, 0.5, mode = 'rgba')
+            self.rect1 = Rectangle(pos = (0, 0), size = (50, 50))
+            self.rect2 = Rectangle(pos = (300, 300), size_hint = (0.05, 0.05))
 
     def on_touch_down(self, touch):
-        print("Mouse Down", touch)
+        self.rect1.pos = touch.pos
+        # print("Mouse Down", touch)
     
     def on_touch_move(self, touch):
-        print("Mouse Move", touch)
-
-    def on_touch_up(self, touch):
-        print("Mouse Up", touch)
+        self.rect1.pos = touch.pos
+        # print("Mouse Move", touch)
 
 class Main4App(App):
     def build(self):
