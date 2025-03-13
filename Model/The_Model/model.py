@@ -50,7 +50,7 @@ def main():
             (PreferenceLoss(device), 10),
             (AllergensLoss(device), 10),
             (IngredientsLoss(device), 10),
-            (CaloriesMSELoss(), 10)
+            (CaloriesMSELoss(device), 10)
         ]
 
         used_loss_functions = []
@@ -228,11 +228,13 @@ class IngredientsLoss(nn.Module):
         return ingredients_diff * self.INGREDIENTS_PENALTY
 
 class CaloriesMSELoss(nn.Module):
-    def __init__(self):
+    def __init__(self, device):
         super(CaloriesMSELoss, self).__init__()
         self.MSE_PENALTY = 1
         self.l1loss = nn.L1Loss()
         self.DENOMINATOR = 100
+
+        self.data = read_foods_tensor().to(device)
 
     def forward(self, y_pred, y):
         pred_ids = y_pred[..., 0]       # Shape: (batch_size, 7, 3, M)
@@ -246,13 +248,13 @@ class CaloriesMSELoss(nn.Module):
         meals_diff = 0.0
 
         for i in range(3):
-            gold = (get_continuous_value(true_ids[:, :, i], FP.CALORIES) * true_amounts[:, :, i] / 100).sum(dim=(1, 2)) / 7
-            pred = (get_continuous_value(round_and_bound(pred_ids[:, :, i]), FP.CALORIES) * pred_amounts[:, :, i] / 100).sum(dim=(1, 2)) / 7
+            gold = (get_continuous_value(true_ids[:, :, i], self.data, FP.CALORIES) * true_amounts[:, :, i] / 100).sum(dim=(1, 2)) / 7
+            pred = (get_continuous_value(round_and_bound(pred_ids[:, :, i]), self.data, FP.CALORIES) * pred_amounts[:, :, i] / 100).sum(dim=(1, 2)) / 7
             meals_diff += self.l1loss(pred, gold) / self.DENOMINATOR
 
         ### Compute the MSE ###
 
-        pred_calorie_value = get_continuous_value(round_and_bound(pred_ids), FP.CALORIES) / 100
+        pred_calorie_value = get_continuous_value(round_and_bound(pred_ids), self.data, FP.CALORIES) / 100
         pred_calories_per_day = (pred_amounts * pred_calorie_value).sum(dim=(2, 3))
         pred_mses = ((pred_calories_per_day - pred_calories_per_day.mean(dim=1, keepdim=True)).pow(2)).mean(dim=1)
 
