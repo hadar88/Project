@@ -1,6 +1,6 @@
 from kivy.app import App
 from kivy.uix.widget import Widget
-from kivy.properties import ObjectPropety
+from kivy.properties import ObjectProperty
 from kivy.uix.label import Label
 from kivy.uix.floatlayout import FloatLayout
 
