@@ -112,7 +112,7 @@ def transform_batch(menu_batch: torch.Tensor, food_data, device):
 def transform_batch2(menu_batch: torch.Tensor, food_data, device):
     return torch.stack([transform2(menu, food_data, device) for menu in menu_batch])
 
-def transform2(menu: torch.Tensor, food_data, device):
+def transform2(menu: torch.Tensor, food_data, device, bound_fn=lambda x: x):
     output = torch.zeros(23, dtype=torch.float32, device=device)
 
     output[14] = 1.0
@@ -123,7 +123,7 @@ def transform2(menu: torch.Tensor, food_data, device):
         for midx, meal in enumerate(day):
             for food in meal:
                 # food: [id, amount]
-                food_id = int(food[0].item())
+                food_id = int(bound_fn(food[0]).item())
                 food_amount = food[1].item() / 100.0
                 
                 if food_id == 0:
