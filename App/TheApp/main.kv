@@ -1,0 +1,81 @@
+#:kivy 2.3.1
+#:import utils kivy.utils
+
+WindowManager:
+
+    MainWindow:
+
+    SecondWindow:
+
+<MainWindow>:
+    name: "main" 
+
+    GridLayout:
+        cols: 1
+        
+        canvas.before:
+            Color:
+                rgba: 0, 0.55, 1, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Label:
+            text: "Enter credit card data:"
+            color: 0, 0, 0
+            font_size: 30
+
+        GridLayout:
+            cols: 2
+
+            canvas.before:
+                Color:
+                    rgba: 0.7, 0, 0, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            Label:
+                text: "Card number:"
+                color: 0, 0, 0
+                font_size: 20
+ 
+            TextInput:
+                id: number
+                multiline: False
+
+            Label:
+                text: "Card date:"
+                color: 0, 0, 0
+                font_size: 20
+
+            TextInput: 
+                id: date
+                multiline: False
+
+            Label:
+                text: "Card cvv:"
+                color: 0, 0, 0
+                font_size: 20
+
+            TextInput: 
+                id: cvv
+                multiline: False
+
+        Button:
+            background_color: 0, 1, 0, 1
+            text: "Submit"
+            color: 0, 0, 0
+            font_size: 50
+            on_release: 
+                app.root.current = "second"
+                root.manager.transition.direction = "left"
+            
+
+<SecondWindow>:
+    name: "second"
+
+    Label:
+        text: "Thank you loser"
+        font_size: 100
+        

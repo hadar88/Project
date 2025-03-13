@@ -1,12 +1,20 @@
 from kivy.app import App
 from kivy.uix.button import Button
+from kivy.uix.screenmanager import ScreenManager, Screen
+
+class MainWindow(Screen):
+    pass
+
+class SecondWindow(Screen):
+    pass
+
+class WindowManager(ScreenManager):
+    pass
 
 
-class MyApp(App):
+class MainApp(App):
     def build(self):
-        return Button(
-            text = "Hello"
-        )
+        return 
 
 if __name__ == "__main__":
-    MyApp().run()
+    MainApp().run()
