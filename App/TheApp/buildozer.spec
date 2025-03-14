@@ -6,22 +6,22 @@
 [app]
 
 # (str) Title of your application
-title = NutriPlan
+title = Nutriplan
 
 # (str) Package name
-package.name = NutriPlan
+package.name = nutriplan
 
 # (str) Package domain (needed for android/ios packaging)
-package.domain = hadar
+package.domain = org.nutriplan
 
 # (str) Source code where the main.py live
 source.dir = .
 
 # (list) Source files to include (leave empty to include all the files)
-source.include_exts = py,png,jpg,kv,atlas,jpeg,ini,ttf
+source.include_exts = py,png,jpg,kv,atlas
 
 # (list) List of inclusions using pattern matching
-source.include_patterns = main.py, config.ini
+source.include_patterns = main.py,main.kv
 //
 # (list) Source files to exclude (leave empty to not exclude anything)
 #source.exclude_exts = spec
@@ -42,7 +42,7 @@ version = 0.1
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3, kivy, requests, google-auth, google-auth-oauthlib, kivymd, pyjnius, google-auth-httplib2
+requirements = python3,kivy,pillow,kivymd
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
@@ -103,13 +103,13 @@ fullscreen = 1
 
 # (list) Permissions
 # (See https://python-for-android.readthedocs.io/en/latest/buildoptions.html for all the supported syntaxes and properties)
-android.permissions = INTERNET, READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE
+# android.permissions =  android.permission.INTERNET, (name=android.permission.WRITE_EXTERNAL_STORAGE;maxSdkVersion=18)
 
 # (list) features (adds uses-feature -tags to manifest)
 #android.features = android.hardware.usb.host
 
 # (int) Target Android API, should be as high as possible.
-android.api = 31
+# android.api = 31
 
 # (int) Minimum API your APK / AAB will support.
 #android.minapi = 21
