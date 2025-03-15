@@ -21,7 +21,7 @@ source.dir = .
 source.include_exts = py,png,jpg,kv,atlas,json,jpeg,ttf,mp4
 
 # (list) List of inclusions using pattern matching
-source.include_patterns = assets/*,images/*.png,images/*.jpg,images/*.jpeg,images/*.ttf,images/*.json, images/*.mp4
+source.include_patterns = assets/*,images/*.png,images/*.jpg,images/*.jpeg,images/*.ttf,images/*.json, images/*.mp4, song.mp4
 
 # (list) Source files to exclude (leave empty to not exclude anything)
 #source.exclude_exts = spec
@@ -42,7 +42,7 @@ version = 0.1
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3,kivy
+requirements = python3,kivy,ffpyplayer
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
@@ -103,7 +103,7 @@ fullscreen = 0
 
 # (list) Permissions
 # (See https://python-for-android.readthedocs.io/en/latest/buildoptions.html for all the supported syntaxes and properties)
-#android.permissions = android.permission.INTERNET, (name=android.permission.WRITE_EXTERNAL_STORAGE;maxSdkVersion=18)
+#android.permissions = android.permission.INTERNET, (name=android.permission.WRITE_EXTERNAL_STORAGE;maxSdkVersion=18), WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE
 
 # (list) features (adds uses-feature -tags to manifest)
 #android.features = android.hardware.usb.host

@@ -5,8 +5,6 @@ from kivy.uix.label import Label
 from kivy.uix.gridlayout import GridLayout
 from kivy.graphics import Color, Rectangle
 from kivy.uix.textinput import TextInput
-from kivy.uix.video import Video
-
 
 class Grid1(GridLayout):
     def __init__(self, screen_manager, **kwargs):
@@ -74,12 +72,7 @@ class Grid3(GridLayout):
         super(Grid3, self).__init__(**kwargs)
         self.cols = 1
         self.screen_manager = screen_manager
-
-        # with self.canvas.before:
-        #     Color(0, 1, 0, 1)
-        #     self.rect = Rectangle(size=self.size, pos=self.pos)
-        # self.bind(size=self._update_rect, pos=self._update_rect)
-
+        
         self.button = Button(text="Submit",
                              font_size= 80,
                              color = (0, 0, 0, 1),
@@ -109,13 +102,9 @@ class SecondWindow(Screen):
         super(SecondWindow, self).__init__(**kw)
         self.name = "second"
         # put the song in the second window
-        self.song = Video(source = "song.mp4", state = "stop")
-        self.add_widget(self.song)
-    
-    def on_enter(self, *args):
-        # Start the video when entering the screen
-        self.song.state = "play"
-        super(SecondWindow, self).on_enter(*args)
+        self.add_widget(Label(text="Thank you loser!",
+                              font_size= 80
+                              ))
 
 
 class WindowManager(ScreenManager):
