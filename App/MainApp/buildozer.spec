@@ -18,10 +18,10 @@ package.domain = org.nutriplan
 source.dir = .
 
 # (list) Source files to include (leave empty to include all the files)
-source.include_exts = py,png,jpg,kv,atlas,json,jpeg,ttf
+source.include_exts = py,png,jpg,kv,atlas,json,jpeg,ttf,mp4
 
 # (list) List of inclusions using pattern matching
-source.include_patterns = assets/*,images/*.png,images/*.jpg,images/*.jpeg,images/*.ttf,images/*.json
+source.include_patterns = assets/*,images/*.png,images/*.jpg,images/*.jpeg,images/*.ttf,images/*.json, images/*.mp4
 
 # (list) Source files to exclude (leave empty to not exclude anything)
 #source.exclude_exts = spec
