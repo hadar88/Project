@@ -18,10 +18,10 @@ package.domain = org.nutriplan
 source.dir = .
 
 # (list) Source files to include (leave empty to include all the files)
-source.include_exts = py,png,jpg,kv,atlas,json,jpeg,ttf,mp4
+source.include_exts = py,png,jpg,kv,atlas,json,jpeg,ttf,txt
 
 # (list) List of inclusions using pattern matching
-source.include_patterns = assets/*,images/*.png,images/*.jpg,images/*.jpeg,images/*.ttf,images/*.json, images/*.mp4, song.mp4
+source.include_patterns = assets/*,images/*.png,images/*.jpg,images/*.jpeg,images/*.ttf,images/*.json, images/*.mp4, *.txt, *.kv, *.atlas, *.py
 
 # (list) Source files to exclude (leave empty to not exclude anything)
 #source.exclude_exts = spec
@@ -34,7 +34,7 @@ source.include_patterns = assets/*,images/*.png,images/*.jpg,images/*.jpeg,image
 #source.exclude_patterns = license,images/*/*.jpg
 
 # (str) Application versioning (method 1)
-version = 0.1
+version = 0.2
 
 # (str) Application versioning (method 2)
 # version.regex = __version__ = ['"](.*)['"]
