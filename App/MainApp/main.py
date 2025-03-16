@@ -101,7 +101,6 @@ class SecondWindow(Screen):
     def __init__(self, **kw):
         super(SecondWindow, self).__init__(**kw)
         self.name = "second"
-        # put the song in the second window
         self.add_widget(Label(text="Thank you loser!",
                               font_size= 80
                               ))
