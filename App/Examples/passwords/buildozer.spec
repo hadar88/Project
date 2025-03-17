@@ -6,22 +6,22 @@
 [app]
 
 # (str) Title of your application
-title = SayHello
+title = Passwords
 
 # (str) Package name
-package.name = sayhello
+package.name = passwords
 
 # (str) Package domain (needed for android/ios packaging)
-package.domain = org.test
+package.domain = org.passwords
 
 # (str) Source code where the main.py live
 source.dir = .
 
 # (list) Source files to include (leave empty to include all the files)
-source.include_exts = py,png,jpg,kv,atlas
+source.include_exts = py,png,jpg,kv,atlas,json,jpeg,ttf,txt
 
 # (list) List of inclusions using pattern matching
-source.include_patterns = main.py, logo.png
+#source.include_patterns = assets/*,images/*.png,images/*.jpg,images/*.jpeg,images/*.ttf,images/*.json, images/*.mp4, *.txt, *.kv, *.atlas, *.py
 
 # (list) Source files to exclude (leave empty to not exclude anything)
 #source.exclude_exts = spec
@@ -52,7 +52,7 @@ requirements = python3,kivy
 #presplash.filename = %(source.dir)s/data/presplash.png
 
 # (str) Icon of the application
-icon.filename = %(source.dir)s/logo.png
+#icon.filename = %(source.dir)s/data/icon.png
 
 # (list) Supported orientations
 # Valid options are: landscape, portrait, portrait-reverse or landscape-reverse
@@ -82,7 +82,7 @@ osx.kivy_version = 2.2.0
 #
 
 # (bool) Indicate if the application should be fullscreen or not
-fullscreen = 1
+fullscreen = 0
 
 # (string) Presplash background color (for android toolchain)
 # Supported formats are: #RRGGBB #AARRGGBB or one of the following names:
@@ -278,7 +278,7 @@ fullscreen = 1
 #android.uses_library =
 
 # (str) Android logcat filters to use
-android.logcat_filters = *:S python:D
+#android.logcat_filters = *:S python:D
 
 # (bool) Android logcat only display log for activity's pid
 #android.logcat_pid_only = False
