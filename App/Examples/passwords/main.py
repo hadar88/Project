@@ -57,12 +57,12 @@ class MainWindow(Screen):
         self.window = GridLayout(cols = 1, size_hint = (1, 1))
 
         # the label height should be 80% of the window height
-        self.label1 = ColoredLabel1(text = "Password Manager", font_size = 40)
+        self.label1 = ColoredLabel1(text = "Password Manager", font_size = 100)
         self.window.add_widget(self.label1)
         
         self.button1 = Button(
             text = "Search for password", 
-            font_size = 40, 
+            font_size = 50, 
             background_color = (0, 1, 0, 1), 
             size_hint_y = 0.3, 
             on_press = self.search
@@ -71,7 +71,7 @@ class MainWindow(Screen):
 
         self.button2 = Button(
             text = "Add password", 
-            font_size = 40, 
+            font_size = 50, 
             background_color = (0.0353, 0.8, 0.87, 1), 
             background_normal = "", 
             size_hint_y = 0.3, 
@@ -97,28 +97,28 @@ class SearchWindow(Screen):
         self.window = FloatLayout(size_hint=(1, 1))
 
         self.label1 = ColoredLabel2(
-            text = "Search a password", font_size = 40, size_hint=(1, 0.3), pos_hint={"x": 0, "top": 1}
+            text = "Search a password", font_size = 100, size_hint=(1, 0.3), pos_hint={"x": 0, "top": 1}
         )
         self.window.add_widget(self.label1)
 
         self.name_input = TextInput(
-            multiline = False, font_size = 40, hint_text = "Name", size_hint=(1, 0.2), pos_hint={"x": 0, "top": 0.7}
+            multiline = False, font_size = 60, hint_text = "Name", size_hint=(1, 0.2), pos_hint={"x": 0, "top": 0.7}
             )
         self.window.add_widget(self.name_input)
 
         self.label2 = ColoredLabel1(
-            text = "Password:", font_size = 30, size_hint=(0.5, 0.2), pos_hint={"x": 0, "top": 0.5}
+            text = "Password:", font_size = 40, size_hint=(0.5, 0.2), pos_hint={"x": 0, "top": 0.5}
         )
         self.window.add_widget(self.label2)
 
         self.label2 = ColoredLabel3(
-            text = "", font_size = 30, size_hint=(0.5, 0.2), pos_hint={"x": 0.5, "top": 0.5}
+            text = "", font_size = 40, size_hint=(0.5, 0.2), pos_hint={"x": 0.5, "top": 0.5}
         )
         self.window.add_widget(self.label2) 
 
         self.search_button = Button(
             text = "Search", 
-            font_size = 40, 
+            font_size = 50, 
             background_color = (0.0353, 0.8, 0.87, 1), 
             background_normal = "", 
             size_hint=(1, 0.3),
@@ -133,7 +133,7 @@ class SearchWindow(Screen):
             background_color = (0.047, 0.035, 0.87, 1),
             background_normal = "",
             size_hint = (None, None),  
-            size = (100, 50),       
+            size = (100, 100),       
             pos_hint = {"x": 0, "top": 1},
             on_press = self.return_to_main
         )
@@ -163,23 +163,23 @@ class AddWindow(Screen):
         self.window = FloatLayout(size_hint=(1, 1))
 
         self.label = ColoredLabel2(
-            text = "Add a password", font_size = 40, size_hint=(1, 0.3), pos_hint={"x": 0, "top": 1}
+            text = "Add a password", font_size = 100, size_hint=(1, 0.3), pos_hint={"x": 0, "top": 1}
             )
         self.window.add_widget(self.label)
 
         self.name_input = TextInput(
-            multiline = False, font_size = 40, hint_text = "Name", size_hint=(1, 0.2), pos_hint={"x": 0, "top": 0.7}
+            multiline = False, font_size = 60, hint_text = "Name", size_hint=(1, 0.2), pos_hint={"x": 0, "top": 0.7}
             )
         self.window.add_widget(self.name_input)
 
         self.passw = TextInput(
-            multiline = False, font_size = 40, hint_text = "Password", size_hint=(1, 0.2), pos_hint={"x": 0, "top": 0.5}
+            multiline = False, font_size = 60, hint_text = "Password", size_hint=(1, 0.2), pos_hint={"x": 0, "top": 0.5}
             )
         self.window.add_widget(self.passw)
 
         self.button = Button(
             text = "Add", 
-            font_size = 40, 
+            font_size = 50, 
             background_color = (0.0353, 0.8, 0.87, 1), 
             background_normal = "", 
             size_hint=(1, 0.3),
@@ -194,7 +194,7 @@ class AddWindow(Screen):
             background_color = (0.047, 0.035, 0.87, 1),
             background_normal = "",
             size_hint = (None, None),  
-            size = (100, 50),       
+            size = (100, 100),       
             pos_hint = {"x": 0, "top": 1},
             on_press = self.return_to_main
         )
