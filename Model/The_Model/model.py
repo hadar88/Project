@@ -15,7 +15,7 @@ import matplotlib.pyplot as plt
 SPLIT = ["train", "val", "test"][0]
 
 MODEL_VERSION = 1.0
-BATCH_SIZE = 64
+BATCH_SIZE = 128
 
 def main():
     parser = argparse.ArgumentParser()
@@ -54,8 +54,8 @@ def main():
         # ]
 
         criterions_and_epochs = [
-            (nn.MSELoss(), 2000),
-            (AllergensLoss(device), 50),
+            (nn.MSELoss(), 5000),
+            (AllergensLoss(device), 10),
             #(PreferenceLoss(device), 50),
             #(IngredientsLoss(device), 10)
         ]
@@ -189,7 +189,7 @@ class AllergensLoss(nn.Module):
     def __init__(self, device):
         super(AllergensLoss, self).__init__()
 
-        self.ALERGENS_PENALTY = 8
+        self.ALERGENS_PENALTY = 20
         self.device = device
 
         self.data = read_foods_tensor().to(device)

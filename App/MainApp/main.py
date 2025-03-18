@@ -34,7 +34,7 @@ class LoginWindow(Screen):
         self.window.add_widget(self.userName)
 
         self.password = TextInput(
-            multiline = False, font_size = 14, hint_text = "Password", size_hint=(0.8, 0.1), pos_hint={"x": 0.1, "top": 0.59}, input_filter="float", keyboard_mode='auto'
+            multiline = False, font_size = 14, hint_text = "Password", size_hint=(0.8, 0.1), pos_hint={"x": 0.1, "top": 0.59}, input_filter="float"
         )
         self.window.add_widget(self.password)
 
@@ -53,7 +53,7 @@ class LoginWindow(Screen):
         #     text="Select Gender",
         #     values=("Male", "Female", "Other"),
         #     size_hint=(0.8, 0.1),
-        #     pos_hint={"x": 0.1, "top": 0.32},
+        #     pos_hint={"x": 0.1, "top": 0.32}
         # )
         # self.window.add_widget(self.gender_spinner)
 
