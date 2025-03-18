@@ -27,6 +27,29 @@ class ColoredLabel(Label):
         self.bg_rect.size = self.size
         self.bg_rect.pos = self.pos
 
+class MainWindow(Screen):
+    def __init__(self, **kw):
+        super(MainWindow, self).__init__(**kw)
+        self.cols = 1
+
+        self.window = FloatLayout(size_hint=(1, 1))
+        with self.window.canvas.before:
+            Color(1, 1, 1, 1)  
+            self.rect = Rectangle(size=self.window.size, pos=self.window.pos)
+            self.window.bind(size=self._update_rect, pos=self._update_rect)
+
+        ###
+
+
+
+        ###
+
+        self.add_widget(self.window)
+
+    def _update_rect(self, instance, value):
+        self.rect.pos = instance.pos
+        self.rect.size = instance.size
+
 class CreatePasswordWindow(Screen):
     def __init__(self, **kw):
         super(CreatePasswordWindow, self).__init__(**kw)
@@ -122,6 +145,8 @@ class WindowManager(ScreenManager):
         super(WindowManager, self).__init__(**kwargs)
 
         self.add_widget(LoginWindow(name = "login"))
+        self.add_widget(MainWindow(name = "main"))
+        self.add_widget(CreatePasswordWindow(name = "create_password"))
         
 class MainApp(App):
     def build(self):

@@ -4,7 +4,7 @@ def calculate_nutritional_data(goal, activity_type, activity_level, daily_calori
 
     Parameters:
         goal (str): "lose", "maintain", or "gain" weight.
-        activity_type (list): Activities performed, e.g., ["cardio", "strength"].
+        activity_type (list): Activities performed, e.g., ["cardio", "strength", "muscle"].
         activity_level (str): "sedentary", "lightly active", "moderately active", "active", "extremely active".
         daily_calories (float): Recommended daily calorie intake (C).
 
@@ -73,6 +73,7 @@ def calculate_nutritional_data(goal, activity_type, activity_level, daily_calori
     }
 
 # Example
+
 result = calculate_nutritional_data(
     goal="gain",
     activity_type=["cardio", "muscle", "strength"],

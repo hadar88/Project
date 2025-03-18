@@ -28,10 +28,4 @@ It also creates a dictionary with the same structure as `menusById`, but with th
 This sctipt is used to convert a menu to a new menu with a desired property.
 [View Script](./menu_maker.py)
 
-# Other:
-
-## `algorithm.py` 
-
-This script calculates the nututionals values based on the user input.
-[View Script](./algorithm.py)
 
