@@ -56,7 +56,7 @@ requirements = python3,kivy,ffpyplayer
 
 # (list) Supported orientations
 # Valid options are: landscape, portrait, portrait-reverse or landscape-reverse
-orientation = landscape, portrait, portrait-reverse, landscape-reverse
+orientation = portrait
 
 # (list) List of services to declare
 # This is currently only relevant to Android services.

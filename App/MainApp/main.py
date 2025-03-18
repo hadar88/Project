@@ -3,17 +3,16 @@ from kivy.app import App
 from kivy.uix.button import Button
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.label import Label
-from kivy.uix.gridlayout import GridLayout
 from kivy.graphics import Color, Rectangle
 from kivy.uix.textinput import TextInput
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.image import Image
 from kivy.uix.spinner import Spinner
+from algorithm import calculate_nutritional_data as cnd
 
 DATA_PATH = "data.json"
-d = open(DATA_PATH, "r")
-data = json.load(d)
-d.close()
+with open(DATA_PATH, "r") as file:
+    data = json.load(file)
 
 class ColoredLabel(Label):
     def __init__(self, color=(0, 0, 0, 1), **kwargs):

@@ -74,11 +74,11 @@ def calculate_nutritional_data(goal, activity_type, activity_level, daily_calori
 
 # Example
 
-result = calculate_nutritional_data(
-    goal="gain",
-    activity_type=["cardio", "muscle", "strength"],
-    activity_level="active",
-    daily_calories=2500
-)
+# result = calculate_nutritional_data(
+#     goal="gain",
+#     activity_type=["cardio", "muscle", "strength"],
+#     activity_level="active",
+#     daily_calories=2500
+# )
 
-print(result)
+# print(result)
