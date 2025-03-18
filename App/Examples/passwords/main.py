@@ -13,35 +13,11 @@ d = open(DATA_PATH, "r")
 data = json.load(d)
 d.close()
 
-class ColoredLabel1(Label):
-    def __init__(self, **kwargs):
-        super(ColoredLabel1, self).__init__(**kwargs)
+class ColoredLabel(Label):
+    def __init__(self, color=(0, 0, 0, 1), **kwargs):
+        super(ColoredLabel, self).__init__(**kwargs)
         with self.canvas.before:
-            self.bg_color = Color(0.047, 0.035, 0.87, 1) 
-            self.bg_rect = Rectangle(size=self.size, pos=self.pos)
-        self.bind(size=self._update_bg, pos=self._update_bg)
-
-    def _update_bg(self, instance, value):
-        self.bg_rect.size = self.size
-        self.bg_rect.pos = self.pos
-
-class ColoredLabel2(Label):
-    def __init__(self, **kwargs):
-        super(ColoredLabel2, self).__init__(**kwargs)
-        with self.canvas.before:
-            self.bg_color = Color(1, 0, 0, 1) 
-            self.bg_rect = Rectangle(size=self.size, pos=self.pos)
-        self.bind(size=self._update_bg, pos=self._update_bg)
-
-    def _update_bg(self, instance, value):
-        self.bg_rect.size = self.size
-        self.bg_rect.pos = self.pos
-
-class ColoredLabel3(Label):
-    def __init__(self, **kwargs):
-        super(ColoredLabel3, self).__init__(**kwargs)
-        with self.canvas.before:
-            self.bg_color = Color(0.8588, 0.478, 0.043, 1) 
+            self.bg_color = Color(*color)  # Use the provided color
             self.bg_rect = Rectangle(size=self.size, pos=self.pos)
         self.bind(size=self._update_bg, pos=self._update_bg)
 
@@ -56,7 +32,10 @@ class MainWindow(Screen):
 
         self.window = GridLayout(cols = 1, size_hint = (1, 1))
 
-        self.label1 = ColoredLabel1(text = "Password Manager", font_size = 100)
+        # the color is : Color(0.047, 0.035, 0.87, 1)
+        self.label1 = ColoredLabel(
+            text = "Password Manager", font_size = 100, color = (0.047, 0.035, 0.87, 1)
+            )
         self.window.add_widget(self.label1)
         
         self.button1 = Button(
@@ -95,8 +74,8 @@ class SearchWindow(Screen):
 
         self.window = FloatLayout(size_hint=(1, 1))
 
-        self.label1 = ColoredLabel2(
-            text = "Search a password", font_size = 100, size_hint=(1, 0.3), pos_hint={"x": 0, "top": 1}
+        self.label1 = ColoredLabel(
+            text = "Search a password", font_size = 100, size_hint=(1, 0.3), pos_hint={"x": 0, "top": 1}, color = (1, 0, 0, 1)
         )
         self.window.add_widget(self.label1)
 
@@ -105,13 +84,13 @@ class SearchWindow(Screen):
             )
         self.window.add_widget(self.name_input)
 
-        self.label2 = ColoredLabel1(
-            text = "Password:", font_size = 40, size_hint=(0.5, 0.2), pos_hint={"x": 0, "top": 0.5}
+        self.label2 = ColoredLabel(
+            text = "Password:", font_size = 40, size_hint=(0.5, 0.2), pos_hint={"x": 0, "top": 0.5}, color = (0.047, 0.035, 0.87, 1)
         )
         self.window.add_widget(self.label2)
 
-        self.label2 = ColoredLabel3(
-            text = "", font_size = 40, size_hint=(0.5, 0.2), pos_hint={"x": 0.5, "top": 0.5}
+        self.label2 = ColoredLabel(
+            text = "", font_size = 40, size_hint=(0.5, 0.2), pos_hint={"x": 0.5, "top": 0.5}, color = (0.8588, 0.478, 0.043, 1)
         )
         self.window.add_widget(self.label2) 
 
@@ -161,8 +140,8 @@ class AddWindow(Screen):
 
         self.window = FloatLayout(size_hint=(1, 1))
 
-        self.label = ColoredLabel2(
-            text = "Add a password", font_size = 100, size_hint=(1, 0.3), pos_hint={"x": 0, "top": 1}
+        self.label = ColoredLabel(
+            text = "Add a password", font_size = 100, size_hint=(1, 0.3), pos_hint={"x": 0, "top": 1}, color = (1, 0, 0, 1)
             )
         self.window.add_widget(self.label)
 

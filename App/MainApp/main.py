@@ -1,3 +1,4 @@
+import json
 from kivy.app import App
 from kivy.uix.button import Button
 from kivy.uix.screenmanager import ScreenManager, Screen
@@ -9,15 +10,54 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.image import Image
 from kivy.uix.spinner import Spinner
 
-class LoginWindow(Screen):
-    def __init__(self, **kw):
-        super(LoginWindow, self).__init__(**kw)
+DATA_PATH = "data.json"
+d = open(DATA_PATH, "r")
+data = json.load(d)
+d.close()
 
+class ColoredLabel(Label):
+    def __init__(self, color=(0, 0, 0, 1), **kwargs):
+        super(ColoredLabel, self).__init__(**kwargs)
+        with self.canvas.before:
+            self.bg_color = Color(*color)  # Use the provided color
+            self.bg_rect = Rectangle(size=self.size, pos=self.pos)
+        self.bind(size=self._update_bg, pos=self._update_bg)
+
+    def _update_bg(self, instance, value):
+        self.bg_rect.size = self.size
+        self.bg_rect.pos = self.pos
+
+class CreatePasswordWindow(Screen):
+    def __init__(self, **kw):
+        super(CreatePasswordWindow, self).__init__(**kw)
         self.cols = 1
 
         self.window = FloatLayout(size_hint=(1, 1))
         with self.window.canvas.before:
-            Color(1, 1, 1, 1)  # Set the color to white
+            Color(1, 1, 1, 1) 
+            self.rect = Rectangle(size=self.window.size, pos=self.window.pos)
+            self.window.bind(size=self._update_rect, pos=self._update_rect)
+
+        ###
+
+        
+
+        ###
+
+        self.add_widget(self.window)
+
+    def _update_rect(self, instance, value):
+        self.rect.pos = instance.pos
+        self.rect.size = instance.size
+
+class LoginWindow(Screen):
+    def __init__(self, **kw):
+        super(LoginWindow, self).__init__(**kw)
+        self.cols = 1
+
+        self.window = FloatLayout(size_hint=(1, 1))
+        with self.window.canvas.before:
+            Color(1, 1, 1, 1)  
             self.rect = Rectangle(size=self.window.size, pos=self.window.pos)
             self.window.bind(size=self._update_rect, pos=self._update_rect)
 
