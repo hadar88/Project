@@ -56,7 +56,6 @@ class MainWindow(Screen):
 
         self.window = GridLayout(cols = 1, size_hint = (1, 1))
 
-        # the label height should be 80% of the window height
         self.label1 = ColoredLabel1(text = "Password Manager", font_size = 100)
         self.window.add_widget(self.label1)
         

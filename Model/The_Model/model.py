@@ -15,7 +15,7 @@ import matplotlib.pyplot as plt
 SPLIT = ["train", "val", "test"][0]
 
 MODEL_VERSION = 1.0
-BATCH_SIZE = 256
+BATCH_SIZE = 64
 
 def main():
     parser = argparse.ArgumentParser()
@@ -43,14 +43,21 @@ def main():
         optimizer = optim.Adam(model.parameters(), lr=0.001, weight_decay=0.0001)
 
         ### Train and save the model ###
+        # criterions_and_epochs = [
+        #     # (RangeLoss(), 100),
+        #     (NutritionLoss(device), 10),
+        #     (PreferenceLoss(device), 10),
+        #     (AllergensLoss(device), 10),
+        #     (IngredientsLoss(device), 10),
+        #     (CaloriesMSELoss(device), 10),
+        #     (ZeroLoss(), 30),
+        # ]
+
         criterions_and_epochs = [
-            (ZeroLoss(), 10),
-            (RangeLoss(), 10),
-            (NutritionLoss(device), 10),
-            (PreferenceLoss(device), 10),
-            (AllergensLoss(device), 10),
-            (IngredientsLoss(device), 10),
-            (CaloriesMSELoss(device), 10)
+            (nn.MSELoss(), 2000),
+            (AllergensLoss(device), 50),
+            #(PreferenceLoss(device), 50),
+            #(IngredientsLoss(device), 10)
         ]
 
         used_loss_functions = []
@@ -58,7 +65,7 @@ def main():
         for i, (criterion, epochs) in enumerate(criterions_and_epochs):
             print(f"Training the model with {criterion.__class__.__name__}")
             used_loss_functions.append(criterion)
-            train_model(dataloader, model, used_loss_functions, optimizer, epochs, device, i == len(criterions_and_epochs) - 1)
+            train_model(dataloader, model, used_loss_functions, optimizer, epochs, device, False)
             torch.save(model.state_dict(), f"saved_models/model_v{MODEL_VERSION}_{criterion.__class__.__name__[0]}.pth")
 
         torch.save(model.state_dict(), f"saved_models/model_v{MODEL_VERSION}.pth")
@@ -74,7 +81,7 @@ def main():
 
         evaluate_on_random_sample(dataloader, model, device)
 
-    loss = evaluate_model(dataloader, model, NutritionLoss(device), device)
+    loss = evaluate_model(dataloader, model, [nn.MSELoss(), AllergensLoss(device)], device)
     print(f"Loss on the {split} set: {loss:.4f}")
 
 class MenuGenerator(nn.Module):
@@ -133,8 +140,8 @@ class RangeLoss(nn.Module):
 class NutritionLoss(nn.Module):
     def __init__(self, device):
         super(NutritionLoss, self).__init__()
-        self.NUTRITION_PENALTY = 2
-        self.DENOMINATOR = 100
+        self.NUTRITION_PENALTY = 5
+        self.DENOMINATOR = 1
         self.l1loss = nn.L1Loss()
         self.device = device
         self.data = read_foods_tensor().to(device)
@@ -159,7 +166,7 @@ class PreferenceLoss(nn.Module):
     def __init__(self, device):
         super(PreferenceLoss, self).__init__()
 
-        self.PREF_PENALTY = 2
+        self.PREF_PENALTY = 7
         self.device = device
 
         self.data = read_foods_tensor().to(device)
@@ -182,7 +189,7 @@ class AllergensLoss(nn.Module):
     def __init__(self, device):
         super(AllergensLoss, self).__init__()
 
-        self.ALERGENS_PENALTY = 3
+        self.ALERGENS_PENALTY = 8
         self.device = device
 
         self.data = read_foods_tensor().to(device)
@@ -205,11 +212,11 @@ class IngredientsLoss(nn.Module):
     def __init__(self, device):
         super(IngredientsLoss, self).__init__()
 
-        self.INGREDIENTS_PENALTY = 1
+        self.INGREDIENTS_PENALTY = 3
         self.device = device
 
         self.data = read_foods_tensor().to(device)
-        self.DENOMINATOR = 100
+        self.DENOMINATOR = 1
 
         self.l1loss = nn.L1Loss()
     
@@ -230,9 +237,9 @@ class IngredientsLoss(nn.Module):
 class CaloriesMSELoss(nn.Module):
     def __init__(self, device):
         super(CaloriesMSELoss, self).__init__()
-        self.MSE_PENALTY = 1
+        self.MSE_PENALTY = 10
         self.l1loss = nn.L1Loss()
-        self.DENOMINATOR = 100
+        self.DENOMINATOR = 1
 
         self.data = read_foods_tensor().to(device)
 
@@ -353,7 +360,7 @@ def train_model(dataloader, model, criterions: list, optimizer, epochs, device, 
         plt.plot(loss_history)
         plt.show()
 
-def evaluate_model(dataloader, model, criterion, device):
+def evaluate_model(dataloader, model, criterions, device):
     """
     Evaluate the model on the given dataset.
 
@@ -371,7 +378,10 @@ def evaluate_model(dataloader, model, criterion, device):
 
         y_pred = model(x)
 
-        loss = criterion(y_pred, y)
+        loss = 0
+
+        for criterion in criterions:
+            loss += criterion(y_pred, y)
 
         total_loss += loss.item()
         num_batches += 1
@@ -389,7 +399,7 @@ def evaluate_on_random_sample(dataloader, model, device):
     data = json.load(foods)
 
     random_index = torch.randint(0, len(dataloader.dataset), (1,)).item()
-    x, _ = dataloader.dataset[random_index]
+    x, y = dataloader.dataset[random_index]
     y_pred = model(x.unsqueeze(0).to(device))
         
     # print("For the following input:")
@@ -397,15 +407,15 @@ def evaluate_on_random_sample(dataloader, model, device):
     print()
     print("The model predicted:")
     print(y_pred.squeeze())
-    # print("The ground truth was:")
-    # print(y)
-    # print()
+    print("The ground truth was:")
+    print(y)
+    print()
 
     print("Here's a comparison between the ground truth and the model's prediction:")
-    # print("Ground truth:")
-    # print(transform2(y, data, device))
     print("Model's prediction:")
     print(transform2(y_pred.squeeze(), data, device, bound))
+    print("Ground truth:")
+    print(transform2(y, data, device))
 
 if __name__ == "__main__":
     main()
