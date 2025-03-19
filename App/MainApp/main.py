@@ -14,6 +14,7 @@ DATA_PATH = "data.json"
 with open(DATA_PATH, "r") as file:
     data = json.load(file)
 
+
 class ColoredLabel(Label):
     def __init__(self, color=(0, 0, 0, 1), **kwargs):
         super(ColoredLabel, self).__init__(**kwargs)
@@ -25,6 +26,7 @@ class ColoredLabel(Label):
     def _update_bg(self, instance, value):
         self.bg_rect.size = self.size
         self.bg_rect.pos = self.pos
+
 
 class MainWindow(Screen):
     def __init__(self, **kw):
@@ -39,8 +41,8 @@ class MainWindow(Screen):
 
         ###
 
-
-
+        self.label = Label(text = "test", font_size = 30)
+        self.window.add_widget(self.label)
         ###
 
         self.add_widget(self.window)
@@ -71,6 +73,7 @@ class CreatePasswordWindow(Screen):
     def _update_rect(self, instance, value):
         self.rect.pos = instance.pos
         self.rect.size = instance.size
+
 
 class LoginWindow(Screen):
     def __init__(self, **kw):
@@ -107,7 +110,7 @@ class LoginWindow(Screen):
             # background_normal = "",
             size_hint = (0.8, 0.1),
             pos_hint = {"x": 0.1, "top": 0.47},
-            # on_press = self.login
+            on_press = self.login
         )
         self.window.add_widget(self.loginButton)
 
@@ -126,7 +129,7 @@ class LoginWindow(Screen):
             # background_normal = "",
             size_hint = (0.8, 0.1),
             pos_hint = {"x": 0.1, "top": 0.2},
-            # on_press = self.login
+            # on_press = self.createAccount
         )
         self.window.add_widget(self.createAccountButton)
 
@@ -138,6 +141,17 @@ class LoginWindow(Screen):
         self.rect.pos = instance.pos
         self.rect.size = instance.size
 
+    def login(self, instance):
+        username = self.userName.text
+        password = self.password.text
+        self.userName.text = ""
+        self.password.text = ""
+        if(data["username"] == username and data["password"] == password):
+            self.manager.current = "main"
+        else:
+            pass
+
+    # def createAccount(self, instance):
 
 class WindowManager(ScreenManager):
     def __init__(self, **kwargs):

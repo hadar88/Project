@@ -15,7 +15,7 @@ import matplotlib.pyplot as plt
 SPLIT = ["train", "val", "test"][0]
 
 MODEL_VERSION = 1.0
-BATCH_SIZE = 128
+BATCH_SIZE = 256
 
 def main():
     parser = argparse.ArgumentParser()
@@ -54,7 +54,7 @@ def main():
         # ]
 
         criterions_and_epochs = [
-            (nn.MSELoss(), 5000),
+            (nn.MSELoss(), 10000),
             (AllergensLoss(device), 10),
             #(PreferenceLoss(device), 50),
             #(IngredientsLoss(device), 10)
@@ -65,7 +65,7 @@ def main():
         for i, (criterion, epochs) in enumerate(criterions_and_epochs):
             print(f"Training the model with {criterion.__class__.__name__}")
             used_loss_functions.append(criterion)
-            train_model(dataloader, model, used_loss_functions, optimizer, epochs, device, False)
+            train_model(dataloader, model, used_loss_functions, optimizer, epochs, device, True)
             torch.save(model.state_dict(), f"saved_models/model_v{MODEL_VERSION}_{criterion.__class__.__name__[0]}.pth")
 
         torch.save(model.state_dict(), f"saved_models/model_v{MODEL_VERSION}.pth")
