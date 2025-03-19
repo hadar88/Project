@@ -40,7 +40,7 @@ def main():
 
         # myLoss = MenuLoss(device).to(device)                                       
         # myLoss = ZeroLoss()                                       
-        optimizer = optim.Adam(model.parameters(), lr=0.01, weight_decay=0.0001)
+        optimizer = optim.Adam(model.parameters(), lr=0.001, weight_decay=0.0001)
 
         ### Train and save the model ###
         # criterions_and_epochs = [
@@ -54,7 +54,7 @@ def main():
         # ]
 
         criterions_and_epochs = [
-            (nn.MSELoss(), 20000),
+            (nn.MSELoss(), 5000),
             #(AllergensLoss(device), 10),
             #(PreferenceLoss(device), 50),
             #(IngredientsLoss(device), 10)
@@ -89,13 +89,17 @@ class MenuGenerator(nn.Module):
         super(MenuGenerator, self).__init__()
 
         self.fc1 = nn.Linear(14, 256)
-        self.fc2 = nn.Linear(256, 256)
-        self.fc3 = nn.Linear(256, 420)
+        self.fc2 = nn.Linear(256, 512)
+        self.fc3 = nn.Linear(512, 512)
+        self.fc4 = nn.Linear(512, 256)
+        self.fc5 = nn.Linear(256, 420)
 
     def forward(self, x):
         y = torch.relu(self.fc1(x))
         y = torch.relu(self.fc2(y))
         y = torch.relu(self.fc3(y))
+        y = torch.relu(self.fc4(y))
+        y = torch.relu(self.fc5(y))
 
         y = y.reshape(-1, 7, 3, 10, 2)
         

@@ -84,7 +84,7 @@ class LoginWindow(Screen):
             # background_normal = "",
             size_hint = (0.8, 0.1),
             pos_hint = {"x": 0.1, "top": 0.2},
-            # on_press = self.createAccount
+            on_press = self.createAccount
         )
         self.window.add_widget(self.createAccountButton)
 
@@ -104,9 +104,13 @@ class LoginWindow(Screen):
         if(data["username"] == username and data["password"] == password):
             self.manager.current = "main"
         else:
+            # give a messagge
             pass
 
-    # def createAccount(self, instance):
+    def createAccount(self, instance):
+        pass
+
+################################
 
 class MainWindow(Screen):
     def __init__(self, **kw):
@@ -129,6 +133,8 @@ class MainWindow(Screen):
     def _update_rect(self, instance, value):
         self.rect.pos = instance.pos
         self.rect.size = instance.size
+
+################################
 
 class SecondWindow(Screen):
     def __init__(self, **kw):
@@ -153,6 +159,8 @@ class SecondWindow(Screen):
         self.rect.pos = instance.pos
         self.rect.size = instance.size
 
+################################
+
 class CreateAccountWindow(Screen):
     def __init__(self, **kw):
         super(CreateAccountWindow, self).__init__(**kw)
@@ -175,6 +183,8 @@ class CreateAccountWindow(Screen):
     def _update_rect(self, instance, value):
         self.rect.pos = instance.pos
         self.rect.size = instance.size
+
+################################
 
 class Questions1Window(Screen):
     def __init__(self, **kw):
@@ -199,6 +209,7 @@ class Questions1Window(Screen):
         self.rect.pos = instance.pos
         self.rect.size = instance.size
 
+################################
 
 class WindowManager(ScreenManager):
     def __init__(self, **kw):
