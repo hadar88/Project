@@ -41,8 +41,11 @@ class MainWindow(Screen):
 
         ###
 
-        self.label = Label(text = "test", font_size = 30)
-        self.window.add_widget(self.label)
+        # self.label = ColoredLabel(
+        #     text = "test", font_size = 30, size_hint=(0.5, 0.5), pos_hint={"x": 0.2, "top":0.7}, color = (0, 0, 1, 1)
+        #     )
+        # self.window.add_widget(self.label)
+
         ###
 
         self.add_widget(self.window)

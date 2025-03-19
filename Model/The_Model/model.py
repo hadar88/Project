@@ -55,7 +55,7 @@ def main():
 
         criterions_and_epochs = [
             (nn.MSELoss(), 10000),
-            (AllergensLoss(device), 10),
+            #(AllergensLoss(device), 10),
             #(PreferenceLoss(device), 50),
             #(IngredientsLoss(device), 10)
         ]
@@ -81,7 +81,7 @@ def main():
 
         evaluate_on_random_sample(dataloader, model, device)
 
-    loss = evaluate_model(dataloader, model, [nn.MSELoss(), AllergensLoss(device)], device)
+    loss = evaluate_model(dataloader, model, [nn.MSELoss()], device)
     print(f"Loss on the {split} set: {loss:.4f}")
 
 class MenuGenerator(nn.Module):
@@ -97,7 +97,7 @@ class MenuGenerator(nn.Module):
     def forward(self, x):
         y = torch.relu(self.fc1(x))
 
-        y = torch.relu(self.fc2(y))
+        y = torch.sigmoid(self.fc2(y))
 
         y = torch.relu(self.fc3(y))
 
