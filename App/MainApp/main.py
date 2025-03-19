@@ -14,10 +14,11 @@ DATA_PATH = "data.json"
 with open(DATA_PATH, "r") as file:
     data = json.load(file)
 
+#######################################################################
 
 class ColoredLabel(Label):
-    def __init__(self, color=(0, 0, 0, 1), **kwargs):
-        super(ColoredLabel, self).__init__(**kwargs)
+    def __init__(self, color=(0, 0, 0, 1), **kw):
+        super(ColoredLabel, self).__init__(**kw)
         with self.canvas.before:
             self.bg_color = Color(*color)  # Use the provided color
             self.bg_rect = Rectangle(size=self.size, pos=self.pos)
@@ -27,56 +28,7 @@ class ColoredLabel(Label):
         self.bg_rect.size = self.size
         self.bg_rect.pos = self.pos
 
-
-class MainWindow(Screen):
-    def __init__(self, **kw):
-        super(MainWindow, self).__init__(**kw)
-        self.cols = 1
-
-        self.window = FloatLayout(size_hint=(1, 1))
-        with self.window.canvas.before:
-            Color(1, 1, 1, 1)  
-            self.rect = Rectangle(size=self.window.size, pos=self.window.pos)
-            self.window.bind(size=self._update_rect, pos=self._update_rect)
-
-        ###
-
-        # self.label = ColoredLabel(
-        #     text = "test", font_size = 30, size_hint=(0.5, 0.5), pos_hint={"x": 0.2, "top":0.7}, color = (0, 0, 1, 1)
-        #     )
-        # self.window.add_widget(self.label)
-
-        ###
-
-        self.add_widget(self.window)
-
-    def _update_rect(self, instance, value):
-        self.rect.pos = instance.pos
-        self.rect.size = instance.size
-
-class CreatePasswordWindow(Screen):
-    def __init__(self, **kw):
-        super(CreatePasswordWindow, self).__init__(**kw)
-        self.cols = 1
-
-        self.window = FloatLayout(size_hint=(1, 1))
-        with self.window.canvas.before:
-            Color(1, 1, 1, 1) 
-            self.rect = Rectangle(size=self.window.size, pos=self.window.pos)
-            self.window.bind(size=self._update_rect, pos=self._update_rect)
-
-        ###
-
-        
-
-        ###
-
-        self.add_widget(self.window)
-
-    def _update_rect(self, instance, value):
-        self.rect.pos = instance.pos
-        self.rect.size = instance.size
-
+#######################################################################
 
 class LoginWindow(Screen):
     def __init__(self, **kw):
@@ -156,13 +108,107 @@ class LoginWindow(Screen):
 
     # def createAccount(self, instance):
 
+class MainWindow(Screen):
+    def __init__(self, **kw):
+        super(MainWindow, self).__init__(**kw)
+        self.cols = 1
+
+        self.window = FloatLayout(size_hint=(1, 1))
+        with self.window.canvas.before:
+            Color(1, 1, 1, 1)  
+            self.rect = Rectangle(size=self.window.size, pos=self.window.pos)
+            self.window.bind(size=self._update_rect, pos=self._update_rect)
+
+        ###
+
+
+        ###
+
+        self.add_widget(self.window)
+
+    def _update_rect(self, instance, value):
+        self.rect.pos = instance.pos
+        self.rect.size = instance.size
+
+class SecondWindow(Screen):
+    def __init__(self, **kw):
+        super(SecondWindow, self).__init__(**kw)
+        self.cols = 1
+
+        self.window = FloatLayout(size_hint=(1, 1))
+        with self.window.canvas.before:
+            Color(1, 1, 1, 1) 
+            self.rect = Rectangle(size=self.window.size, pos=self.window.pos)
+            self.window.bind(size=self._update_rect, pos=self._update_rect)
+
+        ###
+
+        
+
+        ###
+
+        self.add_widget(self.window)
+
+    def _update_rect(self, instance, value):
+        self.rect.pos = instance.pos
+        self.rect.size = instance.size
+
+class CreateAccountWindow(Screen):
+    def __init__(self, **kw):
+        super(CreateAccountWindow, self).__init__(**kw)
+        self.cols = 1
+
+        self.window = FloatLayout(size_hint=(1, 1))
+        with self.window.canvas.before:
+            Color(1, 1, 1, 1) 
+            self.rect = Rectangle(size=self.window.size, pos=self.window.pos)
+            self.window.bind(size=self._update_rect, pos=self._update_rect)
+
+        ###
+
+        
+
+        ###
+
+        self.add_widget(self.window)
+
+    def _update_rect(self, instance, value):
+        self.rect.pos = instance.pos
+        self.rect.size = instance.size
+
+class Questions1Window(Screen):
+    def __init__(self, **kw):
+        super(Questions1Window, self).__init__(**kw)
+        self.cols = 1
+
+        self.window = FloatLayout(size_hint=(1, 1))
+        with self.window.canvas.before:
+            Color(1, 1, 1, 1) 
+            self.rect = Rectangle(size=self.window.size, pos=self.window.pos)
+            self.window.bind(size=self._update_rect, pos=self._update_rect)
+
+        ###
+
+        
+
+        ###
+
+        self.add_widget(self.window)
+
+    def _update_rect(self, instance, value):
+        self.rect.pos = instance.pos
+        self.rect.size = instance.size
+
+
 class WindowManager(ScreenManager):
-    def __init__(self, **kwargs):
-        super(WindowManager, self).__init__(**kwargs)
+    def __init__(self, **kw):
+        super(WindowManager, self).__init__(**kw)
 
         self.add_widget(LoginWindow(name = "login"))
         self.add_widget(MainWindow(name = "main"))
-        self.add_widget(CreatePasswordWindow(name = "create_password"))
+        self.add_widget(SecondWindow(name = "second"))
+        self.add_widget(CreateAccountWindow(name = "createaccount"))
+        self.add_widget(Questions1Window(name = "questions1"))
         
 class MainApp(App):
     def build(self):

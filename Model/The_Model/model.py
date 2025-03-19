@@ -40,7 +40,7 @@ def main():
 
         # myLoss = MenuLoss(device).to(device)                                       
         # myLoss = ZeroLoss()                                       
-        optimizer = optim.Adam(model.parameters(), lr=0.001, weight_decay=0.0001)
+        optimizer = optim.Adam(model.parameters(), lr=0.01, weight_decay=0.0001)
 
         ### Train and save the model ###
         # criterions_and_epochs = [
@@ -54,7 +54,7 @@ def main():
         # ]
 
         criterions_and_epochs = [
-            (nn.MSELoss(), 10000),
+            (nn.MSELoss(), 20000),
             #(AllergensLoss(device), 10),
             #(PreferenceLoss(device), 50),
             #(IngredientsLoss(device), 10)
@@ -88,17 +88,13 @@ class MenuGenerator(nn.Module):
     def __init__(self):
         super(MenuGenerator, self).__init__()
 
-        # TODO: change this to a more suitable architecture
-
-        self.fc1 = nn.Linear(14, 210)   # 14 is the number of features in the input (Calories, Carb, ...)
-        self.fc2 = nn.Linear(210, 210)
-        self.fc3 = nn.Linear(210, 420)
+        self.fc1 = nn.Linear(14, 256)
+        self.fc2 = nn.Linear(256, 256)
+        self.fc3 = nn.Linear(256, 420)
 
     def forward(self, x):
         y = torch.relu(self.fc1(x))
-
-        y = torch.sigmoid(self.fc2(y))
-
+        y = torch.relu(self.fc2(y))
         y = torch.relu(self.fc3(y))
 
         y = y.reshape(-1, 7, 3, 10, 2)
@@ -354,11 +350,12 @@ def train_model(dataloader, model, criterions: list, optimizer, epochs, device, 
 
         loss_history.append(epoch_loss)
 
-    plt.savefig("loss_plot.png")
-
     if plot_loss:
         plt.plot(loss_history)
+        plt.savefig("loss_plot.png")
         plt.show()
+        
+
 
 def evaluate_model(dataloader, model, criterions, device):
     """
