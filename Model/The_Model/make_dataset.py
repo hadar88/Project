@@ -138,7 +138,13 @@ class MenusDataset(Dataset):
     
     def __getitem__(self, index):
         # return self.xs[index], self.mids[index], self.ys[index]
-        return self.xs[index], self.ys[index]
+        foods_id = self.ys[index][..., 0].long()
+        foods_amount = self.ys[index][..., 1].float()
+        return self.xs[index], foods_id, foods_amount
+    
+    @staticmethod
+    def merge_ids_and_amounts(ids, amounts):
+        return torch.stack((ids, amounts), dim=-1)
 
 if __name__ == "__main__":
     xs = make_xs("test")

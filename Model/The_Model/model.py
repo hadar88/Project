@@ -33,45 +33,38 @@ def main():
     # menus = Subset(menus, range(10))
     dataloader = DataLoader(menus, batch_size=BATCH_SIZE, shuffle=(SPLIT == "train"))
     
-    model = MenuGenerator().to(device)
+    model = MenuGenerator()
 
     if split == "train":
         ### Define the model, loss function and optimizer ###
 
         # myLoss = MenuLoss(device).to(device)                                       
         # myLoss = ZeroLoss()                                       
-        optimizer = optim.Adam(model.parameters(), lr=0.001, weight_decay=0.0001)
+        optimizer = optim.Adam(model.parameters(), lr=0.001)
+        criterion_food_id = nn.CrossEntropyLoss()
+        criterion_amount = nn.MSELoss()
 
-        ### Train and save the model ###
+        train_transformer_model(dataloader, model, criterion_food_id, criterion_amount, optimizer, 10, device, True)
+
         # criterions_and_epochs = [
-        #     # (RangeLoss(), 100),
-        #     (NutritionLoss(device), 10),
-        #     (PreferenceLoss(device), 10),
-        #     (AllergensLoss(device), 10),
-        #     (IngredientsLoss(device), 10),
-        #     (CaloriesMSELoss(device), 10),
-        #     (ZeroLoss(), 30),
+        #     (nn.MSELoss(), 5000),
+        #     (AllergensLoss(device), 50),
+        #     #(PreferenceLoss(device), 50),
+        #     #(IngredientsLoss(device), 10)
         # ]
 
-        criterions_and_epochs = [
-            (nn.MSELoss(), 5000),
-            #(AllergensLoss(device), 10),
-            #(PreferenceLoss(device), 50),
-            #(IngredientsLoss(device), 10)
-        ]
+        # used_loss_functions = []
 
-        used_loss_functions = []
-
-        for i, (criterion, epochs) in enumerate(criterions_and_epochs):
-            print(f"Training the model with {criterion.__class__.__name__}")
-            used_loss_functions.append(criterion)
-            train_model(dataloader, model, used_loss_functions, optimizer, epochs, device, True)
-            torch.save(model.state_dict(), f"saved_models/model_v{MODEL_VERSION}_{criterion.__class__.__name__[0]}.pth")
+        # for i, (criterion, epochs) in enumerate(criterions_and_epochs):
+        #     print(f"Training the model with {criterion.__class__.__name__}")
+        #     used_loss_functions.append(criterion)
+        #     train_model(dataloader, model, used_loss_functions, optimizer, epochs, device, True)
+        #     torch.save(model.state_dict(), f"saved_models/model_v{MODEL_VERSION}_{criterion.__class__.__name__[0]}.pth")
 
         torch.save(model.state_dict(), f"saved_models/model_v{MODEL_VERSION}.pth")
         print(f"Model saved as saved_models/model_v{MODEL_VERSION}.pth")
 
-        evaluate_on_random_sample(dataloader, model, device)
+        evaluate_transformer_on_random_sample(dataloader, model, device)
 
     elif split == "val" or split == "test":
         ### Load the model and evaluate it ###
@@ -81,29 +74,43 @@ def main():
 
         evaluate_on_random_sample(dataloader, model, device)
 
-    loss = evaluate_model(dataloader, model, [nn.MSELoss()], device)
-    print(f"Loss on the {split} set: {loss:.4f}")
+    # loss = evaluate_model(dataloader, model, [nn.MSELoss(), AllergensLoss(device)], device)
+    # print(f"Loss on the {split} set: {loss:.4f}")
 
 class MenuGenerator(nn.Module):
     def __init__(self):
         super(MenuGenerator, self).__init__()
 
-        self.fc1 = nn.Linear(14, 256)
-        self.fc2 = nn.Linear(256, 512)
-        self.fc3 = nn.Linear(512, 512)
-        self.fc4 = nn.Linear(512, 256)
-        self.fc5 = nn.Linear(256, 420)
+        self.emb_dim = 16
+
+        self.fc1 = nn.Linear(14, 128)
+        self.fc2 = nn.Linear(128, 256)
+
+        self.transformer = nn.TransformerEncoder(
+            nn.TransformerEncoderLayer(d_model=256, nhead=8, batch_first=True),
+            num_layers=2
+        )
+
+        self.food_fc = nn.Linear(256, 7 * 3 * 10 * 222)
+        self.amount_fc = nn.Linear(256, 7 * 3 * 10)
+
+        self.activation = nn.ReLU()
 
     def forward(self, x):
-        y = torch.relu(self.fc1(x))
-        y = torch.relu(self.fc2(y))
-        y = torch.relu(self.fc3(y))
-        y = torch.relu(self.fc4(y))
-        y = torch.relu(self.fc5(y))
+        x = self.activation(self.fc1(x))
+        x = self.activation(self.fc2(x))
 
-        y = y.reshape(-1, 7, 3, 10, 2)
-        
-        return y
+        x = x.unsqueeze(0) 
+        x = self.transformer(x)
+        x = x.squeeze(0)
+
+        food_logits = self.food_fc(x)
+        food_logits = food_logits.view(-1, 7, 3, 10, 222)
+
+        amount = self.amount_fc(x)
+        amount = amount.view(-1, 7, 3, 10, 1)
+
+        return food_logits, amount
     
 class ZeroLoss(nn.Module):
     def __init__(self):
@@ -189,7 +196,7 @@ class AllergensLoss(nn.Module):
     def __init__(self, device):
         super(AllergensLoss, self).__init__()
 
-        self.ALERGENS_PENALTY = 20
+        self.ALERGENS_PENALTY = 5
         self.device = device
 
         self.data = read_foods_tensor().to(device)
@@ -318,7 +325,51 @@ def round_and_bound(x):
     
 def zero_mask(x):
     return torch.exp(-4 * x)
-    
+
+def train_transformer_model(dataloader, model, criterion_food_id, criterion_amount, optimizer, epochs, device, plot_loss=True):
+    model.to(device)
+    model.train()
+
+    bar = tqdm(range(epochs))
+
+    loss_history = []
+
+    for _ in bar:
+        epoch_loss = 0.0
+
+        for x, ids, amounts in dataloader:
+            x, ids, amounts = x.to(device), ids.to(device), amounts.to(device)
+
+            optimizer.zero_grad()
+
+            # forward
+            food_logits, pred_amounts = model(x)
+
+            # reshape for loss computation
+            food_logits = food_logits.view(-1, 222)
+            ids = ids.view(-1)
+
+            pred_amounts = pred_amounts.view(-1, 1)
+            amounts = amounts.view(-1, 1)
+
+            # compute losses
+            loss_id = criterion_food_id(food_logits, ids)
+            loss_amount = criterion_amount(pred_amounts, amounts)
+
+            # joint loss weighted importance
+            loss = loss_id + loss_amount
+            loss.backward()
+            optimizer.step()
+
+            epoch_loss += loss.item()
+
+        bar.set_postfix_str(f"Loss = {epoch_loss:.4f}")
+        loss_history.append(epoch_loss)
+
+    if plot_loss:
+        plt.plot(loss_history)
+        plt.savefig("loss_plot.png")
+        plt.show()
 
 def train_model(dataloader, model, criterions: list, optimizer, epochs, device, plot_loss=True):
     model.train()
@@ -359,8 +410,6 @@ def train_model(dataloader, model, criterions: list, optimizer, epochs, device, 
         plt.savefig("loss_plot.png")
         plt.show()
         
-
-
 def evaluate_model(dataloader, model, criterions, device):
     """
     Evaluate the model on the given dataset.
@@ -416,7 +465,49 @@ def evaluate_on_random_sample(dataloader, model, device):
     print("Model's prediction:")
     print(transform2(y_pred.squeeze(), data, device, bound))
     print("Ground truth:")
-    print(transform2(y, data, device))
+    print(transform2(y, data, device))\
+    
+
+def evaluate_transformer_on_random_sample(dataloader, model, device):
+    model.eval()
+    model.to(device)
+
+    print("Here is a random prediction:")
+
+    print("Reading the foods data...\n")
+    FOODS_DATA_PATH = "../../Data/layouts/FoodsByID.json"
+    foods = open(FOODS_DATA_PATH, "r")
+    data = json.load(foods)
+
+    random_index = torch.randint(0, len(dataloader.dataset), (1,)).item()
+    x, y_id, y_amount = dataloader.dataset[random_index]
+    x, y_id, y_amount = x.to(device), y_id.to(device), y_amount.to(device)
+
+    pred_id, pred_amount = model(x.unsqueeze(0).to(device))
+        
+    print("For the following input:")
+    print(x)
+    print()
+
+    print("The model predicted:")
+    print("IDs:")
+    print(pred_id.squeeze())
+    print("Amounts:")
+    print(pred_amount.squeeze())
+    print()
+
+    print("The ground truth was:")
+    print("IDs:")
+    print(y_id.squeeze())
+    print("Amounts:")
+    print(y_amount.squeeze())
+    print()
+
+    # print("Here's a comparison between the ground truth and the model's prediction:")
+    # print("Model's prediction:")
+    # print(transform2(y_pred.squeeze(), data, device, bound))
+    # print("Ground truth:")
+    # print(transform2(y, data, device))
 
 if __name__ == "__main__":
     main()
