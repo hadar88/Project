@@ -108,7 +108,7 @@ class LoginWindow(Screen):
             pass
 
     def createAccount(self, instance):
-        pass
+        self.manager.current = "createAccount"
 
 ################################
 
@@ -218,7 +218,7 @@ class WindowManager(ScreenManager):
         self.add_widget(LoginWindow(name = "login"))
         self.add_widget(MainWindow(name = "main"))
         self.add_widget(SecondWindow(name = "second"))
-        self.add_widget(CreateAccountWindow(name = "createaccount"))
+        self.add_widget(CreateAccountWindow(name = "createAccount"))
         self.add_widget(Questions1Window(name = "questions1"))
         
 class MainApp(App):
