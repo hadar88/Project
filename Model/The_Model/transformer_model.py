@@ -36,11 +36,11 @@ def main():
     model = MenuGenerator()
 
     if split == "train":                              
-        optimizer = optim.Adam(model.parameters(), lr=0.001)
+        optimizer = optim.Adam(model.parameters(), lr=0.001, weight_decay=1e-5)
         criterion_food_id = nn.CrossEntropyLoss()
         criterion_amount = nn.MSELoss()
 
-        train_transformer_model(dataloader, model, criterion_food_id, criterion_amount, optimizer, 200, device, True)
+        train_transformer_model(dataloader, model, criterion_food_id, criterion_amount, optimizer, 3000, device, True)
 
         torch.save(model.state_dict(), f"saved_models/model_v{MODEL_VERSION}.pth")
         print(f"Model saved as saved_models/model_v{MODEL_VERSION}.pth")
