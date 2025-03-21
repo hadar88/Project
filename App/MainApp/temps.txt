@@ -2,7 +2,7 @@
 
 self.gender_spinner = Spinner(
     text="Select Gender",
-    values=("Male", "Female", "Other"),
+    values=("Male", "Female"),
     size_hint=(0.8, 0.1),
     pos_hint={"x": 0.1, "top": 0.32}
 )
@@ -14,8 +14,7 @@ self.window.add_widget(self.gender_spinner)
 
 self.home = Button(
     background_normal="home.png",
-    size_hint=(None, None),
-    size=(100, 100),
+    size_hint=(0.1125, 0.07), 
     pos_hint={"x": 0, "top": 1},
     on_press=self.go_home
 )

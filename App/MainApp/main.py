@@ -44,13 +44,6 @@ class LoginWindow(Screen):
             self.window.bind(size=self._update_rect, pos=self._update_rect)
 
         ###
-        self.home = Button(
-            background_normal="home.png",
-            size_hint=(0.15, 0.1), 
-            pos_hint={"x": 0, "top": 1},
-            on_press=self.go_home
-        )
-        self.window.add_widget(self.home)
 
         self.logo = Image(
             source = "logo.png", size_hint = (0.3, 0.3), pos_hint = {"x": 0.35, "top": 1}
@@ -121,12 +114,11 @@ class LoginWindow(Screen):
         password = self.password.text
         self.userName.text = ""
         self.password.text = ""
-        if(data["username"] == username and data["password"] == password):
+        if(data["username"] == username and data["password"] == password and username != "" and password != ""):
             self.errorMassage.text = ""
             self.manager.current = "main"
         else:
             self.errorMassage.text = "Invalid username or password"
-            pass
 
     def createAccount(self, instance):
         self.errorMassage.text = ""
@@ -176,7 +168,13 @@ class SecondWindow(Screen):
 
         ###
 
-        
+        self.home = Button(
+            background_normal="home.png",
+            size_hint=(0.1125, 0.07), 
+            pos_hint={"x": 0, "top": 1},
+            on_press=self.go_home
+        )
+        self.window.add_widget(self.home)
 
         ###
 
@@ -185,6 +183,9 @@ class SecondWindow(Screen):
     def _update_rect(self, instance, value):
         self.rect.pos = instance.pos
         self.rect.size = instance.size
+
+    def go_home(self, instance):
+        self.manager.current = "main"
 
 ################################
 
@@ -202,8 +203,8 @@ class CreateAccountWindow(Screen):
         ###
 
         self.title = ColoredLabel(
-            text = "Create new account", 
-            font_size = 50, 
+            text = "Create a new account", 
+            font_size = 150, 
             size_hint = (0.8, 0.2), 
             pos_hint = {"x": 0.1, "top": 0.9},
             color=(1, 1, 1, 1),
@@ -231,7 +232,7 @@ class CreateAccountWindow(Screen):
 
         self.login = Button(
             text = "Login", 
-            font_size = 100, 
+            font_size = 90, 
             background_color = (1, 1, 1, 1), 
             # background_normal = "",
             size_hint = (0.4, 0.1),
@@ -242,12 +243,12 @@ class CreateAccountWindow(Screen):
 
         self.submit = Button(
             text = "Submit", 
-            font_size = 100, 
+            font_size = 90, 
             background_color = (1, 1, 1, 1), 
             # background_normal = "",
             size_hint = (0.8, 0.1),
             pos_hint = {"x": 0.1, "top": 0.2},
-            on_press = self.registration1
+            on_press = self.registration
         )
         self.window.add_widget(self.submit)
 
@@ -264,7 +265,7 @@ class CreateAccountWindow(Screen):
         self.password.text = ""
         self.manager.current = "login"
 
-    def registration1(self, instance):
+    def registration(self, instance):
         username = self.userName.text
         password = self.password.text
         self.userName.text = ""
@@ -290,7 +291,120 @@ class Registration1Window(Screen):
 
         ###
 
-        
+        self.title = ColoredLabel(
+            text = "Registration", 
+            font_size = 150, 
+            size_hint = (0.8, 0.2), 
+            pos_hint = {"x": 0.1, "top": 0.9},
+            color=(1, 1, 1, 1),
+            text_color=(0, 0, 0, 1)
+        )
+        self.window.add_widget(self.title)
+
+        self.weightLabel = ColoredLabel(
+            text = "Weight:", 
+            font_size = 60, 
+            size_hint = (0.44, 0.1), 
+            pos_hint = {"x": 0.05, "top": 0.6},
+            color=(0, 0, 1, 1),
+            text_color=(0, 0, 0, 1)
+        )
+        self.window.add_widget(self.weightLabel)
+
+        self.weightInput = TextInput(
+            multiline = False, 
+            font_size = 50, 
+            hint_text = "Kg", 
+            size_hint=(0.44, 0.1), 
+            pos_hint={"x": 0.51, "top": 0.6}
+        )
+        self.window.add_widget(self.weightInput)
+
+        self.heightLabel = ColoredLabel(
+            text = "Height:", 
+            font_size = 60, 
+            size_hint = (0.44, 0.1), 
+            pos_hint = {"x": 0.05, "top": 0.48},
+            color=(0, 0, 1, 1),
+            text_color=(0, 0, 0, 1)
+        )
+        self.window.add_widget(self.heightLabel)
+
+        self.heightInput = TextInput(
+            multiline = False, 
+            font_size = 50, 
+            hint_text = "cm", 
+            size_hint=(0.44, 0.1), 
+            pos_hint={"x": 0.51, "top": 0.48}
+        )
+        self.window.add_widget(self.heightInput)
+
+        self.genderLabel = ColoredLabel(
+            text = "Gender:", 
+            font_size = 60, 
+            size_hint = (0.44, 0.1), 
+            pos_hint = {"x": 0.05, "top": 0.36},
+            color=(0, 0, 1, 1),
+            text_color=(0, 0, 0, 1)
+        )
+        self.window.add_widget(self.genderLabel)
+
+        self.genderInput = Spinner(
+            text="Select a gender",
+            values=("Male", "Female"),
+            size_hint=(0.44, 0.1), 
+            pos_hint={"x": 0.51, "top": 0.36},
+            font_size = 50  
+
+        )
+        self.window.add_widget(self.genderInput)
+
+        self.nextPage = Button(
+            text = "Next page", 
+            font_size = 50, 
+            background_color = (1, 1, 1, 1), 
+            # background_normal = "",
+            size_hint = (0.4, 0.1),
+            pos_hint = {"x": 0.3, "top": 0.2},
+            on_press = self.next
+        )
+        self.window.add_widget(self.nextPage)
+
+        ###
+
+        self.add_widget(self.window)
+
+    def _update_rect(self, instance, value):
+        self.rect.pos = instance.pos
+        self.rect.size = instance.size
+
+    def next(self, instance):
+        weight_input = self.weightInput.text
+        height_input = self.heightInput.text
+        gender_input = self.genderInput.text
+        data["weight"] = weight_input
+        data["height"] = height_input
+        data["gender"] = gender_input
+        with open(DATA_PATH, "w") as file:
+            json.dump(data, file)
+        self.manager.current = "registration2"
+
+################################
+
+class Registration2Window(Screen):
+    def __init__(self, **kw):
+        super(Registration2Window, self).__init__(**kw)
+        self.cols = 1
+
+        self.window = FloatLayout(size_hint=(1, 1))
+        with self.window.canvas.before:
+            Color(1, 1, 1, 1) 
+            self.rect = Rectangle(size=self.window.size, pos=self.window.pos)
+            self.window.bind(size=self._update_rect, pos=self._update_rect)
+
+        ###
+
+
 
         ###
 
@@ -302,9 +416,9 @@ class Registration1Window(Screen):
 
 ################################
 
-class Registration2Window(Screen):
+class Registration3Window(Screen):
     def __init__(self, **kw):
-        super(Registration2Window, self).__init__(**kw)
+        super(Registration3Window, self).__init__(**kw)
         self.cols = 1
 
         self.window = FloatLayout(size_hint=(1, 1))
@@ -337,6 +451,7 @@ class WindowManager(ScreenManager):
         self.add_widget(CreateAccountWindow(name = "createAccount"))
         self.add_widget(Registration1Window(name = "registration1"))
         self.add_widget(Registration2Window(name = "registration2"))
+        self.add_widget(Registration3Window(name = "registration3"))
         
 class MainApp(App):
     def build(self):
