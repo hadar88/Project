@@ -66,7 +66,6 @@ class LoginWindow(Screen):
             hint_text = "Password", 
             size_hint=(0.8, 0.1), 
             pos_hint={"x": 0.1, "top": 0.56}, 
-            # input_filter="float" 
         )
         self.window.add_widget(self.password)
 
@@ -144,7 +143,15 @@ class MainWindow(Screen):
 
         ###
 
-
+        self.temp = ColoredLabel(
+            text = "Main", 
+            font_size = 50, 
+            size_hint = (0.4, 0.4), 
+            pos_hint = {"x": 0.3, "top": 0.7},
+            color=(0, 0, 1, 1),
+            text_color=(0, 0, 0, 1)
+        )
+        self.window.add_widget(self.temp)
 
         ###
 
@@ -177,6 +184,16 @@ class SecondWindow(Screen):
         )
         self.window.add_widget(self.home)
 
+        self.temp = ColoredLabel(
+            text = "Second", 
+            font_size = 50, 
+            size_hint = (0.4, 0.4), 
+            pos_hint = {"x": 0.3, "top": 0.7},
+            color=(0, 0, 1, 1),
+            text_color=(0, 0, 0, 1)
+        )
+        self.window.add_widget(self.temp)
+
         ###
 
         self.add_widget(self.window)
@@ -204,7 +221,7 @@ class CreateAccountWindow(Screen):
         ###
 
         self.title = ColoredLabel(
-            text = "Create a new account", 
+            text = "Create an account", 
             font_size = 150, 
             size_hint = (0.8, 0.2), 
             pos_hint = {"x": 0.1, "top": 0.9},
@@ -317,7 +334,8 @@ class Registration1Window(Screen):
             font_size = 50, 
             hint_text = "Kg", 
             size_hint=(0.44, 0.1), 
-            pos_hint={"x": 0.51, "top": 0.65}
+            pos_hint={"x": 0.51, "top": 0.65},
+            input_filter="float"
         )
         self.window.add_widget(self.weightInput)
 
@@ -336,7 +354,8 @@ class Registration1Window(Screen):
             font_size = 50, 
             hint_text = "cm", 
             size_hint=(0.44, 0.1), 
-            pos_hint={"x": 0.51, "top": 0.53}
+            pos_hint={"x": 0.51, "top": 0.53},
+            input_filter="float"
         )
         self.window.add_widget(self.heightInput)
 
@@ -405,6 +424,14 @@ class Registration2Window(Screen):
 
         ###
 
+        self.home = Button(
+            background_normal="arrow.png",
+            size_hint=(0.1125, 0.07), 
+            pos_hint={"x": 0, "top": 1},
+            on_press=self.previous
+        )
+        self.window.add_widget(self.home)
+
         self.title = ColoredLabel(
             text = "Registration", 
             font_size = 150, 
@@ -427,11 +454,11 @@ class Registration2Window(Screen):
 
         self.activityInput = Spinner(
             text="Level of activity",
-            values=("sedentary(little or no exercise)", 
-                    "lightly active(exercise 1-3 days/week)", 
-                    "moderately active(exercise 3-5 days/week)", 
-                    "active(exercise 6-7 days/week)", 
-                    "extremely active(hard exercise 6-7 days/week)"),
+            values=("sedentary", 
+                    "lightly active", 
+                    "moderately active", 
+                    "active", 
+                    "extremely active"),
             size_hint=(0.44, 0.1), 
             pos_hint={"x": 0.51, "top": 0.65},
             font_size = 40  
@@ -550,7 +577,15 @@ class Registration3Window(Screen):
 
         ###
 
-        
+        self.temp = ColoredLabel(
+            text = "Registration3", 
+            font_size = 50, 
+            size_hint = (0.4, 0.4), 
+            pos_hint = {"x": 0.3, "top": 0.7},
+            color=(0, 0, 1, 1),
+            text_color=(0, 0, 0, 1)
+        )
+        self.window.add_widget(self.temp)
 
         ###
 
