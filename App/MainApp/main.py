@@ -11,16 +11,18 @@ from kivy.uix.spinner import Spinner
 from algorithm import calculate_nutritional_data as cnd
 
 DATA_PATH = "data.json"
-with open(DATA_PATH, "r") as file:
-    data = json.load(file)
+d = open(DATA_PATH, "r")
+data = json.load(d)
+d.close()
 
 #######################################################################
 
 class ColoredLabel(Label):
-    def __init__(self, color=(0, 0, 0, 1), **kw):
+    def __init__(self, color=(0, 0, 0, 1), text_color=(0, 0, 0, 1), **kw):
         super(ColoredLabel, self).__init__(**kw)
+        self.color = text_color  # Set the text color
         with self.canvas.before:
-            self.bg_color = Color(*color)  # Use the provided color
+            self.bg_color = Color(*color)  # Use the provided background color
             self.bg_rect = Rectangle(size=self.size, pos=self.pos)
         self.bind(size=self._update_bg, pos=self._update_bg)
 
@@ -42,44 +44,62 @@ class LoginWindow(Screen):
             self.window.bind(size=self._update_rect, pos=self._update_rect)
 
         ###
+        self.home = Button(
+            background_normal="home.png",
+            size_hint=(0.15, 0.1), 
+            pos_hint={"x": 0, "top": 1},
+            on_press=self.go_home
+        )
+        self.window.add_widget(self.home)
 
         self.logo = Image(
-            source = "logo.png", size_hint = (0.25, 0.25), pos_hint = {"x": 0.375, "top": 0.98}
+            source = "logo.png", size_hint = (0.3, 0.3), pos_hint = {"x": 0.35, "top": 1}
             )
         self.window.add_widget(self.logo)
 
         self.userName = TextInput(
-            multiline = False, font_size = 14, hint_text = "Username", size_hint=(0.8, 0.1), pos_hint={"x": 0.1, "top": 0.71}
+            multiline = False, 
+            font_size = 50, 
+            hint_text = "Username", 
+            size_hint=(0.8, 0.1), 
+            pos_hint={"x": 0.1, "top": 0.68}
         )
         self.window.add_widget(self.userName)
 
         self.password = TextInput(
-            multiline = False, font_size = 14, hint_text = "Password", size_hint=(0.8, 0.1), pos_hint={"x": 0.1, "top": 0.59}, input_filter="float"
+            multiline = False, 
+            font_size = 50, 
+            hint_text = "Password", 
+            size_hint=(0.8, 0.1), 
+            pos_hint={"x": 0.1, "top": 0.56}, 
+            # input_filter="float" 
         )
         self.window.add_widget(self.password)
 
         self.loginButton = Button(
             text = "Login", 
-            font_size = 14, 
+            font_size = 100, 
             background_color = (1, 1, 1, 1), 
             # background_normal = "",
             size_hint = (0.8, 0.1),
-            pos_hint = {"x": 0.1, "top": 0.47},
+            pos_hint = {"x": 0.1, "top": 0.44},
             on_press = self.login
         )
         self.window.add_widget(self.loginButton)
 
-        # self.gender_spinner = Spinner(
-        #     text="Select Gender",
-        #     values=("Male", "Female", "Other"),
-        #     size_hint=(0.8, 0.1),
-        #     pos_hint={"x": 0.1, "top": 0.32}
-        # )
-        # self.window.add_widget(self.gender_spinner)
+        self.errorMassage = ColoredLabel(
+            text = "", 
+            font_size = 50, 
+            size_hint = (0.8, 0.1), 
+            pos_hint = {"x": 0.1, "top": 0.32},
+            color=(1, 1, 1, 1),
+            text_color=(1, 0, 0, 1)
+        )
+        self.window.add_widget(self.errorMassage)
 
         self.createAccountButton = Button(
             text = "Create account", 
-            font_size = 14, 
+            font_size = 100, 
             background_color = (1, 1, 1, 1), 
             # background_normal = "",
             size_hint = (0.8, 0.1),
@@ -102,13 +122,19 @@ class LoginWindow(Screen):
         self.userName.text = ""
         self.password.text = ""
         if(data["username"] == username and data["password"] == password):
+            self.errorMassage.text = ""
             self.manager.current = "main"
         else:
-            # give a messagge
+            self.errorMassage.text = "Invalid username or password"
             pass
 
     def createAccount(self, instance):
+        self.errorMassage.text = ""
         self.manager.current = "createAccount"
+
+    def go_home(self, instance):
+        self.errorMassage.text = ""
+        self.manager.current = "main"
 
 ################################
 
@@ -124,6 +150,7 @@ class MainWindow(Screen):
             self.window.bind(size=self._update_rect, pos=self._update_rect)
 
         ###
+
 
 
         ###
@@ -174,6 +201,95 @@ class CreateAccountWindow(Screen):
 
         ###
 
+        self.title = ColoredLabel(
+            text = "Create new account", 
+            font_size = 50, 
+            size_hint = (0.8, 0.2), 
+            pos_hint = {"x": 0.1, "top": 0.9},
+            color=(1, 1, 1, 1),
+            text_color=(0, 0, 0, 1)
+        )
+        self.window.add_widget(self.title)
+
+        self.userName = TextInput(
+            multiline = False, 
+            font_size = 50, 
+            hint_text = "Username", 
+            size_hint=(0.8, 0.1), 
+            pos_hint={"x": 0.1, "top": 0.62}
+        )
+        self.window.add_widget(self.userName)
+
+        self.password = TextInput(
+            multiline = False, 
+            font_size = 50, 
+            hint_text = "Password", 
+            size_hint=(0.8, 0.1), 
+            pos_hint={"x": 0.1, "top": 0.5}
+        )
+        self.window.add_widget(self.password)
+
+        self.login = Button(
+            text = "Login", 
+            font_size = 100, 
+            background_color = (1, 1, 1, 1), 
+            # background_normal = "",
+            size_hint = (0.4, 0.1),
+            pos_hint = {"x": 0.3, "top": 0.32},
+            on_press = self.log_in
+        )
+        self.window.add_widget(self.login)
+
+        self.submit = Button(
+            text = "Submit", 
+            font_size = 100, 
+            background_color = (1, 1, 1, 1), 
+            # background_normal = "",
+            size_hint = (0.8, 0.1),
+            pos_hint = {"x": 0.1, "top": 0.2},
+            on_press = self.registration1
+        )
+        self.window.add_widget(self.submit)
+
+        ###
+
+        self.add_widget(self.window)
+
+    def _update_rect(self, instance, value):
+        self.rect.pos = instance.pos
+        self.rect.size = instance.size
+
+    def log_in(self, instance):
+        self.userName.text = ""
+        self.password.text = ""
+        self.manager.current = "login"
+
+    def registration1(self, instance):
+        username = self.userName.text
+        password = self.password.text
+        self.userName.text = ""
+        self.password.text = ""
+        data["username"] = username
+        data["password"] = password
+        with open(DATA_PATH, "w") as file:
+            json.dump(data, file)
+        self.manager.current = "registration1"
+
+################################
+
+class Registration1Window(Screen):
+    def __init__(self, **kw):
+        super(Registration1Window, self).__init__(**kw)
+        self.cols = 1
+
+        self.window = FloatLayout(size_hint=(1, 1))
+        with self.window.canvas.before:
+            Color(1, 1, 1, 1) 
+            self.rect = Rectangle(size=self.window.size, pos=self.window.pos)
+            self.window.bind(size=self._update_rect, pos=self._update_rect)
+
+        ###
+
         
 
         ###
@@ -186,9 +302,9 @@ class CreateAccountWindow(Screen):
 
 ################################
 
-class Questions1Window(Screen):
+class Registration2Window(Screen):
     def __init__(self, **kw):
-        super(Questions1Window, self).__init__(**kw)
+        super(Registration2Window, self).__init__(**kw)
         self.cols = 1
 
         self.window = FloatLayout(size_hint=(1, 1))
@@ -219,7 +335,8 @@ class WindowManager(ScreenManager):
         self.add_widget(MainWindow(name = "main"))
         self.add_widget(SecondWindow(name = "second"))
         self.add_widget(CreateAccountWindow(name = "createAccount"))
-        self.add_widget(Questions1Window(name = "questions1"))
+        self.add_widget(Registration1Window(name = "registration1"))
+        self.add_widget(Registration2Window(name = "registration2"))
         
 class MainApp(App):
     def build(self):
