@@ -9,6 +9,7 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.image import Image
 from kivy.uix.spinner import Spinner
 from algorithm import calculate_nutritional_data as cnd
+from kivy.uix.checkbox import CheckBox
 
 DATA_PATH = "data.json"
 d = open(DATA_PATH, "r")
@@ -305,7 +306,7 @@ class Registration1Window(Screen):
             text = "Weight:", 
             font_size = 60, 
             size_hint = (0.44, 0.1), 
-            pos_hint = {"x": 0.05, "top": 0.6},
+            pos_hint = {"x": 0.05, "top": 0.65},
             color=(0, 0, 1, 1),
             text_color=(0, 0, 0, 1)
         )
@@ -316,7 +317,7 @@ class Registration1Window(Screen):
             font_size = 50, 
             hint_text = "Kg", 
             size_hint=(0.44, 0.1), 
-            pos_hint={"x": 0.51, "top": 0.6}
+            pos_hint={"x": 0.51, "top": 0.65}
         )
         self.window.add_widget(self.weightInput)
 
@@ -324,7 +325,7 @@ class Registration1Window(Screen):
             text = "Height:", 
             font_size = 60, 
             size_hint = (0.44, 0.1), 
-            pos_hint = {"x": 0.05, "top": 0.48},
+            pos_hint = {"x": 0.05, "top": 0.53},
             color=(0, 0, 1, 1),
             text_color=(0, 0, 0, 1)
         )
@@ -335,7 +336,7 @@ class Registration1Window(Screen):
             font_size = 50, 
             hint_text = "cm", 
             size_hint=(0.44, 0.1), 
-            pos_hint={"x": 0.51, "top": 0.48}
+            pos_hint={"x": 0.51, "top": 0.53}
         )
         self.window.add_widget(self.heightInput)
 
@@ -343,7 +344,7 @@ class Registration1Window(Screen):
             text = "Gender:", 
             font_size = 60, 
             size_hint = (0.44, 0.1), 
-            pos_hint = {"x": 0.05, "top": 0.36},
+            pos_hint = {"x": 0.05, "top": 0.41},
             color=(0, 0, 1, 1),
             text_color=(0, 0, 0, 1)
         )
@@ -353,7 +354,7 @@ class Registration1Window(Screen):
             text="Select a gender",
             values=("Male", "Female"),
             size_hint=(0.44, 0.1), 
-            pos_hint={"x": 0.51, "top": 0.36},
+            pos_hint={"x": 0.51, "top": 0.41},
             font_size = 50  
 
         )
@@ -404,7 +405,111 @@ class Registration2Window(Screen):
 
         ###
 
+        self.title = ColoredLabel(
+            text = "Registration", 
+            font_size = 150, 
+            size_hint = (0.8, 0.2), 
+            pos_hint = {"x": 0.1, "top": 0.9},
+            color=(1, 1, 1, 1),
+            text_color=(0, 0, 0, 1)
+        )
+        self.window.add_widget(self.title)
 
+        self.activityLabel = ColoredLabel(
+            text = "I am:", 
+            font_size = 60, 
+            size_hint = (0.44, 0.1), 
+            pos_hint = {"x": 0.05, "top": 0.65},
+            color=(0, 0, 1, 1),
+            text_color=(0, 0, 0, 1)
+        )
+        self.window.add_widget(self.activityLabel)
+
+        self.activityInput = Spinner(
+            text="Level of activity",
+            values=("sedentary(little or no exercise)", 
+                    "lightly active(exercise 1-3 days/week)", 
+                    "moderately active(exercise 3-5 days/week)", 
+                    "active(exercise 6-7 days/week)", 
+                    "extremely active(hard exercise 6-7 days/week)"),
+            size_hint=(0.44, 0.1), 
+            pos_hint={"x": 0.51, "top": 0.65},
+            font_size = 40  
+        )
+        self.window.add_widget(self.activityInput)
+
+        self.activityTypeLabel = ColoredLabel(
+            text = "Types of activity:", 
+            font_size = 60, 
+            size_hint = (0.6, 0.1), 
+            pos_hint = {"x": 0.2, "top": 0.53},
+            color=(0, 0, 1, 1),
+            text_color=(0, 0, 0, 1)
+        )
+        self.window.add_widget(self.activityTypeLabel)
+
+        self.cardioLabel = ColoredLabel(
+            text = "Cardio", 
+            font_size = 40, 
+            size_hint = (0.2, 0.05), 
+            pos_hint = {"x": 0.3, "top": 0.41},
+            color=(1, 1, 1, 1),
+            text_color=(0, 0, 0, 1)
+        )
+        self.window.add_widget(self.cardioLabel)
+
+        self.cardioInput = CheckBox(
+            size_hint=(0.1, 0.1),
+            pos_hint={"x": 0.55, "top": 0.43},
+            color=(1, 0, 0, 1)
+        )
+        self.window.add_widget(self.cardioInput)
+
+        self.strengthLabel = ColoredLabel(
+            text = "Strength", 
+            font_size = 40, 
+            size_hint = (0.2, 0.05), 
+            pos_hint = {"x": 0.3, "top": 0.34},
+            color=(1, 1, 1, 1),
+            text_color=(0, 0, 0, 1)
+        )
+        self.window.add_widget(self.strengthLabel)
+
+        self.strengthInput = CheckBox(
+            size_hint=(0.1, 0.1),
+            pos_hint={"x": 0.55, "top": 0.36},
+            color=(1, 0, 0, 1)
+        )
+        self.window.add_widget(self.strengthInput)
+
+        self.muscleLabel = ColoredLabel(
+            text = "Muscle", 
+            font_size = 40, 
+            size_hint = (0.2, 0.05), 
+            pos_hint = {"x": 0.3, "top": 0.27},
+            color=(1, 1, 1, 1),
+            text_color=(0, 0, 0, 1)
+        )
+        self.window.add_widget(self.muscleLabel)
+
+        self.muscleInput = CheckBox(
+            size_hint=(0.1, 0.1),
+            pos_hint={"x": 0.55, "top": 0.29},
+            color=(1, 0, 0, 1)
+        )
+        self.window.add_widget(self.muscleInput)
+
+
+        self.nextPage = Button(
+            text = "Next page", 
+            font_size = 50, 
+            background_color = (1, 1, 1, 1), 
+            # background_normal = "",
+            size_hint = (0.4, 0.1),
+            pos_hint = {"x": 0.3, "top": 0.2},
+            on_press = self.next
+        )
+        self.window.add_widget(self.nextPage)
 
         ###
 
@@ -413,6 +518,22 @@ class Registration2Window(Screen):
     def _update_rect(self, instance, value):
         self.rect.pos = instance.pos
         self.rect.size = instance.size
+
+    def next(self, instance):
+        activity = self.activityInput.text
+        cardio = self.cardioInput.active
+        strength = self.strengthInput.active
+        muscle = self.muscleInput.active
+        data["activity"] = activity
+        data["cardio"] = cardio
+        data["strength"] = strength
+        data["muscle"] = muscle
+        with open(DATA_PATH, "w") as file:
+            json.dump(data, file)
+        self.manager.current = "registration3"
+
+    def previous(self, instance):
+        self.manager.current = "registration1"
 
 ################################
 
