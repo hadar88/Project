@@ -8,7 +8,7 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.image import Image
 from kivy.uix.spinner import Spinner
-from algorithm import calculate_nutritional_data as cnd
+from algorithms import calculate_nutritional_data as cnd
 from kivy.uix.checkbox import CheckBox
 
 DATA_PATH = "data.json"
@@ -380,15 +380,35 @@ class Registration1Window(Screen):
             hint_text = "cm", 
             size_hint=(0.44, 0.1), 
             pos_hint={"x": 0.51, "top": 0.58},
-            input_filter="float"
+            input_filter="int"
         )
         self.window.add_widget(self.heightInput)
+
+        self.AgeLabel = ColoredLabel(
+            text = "Age:", 
+            font_size = 60, 
+            size_hint = (0.44, 0.1), 
+            pos_hint = {"x": 0.05, "top": 0.46},
+            color=(0, 0, 1, 1),
+            text_color=(0, 0, 0, 1)
+        )
+        self.window.add_widget(self.AgeLabel)
+
+        self.AgeInput = TextInput(
+            multiline = False, 
+            font_size = 50, 
+            hint_text = "years", 
+            size_hint=(0.44, 0.1), 
+            pos_hint={"x": 0.51, "top": 0.46},
+            input_filter="int"
+        )
+        self.window.add_widget(self.AgeInput)
 
         self.genderLabel = ColoredLabel(
             text = "Gender:", 
             font_size = 60, 
             size_hint = (0.44, 0.1), 
-            pos_hint = {"x": 0.05, "top": 0.46},
+            pos_hint = {"x": 0.05, "top": 0.34},
             color=(0, 0, 1, 1),
             text_color=(0, 0, 0, 1)
         )
@@ -398,7 +418,7 @@ class Registration1Window(Screen):
             text="Select a gender",
             values=("Male", "Female"),
             size_hint=(0.44, 0.1), 
-            pos_hint={"x": 0.51, "top": 0.46},
+            pos_hint={"x": 0.51, "top": 0.34},
             font_size = 50  
 
         )
@@ -407,8 +427,8 @@ class Registration1Window(Screen):
         self.errorMessage = ColoredLabel(
             text = "", 
             font_size = 50, 
-            size_hint = (0.8, 0.1), 
-            pos_hint = {"x": 0.1, "top": 0.3},
+            size_hint = (0.8, 0.06), 
+            pos_hint = {"x": 0.1, "top": 0.22},
             color=(1, 1, 1, 1),
             text_color=(1, 0, 0, 1)
         )
@@ -436,12 +456,14 @@ class Registration1Window(Screen):
     def next(self, instance):
         weight_input = self.weightInput.text
         height_input = self.heightInput.text
+        age_input = self.AgeInput.text
         gender_input = self.genderInput.text
-        if(weight_input == "" or height_input == "" or gender_input == "Select a gender"):
+        if(weight_input == "" or height_input == "" or age_input == "" or gender_input == "Select a gender"):
             self.errorMessage.text = "Please fill in all fields"
         else:
             data["weight"] = weight_input
             data["height"] = height_input
+            data["age"] = age_input
             data["gender"] = gender_input
             data["stage"] = "registration2"
             with open(DATA_PATH, "w") as file:
@@ -796,7 +818,7 @@ class Registration4Window(Screen):
 
         self.eggAllergyInput = CheckBox(
             size_hint=(0.1, 0.1),
-            pos_hint={"x": 0.55, "top": 0.595},
+            pos_hint={"x": 0.55, "top": 0.6},
             color=(1, 0, 0, 1)
         )
         self.window.add_widget(self.eggAllergyInput)
@@ -813,13 +835,13 @@ class Registration4Window(Screen):
 
         self.milkAllergyInput = CheckBox(
             size_hint=(0.1, 0.1),
-            pos_hint={"x": 0.55, "top": 0.535},
+            pos_hint={"x": 0.55, "top": 0.54},
             color=(1, 0, 0, 1)
         )
         self.window.add_widget(self.milkAllergyInput)
 
         self.nutAllergyLabel = ColoredLabel(
-            text = "Nuts or peanuts", 
+            text = "Nuts", 
             font_size = 50, 
             size_hint = (0.2, 0.04), 
             pos_hint = {"x": 0.3, "top": 0.45},
@@ -830,7 +852,7 @@ class Registration4Window(Screen):
 
         self.nutAllergyInput = CheckBox(
             size_hint=(0.1, 0.1),
-            pos_hint={"x": 0.55, "top": 0.475},
+            pos_hint={"x": 0.55, "top": 0.48},
             color=(1, 0, 0, 1)
         )
         self.window.add_widget(self.nutAllergyInput)
@@ -847,7 +869,7 @@ class Registration4Window(Screen):
 
         self.fishAllergyInput = CheckBox(
             size_hint=(0.1, 0.1),
-            pos_hint={"x": 0.55, "top": 0.415},
+            pos_hint={"x": 0.55, "top": 0.42},
             color=(1, 0, 0, 1)
         )
         self.window.add_widget(self.fishAllergyInput)
@@ -864,7 +886,7 @@ class Registration4Window(Screen):
 
         self.sesameAllergyInput = CheckBox(
             size_hint=(0.1, 0.1),
-            pos_hint={"x": 0.55, "top": 0.355},
+            pos_hint={"x": 0.55, "top": 0.36},
             color=(1, 0, 0, 1)
         )
         self.window.add_widget(self.sesameAllergyInput)
@@ -881,7 +903,7 @@ class Registration4Window(Screen):
 
         self.soyAllergyInput = CheckBox(
             size_hint=(0.1, 0.1),
-            pos_hint={"x": 0.55, "top": 0.295},
+            pos_hint={"x": 0.55, "top": 0.3},
             color=(1, 0, 0, 1)
         )
         self.window.add_widget(self.soyAllergyInput)
@@ -898,7 +920,7 @@ class Registration4Window(Screen):
 
         self.glutenAllergyInput = CheckBox(
             size_hint=(0.1, 0.1),
-            pos_hint={"x": 0.55, "top": 0.235},
+            pos_hint={"x": 0.55, "top": 0.24},
             color=(1, 0, 0, 1)
         )
         self.window.add_widget(self.glutenAllergyInput)
@@ -986,15 +1008,15 @@ class WindowManager(ScreenManager):
     def __init__(self, **kw):
         super(WindowManager, self).__init__(**kw)
 
-        self.add_widget(LoginWindow(name = "login"))
-        self.add_widget(MainWindow(name = "main"))
-        self.add_widget(SecondWindow(name = "second"))
-        self.add_widget(CreateAccountWindow(name = "createAccount"))
+        # self.add_widget(LoginWindow(name = "login"))
+        # self.add_widget(MainWindow(name = "main"))
+        # self.add_widget(SecondWindow(name = "second"))
+        # self.add_widget(CreateAccountWindow(name = "createAccount"))
         self.add_widget(Registration1Window(name = "registration1"))
-        self.add_widget(Registration2Window(name = "registration2"))
-        self.add_widget(Registration3Window(name = "registration3"))
-        self.add_widget(Registration4Window(name = "registration4"))
-        self.add_widget(Registration5Window(name = "registration5"))
+        # self.add_widget(Registration2Window(name = "registration2"))
+        # self.add_widget(Registration3Window(name = "registration3"))
+        # self.add_widget(Registration4Window(name = "registration4"))
+        # self.add_widget(Registration5Window(name = "registration5"))
         
 class MainApp(App):
     def build(self):
