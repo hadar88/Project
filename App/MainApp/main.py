@@ -8,7 +8,7 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.image import Image
 from kivy.uix.spinner import Spinner
-from algorithms import calculate_nutritional_data as cnd
+import algorithms
 from kivy.uix.checkbox import CheckBox
 
 DATA_PATH = "data.json"
@@ -1008,15 +1008,15 @@ class WindowManager(ScreenManager):
     def __init__(self, **kw):
         super(WindowManager, self).__init__(**kw)
 
-        # self.add_widget(LoginWindow(name = "login"))
-        # self.add_widget(MainWindow(name = "main"))
-        # self.add_widget(SecondWindow(name = "second"))
-        # self.add_widget(CreateAccountWindow(name = "createAccount"))
+        self.add_widget(LoginWindow(name = "login"))
+        self.add_widget(MainWindow(name = "main"))
+        self.add_widget(SecondWindow(name = "second"))
+        self.add_widget(CreateAccountWindow(name = "createAccount"))
         self.add_widget(Registration1Window(name = "registration1"))
-        # self.add_widget(Registration2Window(name = "registration2"))
-        # self.add_widget(Registration3Window(name = "registration3"))
-        # self.add_widget(Registration4Window(name = "registration4"))
-        # self.add_widget(Registration5Window(name = "registration5"))
+        self.add_widget(Registration2Window(name = "registration2"))
+        self.add_widget(Registration3Window(name = "registration3"))
+        self.add_widget(Registration4Window(name = "registration4"))
+        self.add_widget(Registration5Window(name = "registration5"))
         
 class MainApp(App):
     def build(self):

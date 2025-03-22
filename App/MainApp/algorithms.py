@@ -1,23 +1,10 @@
-def calculate_nutritional_data(goal, activity_type, activity_level, daily_calories):
-    """
-    Calculate carbohydrates, sugars, fats, and proteins.
-
-    Parameters:
-        goal (str): "lose", "maintain", or "gain" weight.
-        activity_type (list): Activities performed, e.g., ["cardio", "strength", "muscle"].
-        activity_level (str): "sedentary", "lightly active", "moderately active", "active", "extremely active".
-        daily_calories (float): Recommended daily calorie intake (C).
-
-    Returns:
-        dict: Macronutrient percentages {carbohydrates, sugars, fats, proteins}.
-    """
-    
+def calculate_nutritional_data(goal, activity_type, activity_level, daily_calories):    
     x1, x2, x3, x4 = 0.55, 0.05, 0.3, 0.225
 
-    if goal == "lose":
+    if goal == "Lose weight":
         x3 = 0.25  
         x4 = 0.25  
-    elif goal == "gain":
+    elif goal == "Gain weight":
         x3 = 0.35  
         x4 = 0.3    
 
@@ -65,35 +52,126 @@ def calculate_nutritional_data(goal, activity_type, activity_level, daily_calori
     fats = round(fats, 2)
     proteins = round(proteins, 2)
     
-    return {
-        "carbohydrates": carbohydrates,
-        "sugars": sugars,
-        "fats": fats,
-        "proteins": proteins
-    }
+    return [carbohydrates, sugars, fats, proteins]
 
 def bmi(weight, height):
     height /= 100
     return round(weight / (height ** 2), 2)
 
-def check_bmi(bmi):
-    pass
+def check_bmi(weight, height):
+    b = bmi(weight, height)
+    if b < 16:
+        return "Severely underweight"
+    elif b < 18.5:
+        return "Underweight"
+    elif b < 25:
+        return "Healthy"
+    elif b < 30:
+        return "Overweight"
+    elif b < 40:
+        return "Obese"
+    else:
+        return "Extremely obese"
 
-def bmr(weight, height, age):
-    pass
+def bmr(weight, height, age, gender):
+    if(gender == "Male"):
+        return 10 * weight + 6.25 * height - 5 * age + 5
+    else:
+        return 10 * weight + 6.25 * height - 5 * age - 161
+    
+def amr(weight, height, age, gender, activity_level):
+    bmr_value = bmr(weight, height, age, gender)
+    if activity_level == "sedentary":
+        return bmr_value * 1.2
+    elif activity_level == "lightly active":
+        return bmr_value * 1.375
+    elif activity_level == "moderately active":
+        return bmr_value * 1.55
+    elif activity_level == "active":
+        return bmr_value * 1.725
+    elif activity_level == "extremely active":
+        return bmr_value * 1.9
 
-def ideal_body_weight(weight, gender):
+def ideal_body_weight(height, gender):
     inch = 0.3937
+    height = height * inch
 
-    return
-# Example
+    if(gender == "Male"):
+        return 50 + 2.3 * (height - 60)
+    else:
+        return 45.5 + 2.3 * (height - 60)
 
-# result = calculate_nutritional_data(
-#     goal="gain",
-#     activity_type=["cardio", "muscle", "strength"],
-#     activity_level="active",
-#     daily_calories=2500
-# )
+def weight_change(current_weight, goal_weight):
+    return abs(current_weight - goal_weight)
 
-# print(result)
+def time_of_change(current_weight, goal_weight):
+    c = weight_change(current_weight, goal_weight)
+    return round(260 * c / current_weight)
+
+def weekly_change(current_weight, goal_weight, time):
+    c = weight_change(current_weight, goal_weight)
+    return round(1000 * c / time)
+
+def daily_calories_change(current_weight, goal_weight):
+    t = weekly_change(current_weight, goal_weight)
+    return round(9 * t / 7)
+
+def calculate_calories(current_weight, goal_weight, height, age, gender, activity_level):
+    a = amr(current_weight, height, age, gender, activity_level)
+    p = daily_calories_change(current_weight, goal_weight)
+    i = 1 if current_weight <= goal_weight else -1
+    return a + i * p
+
+def get_vector(current_weight, goal_weight, height, age, gender, goal, cardio, strength, muscle, activity, vegeterian, vegan, eggs, milk, nuts, fish, sesame, soy, gluten):
+    activity_type = []
+    if cardio == "1":
+        activity_type.append("cardio")
+    if strength == 1:
+        activity_type.append("strength")
+    if muscle == 1:
+        activity_type.append("muscle")
+
+    c = calculate_calories(current_weight, goal_weight, height, age, gender, activity)
+
+    result = calculate_nutritional_data(goal, activity_type, activity, c)
+
+    vec = [c, result[0], result[1], result[2], result[3]]
+    
+    if vegeterian == "1":
+        vec.append(1)
+    else:
+        vec.append(0)
+    if vegan == "1":
+        vec.append(1)
+    else:
+        vec.append(0)
+    if eggs == "1":
+        vec.append(0)
+    else:
+        vec.append(1)
+    if milk == "1":
+        vec.append(0)
+    else:
+        vec.append(1)
+    if nuts == "1":
+        vec.append(0)
+    else:
+        vec.append(1)
+    if fish == "1":
+        vec.append(0)
+    else:
+        vec.append(1)
+    if sesame == "1":
+        vec.append(0)
+    else:
+        vec.append(1)
+    if soy == "1":
+        vec.append(0)
+    else:
+        vec.append(1)
+    if gluten == "1":
+        vec.append(0)
+    else:
+        vec.append(1)
+    return vec
 
