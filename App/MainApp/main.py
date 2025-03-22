@@ -241,7 +241,7 @@ class CreateAccountWindow(Screen):
             font_size = 50, 
             hint_text = "Username", 
             size_hint=(0.8, 0.1), 
-            pos_hint={"x": 0.1, "top": 0.62}
+            pos_hint={"x": 0.1, "top": 0.68}
         )
         self.window.add_widget(self.userName)
 
@@ -250,9 +250,19 @@ class CreateAccountWindow(Screen):
             font_size = 50, 
             hint_text = "Password", 
             size_hint=(0.8, 0.1), 
-            pos_hint={"x": 0.1, "top": 0.5}
+            pos_hint={"x": 0.1, "top": 0.56}
         )
         self.window.add_widget(self.password)
+
+        self.errorMassage = ColoredLabel(
+            text = "", 
+            font_size = 50, 
+            size_hint = (0.8, 0.1), 
+            pos_hint = {"x": 0.1, "top": 0.44},
+            color=(1, 1, 1, 1),
+            text_color=(1, 0, 0, 1)
+        )
+        self.window.add_widget(self.errorMassage)
 
         self.login = Button(
             text = "Login", 
@@ -260,7 +270,7 @@ class CreateAccountWindow(Screen):
             background_color = (1, 1, 1, 1), 
             # background_normal = "",
             size_hint = (0.4, 0.1),
-            pos_hint = {"x": 0.3, "top": 0.35},
+            pos_hint = {"x": 0.3, "top": 0.32},
             on_press = self.log_in
         )
         self.window.add_widget(self.login)
@@ -295,14 +305,17 @@ class CreateAccountWindow(Screen):
     def registration(self, instance):
         username = self.userName.text
         password = self.password.text
-        self.userName.text = ""
-        self.password.text = ""
-        data["username"] = username
-        data["password"] = password
-        data["stage"] = "registration1"
-        with open(DATA_PATH, "w") as file:
-            json.dump(data, file)
-        self.manager.current = "registration1"
+        if(username == "" or password == ""):
+            self.errorMassage.text = "Cannot leave fields empty"
+        else:
+            self.userName.text = ""
+            self.password.text = ""
+            data["username"] = username
+            data["password"] = password
+            data["stage"] = "registration1"
+            with open(DATA_PATH, "w") as file:
+                json.dump(data, file)
+            self.manager.current = "registration1"
 
 ################################
 
@@ -471,7 +484,7 @@ class Registration2Window(Screen):
             text = "I am:", 
             font_size = 60, 
             size_hint = (0.44, 0.1), 
-            pos_hint = {"x": 0.05, "top": 0.75},
+            pos_hint = {"x": 0.05, "top": 0.7},
             color=(0, 0, 1, 1),
             text_color=(0, 0, 0, 1)
         )
@@ -485,7 +498,7 @@ class Registration2Window(Screen):
                     "active", 
                     "extremely active"),
             size_hint=(0.44, 0.1), 
-            pos_hint={"x": 0.51, "top": 0.75},
+            pos_hint={"x": 0.51, "top": 0.7},
             font_size = 40  
         )
         self.window.add_widget(self.activityInput)
@@ -494,7 +507,7 @@ class Registration2Window(Screen):
             text = "Types of activity:", 
             font_size = 60, 
             size_hint = (0.6, 0.1), 
-            pos_hint = {"x": 0.2, "top": 0.63},
+            pos_hint = {"x": 0.2, "top": 0.58},
             color=(0, 0, 1, 1),
             text_color=(0, 0, 0, 1)
         )
@@ -504,7 +517,7 @@ class Registration2Window(Screen):
             text = "Cardio", 
             font_size = 50, 
             size_hint = (0.2, 0.05), 
-            pos_hint = {"x": 0.3, "top": 0.51},
+            pos_hint = {"x": 0.3, "top": 0.46},
             color=(1, 1, 1, 1),
             text_color=(0, 0, 0, 1)
         )
@@ -512,7 +525,7 @@ class Registration2Window(Screen):
 
         self.cardioInput = CheckBox(
             size_hint=(0.1, 0.1),
-            pos_hint={"x": 0.55, "top": 0.55},
+            pos_hint={"x": 0.55, "top": 0.48},
             color=(1, 0, 0, 1)
         )
         self.window.add_widget(self.cardioInput)
@@ -521,7 +534,7 @@ class Registration2Window(Screen):
             text = "Strength", 
             font_size = 50, 
             size_hint = (0.2, 0.05), 
-            pos_hint = {"x": 0.3, "top": 0.44},
+            pos_hint = {"x": 0.3, "top": 0.39},
             color=(1, 1, 1, 1),
             text_color=(0, 0, 0, 1)
         )
@@ -529,7 +542,7 @@ class Registration2Window(Screen):
 
         self.strengthInput = CheckBox(
             size_hint=(0.1, 0.1),
-            pos_hint={"x": 0.55, "top": 0.48},
+            pos_hint={"x": 0.55, "top": 0.41},
             color=(1, 0, 0, 1)
         )
         self.window.add_widget(self.strengthInput)
@@ -538,7 +551,7 @@ class Registration2Window(Screen):
             text = "Muscle", 
             font_size = 50, 
             size_hint = (0.2, 0.05), 
-            pos_hint = {"x": 0.3, "top": 0.37},
+            pos_hint = {"x": 0.3, "top": 0.32},
             color=(1, 1, 1, 1),
             text_color=(0, 0, 0, 1)
         )
@@ -546,7 +559,7 @@ class Registration2Window(Screen):
 
         self.muscleInput = CheckBox(
             size_hint=(0.1, 0.1),
-            pos_hint={"x": 0.55, "top": 0.41},
+            pos_hint={"x": 0.55, "top": 0.34},
             color=(1, 0, 0, 1)
         )
         self.window.add_widget(self.muscleInput)
@@ -555,7 +568,7 @@ class Registration2Window(Screen):
             text = "", 
             font_size = 50, 
             size_hint = (0.8, 0.1), 
-            pos_hint = {"x": 0.1, "top": 0.28},
+            pos_hint = {"x": 0.1, "top": 0.255},
             color=(1, 1, 1, 1),
             text_color=(1, 0, 0, 1)
         )
