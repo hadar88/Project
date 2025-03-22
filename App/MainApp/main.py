@@ -116,16 +116,22 @@ class LoginWindow(Screen):
         self.password.text = ""
         if(data["username"] == username and data["password"] == password and username != "" and password != ""):
             self.errorMassage.text = ""
-            self.manager.current = "main"
+            self.manager.current = data["stage"]
         else:
             self.errorMassage.text = "Invalid username or password"
 
     def createAccount(self, instance):
         self.errorMassage.text = ""
+        data["stage"] = "createAccount"
+        with open(DATA_PATH, "w") as file:
+            json.dump(data, file)
         self.manager.current = "createAccount"
-
+        
     def go_home(self, instance):
         self.errorMassage.text = ""
+        data["stage"] = "main"
+        with open(DATA_PATH, "w") as file:
+            json.dump(data, file)
         self.manager.current = "main"
 
 ################################
@@ -222,7 +228,7 @@ class CreateAccountWindow(Screen):
 
         self.title = ColoredLabel(
             text = "Create an account", 
-            font_size = 150, 
+            font_size = 100, 
             size_hint = (0.8, 0.2), 
             pos_hint = {"x": 0.1, "top": 0.9},
             color=(1, 1, 1, 1),
@@ -254,7 +260,7 @@ class CreateAccountWindow(Screen):
             background_color = (1, 1, 1, 1), 
             # background_normal = "",
             size_hint = (0.4, 0.1),
-            pos_hint = {"x": 0.3, "top": 0.32},
+            pos_hint = {"x": 0.3, "top": 0.35},
             on_press = self.log_in
         )
         self.window.add_widget(self.login)
@@ -281,6 +287,9 @@ class CreateAccountWindow(Screen):
     def log_in(self, instance):
         self.userName.text = ""
         self.password.text = ""
+        data["stage"] = "login"
+        with open(DATA_PATH, "w") as file:
+            json.dump(data, file)
         self.manager.current = "login"
 
     def registration(self, instance):
@@ -290,6 +299,7 @@ class CreateAccountWindow(Screen):
         self.password.text = ""
         data["username"] = username
         data["password"] = password
+        data["stage"] = "registration1"
         with open(DATA_PATH, "w") as file:
             json.dump(data, file)
         self.manager.current = "registration1"
@@ -312,8 +322,8 @@ class Registration1Window(Screen):
         self.title = ColoredLabel(
             text = "Registration", 
             font_size = 150, 
-            size_hint = (0.8, 0.2), 
-            pos_hint = {"x": 0.1, "top": 0.9},
+            size_hint = (0.775, 0.2), 
+            pos_hint = {"x": 0.1125, "top": 0.95},
             color=(1, 1, 1, 1),
             text_color=(0, 0, 0, 1)
         )
@@ -323,7 +333,7 @@ class Registration1Window(Screen):
             text = "Weight:", 
             font_size = 60, 
             size_hint = (0.44, 0.1), 
-            pos_hint = {"x": 0.05, "top": 0.65},
+            pos_hint = {"x": 0.05, "top": 0.7},
             color=(0, 0, 1, 1),
             text_color=(0, 0, 0, 1)
         )
@@ -334,7 +344,7 @@ class Registration1Window(Screen):
             font_size = 50, 
             hint_text = "Kg", 
             size_hint=(0.44, 0.1), 
-            pos_hint={"x": 0.51, "top": 0.65},
+            pos_hint={"x": 0.51, "top": 0.7},
             input_filter="float"
         )
         self.window.add_widget(self.weightInput)
@@ -343,7 +353,7 @@ class Registration1Window(Screen):
             text = "Height:", 
             font_size = 60, 
             size_hint = (0.44, 0.1), 
-            pos_hint = {"x": 0.05, "top": 0.53},
+            pos_hint = {"x": 0.05, "top": 0.58},
             color=(0, 0, 1, 1),
             text_color=(0, 0, 0, 1)
         )
@@ -354,7 +364,7 @@ class Registration1Window(Screen):
             font_size = 50, 
             hint_text = "cm", 
             size_hint=(0.44, 0.1), 
-            pos_hint={"x": 0.51, "top": 0.53},
+            pos_hint={"x": 0.51, "top": 0.58},
             input_filter="float"
         )
         self.window.add_widget(self.heightInput)
@@ -363,7 +373,7 @@ class Registration1Window(Screen):
             text = "Gender:", 
             font_size = 60, 
             size_hint = (0.44, 0.1), 
-            pos_hint = {"x": 0.05, "top": 0.41},
+            pos_hint = {"x": 0.05, "top": 0.46},
             color=(0, 0, 1, 1),
             text_color=(0, 0, 0, 1)
         )
@@ -373,11 +383,21 @@ class Registration1Window(Screen):
             text="Select a gender",
             values=("Male", "Female"),
             size_hint=(0.44, 0.1), 
-            pos_hint={"x": 0.51, "top": 0.41},
+            pos_hint={"x": 0.51, "top": 0.46},
             font_size = 50  
 
         )
         self.window.add_widget(self.genderInput)
+
+        self.errorMessage = ColoredLabel(
+            text = "", 
+            font_size = 50, 
+            size_hint = (0.8, 0.1), 
+            pos_hint = {"x": 0.1, "top": 0.3},
+            color=(1, 1, 1, 1),
+            text_color=(1, 0, 0, 1)
+        )
+        self.window.add_widget(self.errorMessage)
 
         self.nextPage = Button(
             text = "Next page", 
@@ -385,7 +405,7 @@ class Registration1Window(Screen):
             background_color = (1, 1, 1, 1), 
             # background_normal = "",
             size_hint = (0.4, 0.1),
-            pos_hint = {"x": 0.3, "top": 0.2},
+            pos_hint = {"x": 0.3, "top": 0.14},
             on_press = self.next
         )
         self.window.add_widget(self.nextPage)
@@ -402,12 +422,17 @@ class Registration1Window(Screen):
         weight_input = self.weightInput.text
         height_input = self.heightInput.text
         gender_input = self.genderInput.text
-        data["weight"] = weight_input
-        data["height"] = height_input
-        data["gender"] = gender_input
-        with open(DATA_PATH, "w") as file:
-            json.dump(data, file)
-        self.manager.current = "registration2"
+        if(weight_input == "" or height_input == "" or gender_input == "Select a gender"):
+            self.errorMessage.text = "Please fill in all fields"
+        else:
+            data["weight"] = weight_input
+            data["height"] = height_input
+            data["gender"] = gender_input
+            data["stage"] = "registration2"
+            with open(DATA_PATH, "w") as file:
+                json.dump(data, file)
+            self.manager.current = "registration2"
+            self.errorMessage.text = ""
 
 ################################
 
@@ -425,7 +450,7 @@ class Registration2Window(Screen):
         ###
 
         self.home = Button(
-            background_normal="arrow.png",
+            background_normal="back.png",
             size_hint=(0.1125, 0.07), 
             pos_hint={"x": 0, "top": 1},
             on_press=self.previous
@@ -435,8 +460,8 @@ class Registration2Window(Screen):
         self.title = ColoredLabel(
             text = "Registration", 
             font_size = 150, 
-            size_hint = (0.8, 0.2), 
-            pos_hint = {"x": 0.1, "top": 0.9},
+            size_hint = (0.775, 0.2), 
+            pos_hint = {"x": 0.1125, "top": 0.95},
             color=(1, 1, 1, 1),
             text_color=(0, 0, 0, 1)
         )
@@ -446,7 +471,7 @@ class Registration2Window(Screen):
             text = "I am:", 
             font_size = 60, 
             size_hint = (0.44, 0.1), 
-            pos_hint = {"x": 0.05, "top": 0.65},
+            pos_hint = {"x": 0.05, "top": 0.75},
             color=(0, 0, 1, 1),
             text_color=(0, 0, 0, 1)
         )
@@ -460,7 +485,7 @@ class Registration2Window(Screen):
                     "active", 
                     "extremely active"),
             size_hint=(0.44, 0.1), 
-            pos_hint={"x": 0.51, "top": 0.65},
+            pos_hint={"x": 0.51, "top": 0.75},
             font_size = 40  
         )
         self.window.add_widget(self.activityInput)
@@ -469,7 +494,7 @@ class Registration2Window(Screen):
             text = "Types of activity:", 
             font_size = 60, 
             size_hint = (0.6, 0.1), 
-            pos_hint = {"x": 0.2, "top": 0.53},
+            pos_hint = {"x": 0.2, "top": 0.63},
             color=(0, 0, 1, 1),
             text_color=(0, 0, 0, 1)
         )
@@ -477,9 +502,9 @@ class Registration2Window(Screen):
 
         self.cardioLabel = ColoredLabel(
             text = "Cardio", 
-            font_size = 40, 
+            font_size = 50, 
             size_hint = (0.2, 0.05), 
-            pos_hint = {"x": 0.3, "top": 0.41},
+            pos_hint = {"x": 0.3, "top": 0.51},
             color=(1, 1, 1, 1),
             text_color=(0, 0, 0, 1)
         )
@@ -487,16 +512,16 @@ class Registration2Window(Screen):
 
         self.cardioInput = CheckBox(
             size_hint=(0.1, 0.1),
-            pos_hint={"x": 0.55, "top": 0.43},
+            pos_hint={"x": 0.55, "top": 0.55},
             color=(1, 0, 0, 1)
         )
         self.window.add_widget(self.cardioInput)
 
         self.strengthLabel = ColoredLabel(
             text = "Strength", 
-            font_size = 40, 
+            font_size = 50, 
             size_hint = (0.2, 0.05), 
-            pos_hint = {"x": 0.3, "top": 0.34},
+            pos_hint = {"x": 0.3, "top": 0.44},
             color=(1, 1, 1, 1),
             text_color=(0, 0, 0, 1)
         )
@@ -504,16 +529,16 @@ class Registration2Window(Screen):
 
         self.strengthInput = CheckBox(
             size_hint=(0.1, 0.1),
-            pos_hint={"x": 0.55, "top": 0.36},
+            pos_hint={"x": 0.55, "top": 0.48},
             color=(1, 0, 0, 1)
         )
         self.window.add_widget(self.strengthInput)
 
         self.muscleLabel = ColoredLabel(
             text = "Muscle", 
-            font_size = 40, 
+            font_size = 50, 
             size_hint = (0.2, 0.05), 
-            pos_hint = {"x": 0.3, "top": 0.27},
+            pos_hint = {"x": 0.3, "top": 0.37},
             color=(1, 1, 1, 1),
             text_color=(0, 0, 0, 1)
         )
@@ -521,11 +546,20 @@ class Registration2Window(Screen):
 
         self.muscleInput = CheckBox(
             size_hint=(0.1, 0.1),
-            pos_hint={"x": 0.55, "top": 0.29},
+            pos_hint={"x": 0.55, "top": 0.41},
             color=(1, 0, 0, 1)
         )
         self.window.add_widget(self.muscleInput)
 
+        self.errorMessage = ColoredLabel(
+            text = "", 
+            font_size = 50, 
+            size_hint = (0.8, 0.1), 
+            pos_hint = {"x": 0.1, "top": 0.28},
+            color=(1, 1, 1, 1),
+            text_color=(1, 0, 0, 1)
+        )
+        self.window.add_widget(self.errorMessage)
 
         self.nextPage = Button(
             text = "Next page", 
@@ -533,7 +567,7 @@ class Registration2Window(Screen):
             background_color = (1, 1, 1, 1), 
             # background_normal = "",
             size_hint = (0.4, 0.1),
-            pos_hint = {"x": 0.3, "top": 0.2},
+            pos_hint = {"x": 0.3, "top": 0.14},
             on_press = self.next
         )
         self.window.add_widget(self.nextPage)
@@ -551,13 +585,18 @@ class Registration2Window(Screen):
         cardio = self.cardioInput.active
         strength = self.strengthInput.active
         muscle = self.muscleInput.active
-        data["activity"] = activity
-        data["cardio"] = cardio
-        data["strength"] = strength
-        data["muscle"] = muscle
-        with open(DATA_PATH, "w") as file:
-            json.dump(data, file)
-        self.manager.current = "registration3"
+        if(activity == "Level of activity"):
+            self.errorMessage.text = "Please select a level of activity"
+        else:
+            data["activity"] = activity
+            data["cardio"] = cardio
+            data["strength"] = strength
+            data["muscle"] = muscle
+            data["stage"] = "registration3"
+            with open(DATA_PATH, "w") as file:
+                json.dump(data, file)
+            self.manager.current = "registration3"
+            self.errorMessage.text = ""
 
     def previous(self, instance):
         self.manager.current = "registration1"
