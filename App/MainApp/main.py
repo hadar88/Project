@@ -301,6 +301,7 @@ class CreateAccountWindow(Screen):
         with open(DATA_PATH, "w") as file:
             json.dump(data, file)
         self.manager.current = "login"
+        self.errorMassage.text = ""
 
     def registration(self, instance):
         username = self.userName.text
@@ -316,6 +317,7 @@ class CreateAccountWindow(Screen):
             with open(DATA_PATH, "w") as file:
                 json.dump(data, file)
             self.manager.current = "registration1"
+            self.errorMassage.text = ""
 
 ################################
 
@@ -525,7 +527,7 @@ class Registration2Window(Screen):
 
         self.cardioInput = CheckBox(
             size_hint=(0.1, 0.1),
-            pos_hint={"x": 0.55, "top": 0.48},
+            pos_hint={"x": 0.55, "top": 0.485},
             color=(1, 0, 0, 1)
         )
         self.window.add_widget(self.cardioInput)
@@ -542,7 +544,7 @@ class Registration2Window(Screen):
 
         self.strengthInput = CheckBox(
             size_hint=(0.1, 0.1),
-            pos_hint={"x": 0.55, "top": 0.41},
+            pos_hint={"x": 0.55, "top": 0.415},
             color=(1, 0, 0, 1)
         )
         self.window.add_widget(self.strengthInput)
@@ -559,7 +561,7 @@ class Registration2Window(Screen):
 
         self.muscleInput = CheckBox(
             size_hint=(0.1, 0.1),
-            pos_hint={"x": 0.55, "top": 0.34},
+            pos_hint={"x": 0.55, "top": 0.345},
             color=(1, 0, 0, 1)
         )
         self.window.add_widget(self.muscleInput)
