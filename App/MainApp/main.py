@@ -168,6 +168,16 @@ class MainWindow(Screen):
         self.rect.size = instance.size
     
     def on_enter(self):
+        if(data["build menu"]):
+            data["build menu"] = False
+            with open(DATA_PATH, "w") as file:
+                json.dump(data, file)
+            self.buildMenu()
+        else:
+            return
+        
+    def buildMenu(self):
+        # call get_vector function from algorithms.py
         pass
 
 ################################

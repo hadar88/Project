@@ -1,5 +1,6 @@
 {
     "stage": "login",
+    "build menu": true,
     "username": "",
     "password": "",
     "weight": "",
