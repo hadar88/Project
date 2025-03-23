@@ -1,5 +1,6 @@
 import torch
 import json
+import time
 from kivy.app import App
 from kivy.uix.button import Button
 from kivy.uix.screenmanager import ScreenManager, Screen
@@ -1253,7 +1254,7 @@ class LoadingWindow(Screen):
         self.rect.pos = instance.pos
         self.rect.size = instance.size
 
-    def next(self, instance):
+    def next(self):
         data["stage"] = "main"
         with open(DATA_PATH, "w") as file:
             json.dump(data, file)
@@ -1291,6 +1292,8 @@ class LoadingWindow(Screen):
         data["sugar"] = self.vector[2]
         data["fat"] = self.vector[3]
         data["protein"] = self.vector[4]
+        with open(DATA_PATH, "w") as file:
+            json.dump(data, file)
 
         self.build_menu()
 
@@ -1298,26 +1301,25 @@ class LoadingWindow(Screen):
         # build the menu: call the model after changing the vector to tensor
         # set the menu in the json file to the menu from the model
 
-        print("finished")
-        # self.next()
-        # pass
+        # time.sleep(5)
+        self.next()
         
 
 class WindowManager(ScreenManager):
     def __init__(self, **kw):
         super(WindowManager, self).__init__(**kw)
 
-        # self.add_widget(LoginWindow(name = "login"))
+        self.add_widget(LoginWindow(name = "login"))
         self.add_widget(LoadingWindow(name = "loading"))
         self.add_widget(MainWindow(name = "main"))
-        # self.add_widget(SecondWindow(name = "second"))
-        # self.add_widget(CreateAccountWindow(name = "createAccount"))
-        # self.add_widget(Registration1Window(name = "registration1"))
-        # self.add_widget(Registration2Window(name = "registration2"))
-        # self.add_widget(Registration3Window(name = "registration3"))
-        # self.add_widget(Registration5Window(name = "registration5"))
-        # self.add_widget(Registration4Window(name = "registration4"))
-        # self.add_widget(Registration6Window(name = "registration6"))
+        self.add_widget(SecondWindow(name = "second"))
+        self.add_widget(CreateAccountWindow(name = "createAccount"))
+        self.add_widget(Registration1Window(name = "registration1"))
+        self.add_widget(Registration2Window(name = "registration2"))
+        self.add_widget(Registration3Window(name = "registration3"))
+        self.add_widget(Registration5Window(name = "registration5"))
+        self.add_widget(Registration4Window(name = "registration4"))
+        self.add_widget(Registration6Window(name = "registration6"))
         
 class MainApp(App):
     def build(self):
