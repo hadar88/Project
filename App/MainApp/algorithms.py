@@ -126,9 +126,9 @@ def get_vector(current_weight, goal_weight, height, age, gender, goal, cardio, s
     activity_type = []
     if cardio == "1":
         activity_type.append("cardio")
-    if strength == 1:
+    if strength == "1":
         activity_type.append("strength")
-    if muscle == 1:
+    if muscle == "1":
         activity_type.append("muscle")
 
     c = calculate_calories(current_weight, goal_weight, height, age, gender, activity)
@@ -173,5 +173,6 @@ def get_vector(current_weight, goal_weight, height, age, gender, goal, cardio, s
         vec.append(0)
     else:
         vec.append(1)
+        
     return vec
 
