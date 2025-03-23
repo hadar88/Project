@@ -1,3 +1,4 @@
+import torch
 import json
 from kivy.app import App
 from kivy.uix.button import Button
@@ -168,16 +169,7 @@ class MainWindow(Screen):
         self.rect.size = instance.size
     
     def on_enter(self):
-        if(data["build menu"]):
-            data["build menu"] = False
-            with open(DATA_PATH, "w") as file:
-                json.dump(data, file)
-            self.buildMenu()
-        else:
-            return
-        
-    def buildMenu(self):
-        # call get_vector function from algorithms.py
+        # get all the data from the json file and display it
         pass
 
 ################################
@@ -1214,10 +1206,10 @@ class Registration6Window(Screen):
         else:
             self.errorMessage.text = ""
             data["goal time"] = self.timeInput.text
-            data["stage"] = "main"
+            data["stage"] = "loading"
             with open(DATA_PATH, "w") as file:
                 json.dump(data, file)
-            self.manager.current = "main"
+            self.manager.current = "loading"
 
     def previous(self, instance):
         self.manager.current = "registration5"
@@ -1228,20 +1220,104 @@ class Registration6Window(Screen):
 
 ################################
 
+class LoadingWindow(Screen):
+    def __init__(self, **kw):
+        super(LoadingWindow, self).__init__(**kw)
+        self.cols = 1
+
+        self.window = FloatLayout(size_hint=(1, 1))
+        with self.window.canvas.before:
+            Color(1, 1, 1, 1) 
+            self.rect = Rectangle(size=self.window.size, pos=self.window.pos)
+            self.window.bind(size=self._update_rect, pos=self._update_rect)    
+
+        ###
+
+        self.vector = []
+
+        self.loading = ColoredLabel(
+            text = "Loading...", 
+            font_size = 150, 
+            size_hint = (0.6, 0.6), 
+            pos_hint = {"x": 0.2, "top": 0.8},
+            color=(1, 1, 1, 1),
+            text_color=(0, 0, 0, 1)
+        )
+        self.window.add_widget(self.loading)
+
+        ###
+
+        self.add_widget(self.window)
+
+    def _update_rect(self, instance, value):
+        self.rect.pos = instance.pos
+        self.rect.size = instance.size
+
+    def next(self, instance):
+        data["stage"] = "main"
+        with open(DATA_PATH, "w") as file:
+            json.dump(data, file)
+        self.manager.current = "main"
+
+    def on_enter(self):
+        current_weight_temp = int(data["weight"])
+        goal_weight_temp = int(data["goal weight"])
+        goal_time_temp = int(data["goal time"])
+        height_temp = int(data["height"])
+        age_temp = int(data["age"])
+        gender_temp = data["gender"]
+        goal_temp = data["goal"]
+        cardio_temp = data["cardio"]
+        strength_temp = data["strength"]
+        muscle_temp = data["muscle"]
+        activity_temp = data["activity"]
+        vegetarian_temp = data["vegetarian"]
+        vegan_temp = data["vegan"]
+        egg_allergy_temp = data["eggs allergy"]
+        milk_allergy_temp = data["milk allergy"]
+        nuts_allergy_temp = data["nuts allergy"]
+        fish_allergy_temp = data["fish allergy"]
+        sesame_allergy_temp = data["sesame allergy"]
+        soy_allergy_temp = data["soy allergy"]
+        gluten_allergy_temp = data["gluten allergy"]
+
+        self.vector = algorithms.get_vector(current_weight_temp, goal_weight_temp, goal_time_temp, height_temp, age_temp, 
+                                            gender_temp, goal_temp, cardio_temp, strength_temp, muscle_temp, activity_temp,
+                                            vegetarian_temp, vegan_temp, egg_allergy_temp, milk_allergy_temp, nuts_allergy_temp,
+                                            fish_allergy_temp, sesame_allergy_temp, soy_allergy_temp, gluten_allergy_temp)
+        
+        data["calories"] = self.vector[0]
+        data["carbohydrates"] = self.vector[1]
+        data["sugar"] = self.vector[2]
+        data["fat"] = self.vector[3]
+        data["protein"] = self.vector[4]
+
+        self.build_menu()
+
+    def build_menu(self):
+        # build the menu: call the model after changing the vector to tensor
+        # set the menu in the json file to the menu from the model
+
+        print("finished")
+        # self.next()
+        # pass
+        
+
 class WindowManager(ScreenManager):
     def __init__(self, **kw):
         super(WindowManager, self).__init__(**kw)
 
-        self.add_widget(LoginWindow(name = "login"))
+        # self.add_widget(LoginWindow(name = "login"))
+        self.add_widget(LoadingWindow(name = "loading"))
         self.add_widget(MainWindow(name = "main"))
-        self.add_widget(SecondWindow(name = "second"))
-        self.add_widget(CreateAccountWindow(name = "createAccount"))
-        self.add_widget(Registration1Window(name = "registration1"))
-        self.add_widget(Registration2Window(name = "registration2"))
-        self.add_widget(Registration3Window(name = "registration3"))
-        self.add_widget(Registration5Window(name = "registration5"))
-        self.add_widget(Registration4Window(name = "registration4"))
-        self.add_widget(Registration6Window(name = "registration6"))
+        # self.add_widget(SecondWindow(name = "second"))
+        # self.add_widget(CreateAccountWindow(name = "createAccount"))
+        # self.add_widget(Registration1Window(name = "registration1"))
+        # self.add_widget(Registration2Window(name = "registration2"))
+        # self.add_widget(Registration3Window(name = "registration3"))
+        # self.add_widget(Registration5Window(name = "registration5"))
+        # self.add_widget(Registration4Window(name = "registration4"))
+        # self.add_widget(Registration6Window(name = "registration6"))
         
 class MainApp(App):
     def build(self):
