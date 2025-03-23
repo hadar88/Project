@@ -1,4 +1,4 @@
-import torch
+# import torch
 import json
 import time
 from kivy.app import App
@@ -1196,8 +1196,8 @@ class Registration5Window(Screen):
         self.title2 = ColoredLabel(
             text = "Target weight", 
             font_size = 80, 
-            size_hint = (0.4, 0.1), 
-            pos_hint = {"x": 0.3, "top": 0.7},
+            size_hint = (0.8, 0.1), 
+            pos_hint = {"x": 0.1, "top": 0.7},
             color=(0, 0, 1, 1),
             text_color=(0, 0, 0, 1)
         )
@@ -1318,8 +1318,8 @@ class Registration6Window(Screen):
         self.title2 = ColoredLabel(
             text = "Time of the process", 
             font_size = 80, 
-            size_hint = (0.4, 0.1), 
-            pos_hint = {"x": 0.3, "top": 0.7},
+            size_hint = (0.8, 0.1), 
+            pos_hint = {"x": 0.1, "top": 0.7},
             color=(0, 0, 1, 1),
             text_color=(0, 0, 0, 1)
         )
@@ -1510,5 +1510,3 @@ class MainApp(App):
 
 if __name__ == "__main__":
     MainApp().run()
-
-
