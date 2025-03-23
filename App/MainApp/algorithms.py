@@ -97,9 +97,9 @@ def ideal_body_weight(height, gender):
     height = height * inch
 
     if(gender == "Male"):
-        return 50 + 2.3 * (height - 60)
+        return round(50 + 2.3 * (height - 60))
     else:
-        return 45.5 + 2.3 * (height - 60)
+        return round(45.5 + 2.3 * (height - 60))
 
 def weight_change(current_weight, goal_weight):
     return abs(current_weight - goal_weight)

@@ -983,9 +983,128 @@ class Registration5Window(Screen):
             self.window.bind(size=self._update_rect, pos=self._update_rect)
 
         ###
+        h = float(data["height"])
+        g = data["gender"]
+
+        idealBodyWeight = algorithms.ideal_body_weight(h, g)
+
+        self.home = Button(
+            background_normal="back.png",
+            size_hint=(0.1125, 0.07), 
+            pos_hint={"x": 0, "top": 1},
+            on_press=self.previous
+        )
+        self.window.add_widget(self.home)
+
+        self.title = ColoredLabel(
+            text = "Registration", 
+            font_size = 150, 
+            size_hint = (0.775, 0.2), 
+            pos_hint = {"x": 0.1125, "top": 0.95},
+            color=(1, 1, 1, 1),
+            text_color=(0, 0, 0, 1)
+        )
+        self.window.add_widget(self.title)
+
+        self.title2 = ColoredLabel(
+            text = "Target weight", 
+            font_size = 80, 
+            size_hint = (0.4, 0.1), 
+            pos_hint = {"x": 0.3, "top": 0.7},
+            color=(0, 0, 1, 1),
+            text_color=(0, 0, 0, 1)
+        )
+        self.window.add_widget(self.title2)
+
+        self.suggestedWeight = ColoredLabel(
+            text = "We suggest {} kg".format(idealBodyWeight), 
+            font_size = 60, 
+            size_hint = (0.9, 0.1), 
+            pos_hint = {"x": 0.05, "top": 0.57},
+            color=(1, 1, 1, 1),
+            text_color=(0, 0, 0, 1)
+        )
+        self.window.add_widget(self.suggestedWeight)
+
+        self.goalweightLabel = ColoredLabel(
+            text = "Weight:", 
+            font_size = 60, 
+            size_hint = (0.44, 0.1), 
+            pos_hint = {"x": 0.05, "top": 0.44},
+            color=(0, 0, 1, 1),
+            text_color=(0, 0, 0, 1)
+        )
+        self.window.add_widget(self.goalweightLabel)
+
+        self.goalweightInput = TextInput(
+            multiline = False, 
+            font_size = 50, 
+            hint_text = "Kg", 
+            size_hint=(0.44, 0.1), 
+            pos_hint={"x": 0.51, "top": 0.44},
+            input_filter="int"
+        )
+        self.window.add_widget(self.goalweightInput)
+
+        self.errorMessage = ColoredLabel(
+            text = "", 
+            font_size = 50, 
+            size_hint = (0.8, 0.1), 
+            pos_hint = {"x": 0.1, "top": 0.29},
+            color=(1, 1, 1, 1),
+            text_color=(1, 0, 0, 1)
+        )
+        self.window.add_widget(self.errorMessage)
+
+        self.nextPage = Button(
+            text = "Next page", 
+            font_size = 50, 
+            background_color = (1, 1, 1, 1), 
+            # background_normal = "",
+            size_hint = (0.4, 0.1),
+            pos_hint = {"x": 0.3, "top": 0.14},
+            on_press = self.next
+        )
+        self.window.add_widget(self.nextPage)
+
+        ###
+
+        self.add_widget(self.window)
+
+    def _update_rect(self, instance, value):
+        self.rect.pos = instance.pos
+        self.rect.size = instance.size
+
+    def next(self, instance):
+        if(self.goalweightInput.text == ""):
+            self.errorMessage.text = "Please fill in the field"
+        else:
+            data["goal weight"] = self.goalweightInput.text
+            data["stage"] = "registration6"
+            with open(DATA_PATH, "w") as file:
+                json.dump(data, file)
+            self.manager.current = "registration6"
+
+    def previous(self, instance):
+        self.manager.current = "registration6"
+
+################################
+
+class Registration6Window(Screen):
+    def __init__(self, **kw):
+        super(Registration6Window, self).__init__(**kw)
+        self.cols = 1
+
+        self.window = FloatLayout(size_hint=(1, 1))
+        with self.window.canvas.before:
+            Color(1, 1, 1, 1) 
+            self.rect = Rectangle(size=self.window.size, pos=self.window.pos)
+            self.window.bind(size=self._update_rect, pos=self._update_rect)
+
+        ###
 
         self.temp = ColoredLabel(
-            text = "Registration5", 
+            text = "Registration6", 
             font_size = 50, 
             size_hint = (0.4, 0.4), 
             pos_hint = {"x": 0.3, "top": 0.7},
@@ -1017,6 +1136,7 @@ class WindowManager(ScreenManager):
         self.add_widget(Registration3Window(name = "registration3"))
         self.add_widget(Registration4Window(name = "registration4"))
         self.add_widget(Registration5Window(name = "registration5"))
+        self.add_widget(Registration6Window(name = "registration6"))
         
 class MainApp(App):
     def build(self):
