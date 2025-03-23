@@ -1301,7 +1301,7 @@ class LoadingWindow(Screen):
         # build the menu: call the model after changing the vector to tensor
         # set the menu in the json file to the menu from the model
 
-        # time.sleep(5)
+        time.sleep(5)
         self.next()
         
 
