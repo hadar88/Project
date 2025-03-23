@@ -983,10 +983,8 @@ class Registration5Window(Screen):
             self.window.bind(size=self._update_rect, pos=self._update_rect)
 
         ###
-        h = float(data["height"])
-        g = data["gender"]
 
-        idealBodyWeight = algorithms.ideal_body_weight(h, g)
+        self.idealBodyWeight = 0
 
         self.home = Button(
             background_normal="back.png",
@@ -1017,7 +1015,7 @@ class Registration5Window(Screen):
         self.window.add_widget(self.title2)
 
         self.suggestedWeight = ColoredLabel(
-            text = "We suggest {} kg".format(idealBodyWeight), 
+            text = "Suggested weight: " + str(self.idealBodyWeight) + " kg", 
             font_size = 60, 
             size_hint = (0.9, 0.1), 
             pos_hint = {"x": 0.05, "top": 0.57},
@@ -1079,6 +1077,7 @@ class Registration5Window(Screen):
         if(self.goalweightInput.text == ""):
             self.errorMessage.text = "Please fill in the field"
         else:
+            self.errorMessage.text = ""
             data["goal weight"] = self.goalweightInput.text
             data["stage"] = "registration6"
             with open(DATA_PATH, "w") as file:
@@ -1086,7 +1085,11 @@ class Registration5Window(Screen):
             self.manager.current = "registration6"
 
     def previous(self, instance):
-        self.manager.current = "registration6"
+        self.manager.current = "registration4"
+
+    def on_enter(self):
+        idealBodyWeight = algorithms.ideal_body_weight(int(data["height"]), data["gender"])
+        self.suggestedWeight.text = "Suggested weight: " + str(idealBodyWeight) + " kg"
 
 ################################
 
@@ -1103,15 +1106,86 @@ class Registration6Window(Screen):
 
         ###
 
-        self.temp = ColoredLabel(
-            text = "Registration6", 
-            font_size = 50, 
-            size_hint = (0.4, 0.4), 
+        self.time = 0
+
+        self.home = Button(
+            background_normal="back.png",
+            size_hint=(0.1125, 0.07), 
+            pos_hint={"x": 0, "top": 1},
+            on_press=self.previous
+        )
+        self.window.add_widget(self.home)
+
+        self.title = ColoredLabel(
+            text = "Registration", 
+            font_size = 150, 
+            size_hint = (0.775, 0.2), 
+            pos_hint = {"x": 0.1125, "top": 0.95},
+            color=(1, 1, 1, 1),
+            text_color=(0, 0, 0, 1)
+        )
+        self.window.add_widget(self.title)
+
+        self.title2 = ColoredLabel(
+            text = "Time of the process", 
+            font_size = 80, 
+            size_hint = (0.4, 0.1), 
             pos_hint = {"x": 0.3, "top": 0.7},
             color=(0, 0, 1, 1),
             text_color=(0, 0, 0, 1)
         )
-        self.window.add_widget(self.temp)
+        self.window.add_widget(self.title2)
+
+        self.suggestedTime = ColoredLabel(
+            text = "Suggested time: " + str(self.time) + " weeks", 
+            font_size = 60, 
+            size_hint = (0.9, 0.1), 
+            pos_hint = {"x": 0.05, "top": 0.57},
+            color=(1, 1, 1, 1),
+            text_color=(0, 0, 0, 1)
+        )
+        self.window.add_widget(self.suggestedTime)
+
+        self.timeLabel = ColoredLabel(
+            text = "Time:", 
+            font_size = 60, 
+            size_hint = (0.44, 0.1), 
+            pos_hint = {"x": 0.05, "top": 0.44},
+            color=(0, 0, 1, 1),
+            text_color=(0, 0, 0, 1)
+        )
+        self.window.add_widget(self.timeLabel)
+
+        self.timeInput = TextInput(
+            multiline = False, 
+            font_size = 50, 
+            hint_text = "Weeks", 
+            size_hint=(0.44, 0.1), 
+            pos_hint={"x": 0.51, "top": 0.44},
+            input_filter="int"
+        )
+        self.window.add_widget(self.timeInput)
+
+        self.errorMessage = ColoredLabel(
+            text = "", 
+            font_size = 50, 
+            size_hint = (0.8, 0.1), 
+            pos_hint = {"x": 0.1, "top": 0.29},
+            color=(1, 1, 1, 1),
+            text_color=(1, 0, 0, 1)
+        )
+        self.window.add_widget(self.errorMessage)
+
+        self.nextPage = Button(
+            text = "Next page", 
+            font_size = 50, 
+            background_color = (1, 1, 1, 1), 
+            # background_normal = "",
+            size_hint = (0.4, 0.1),
+            pos_hint = {"x": 0.3, "top": 0.14},
+            on_press = self.next
+        )
+        self.window.add_widget(self.nextPage)
 
         ###
 
@@ -1120,6 +1194,24 @@ class Registration6Window(Screen):
     def _update_rect(self, instance, value):
         self.rect.pos = instance.pos
         self.rect.size = instance.size
+
+    def next(self, instance):
+        if(self.timeInput.text == ""):
+            self.errorMessage.text = "Please fill in the field"
+        else:
+            self.errorMessage.text = ""
+            data["goal time"] = self.timeInput.text
+            data["stage"] = "main"
+            with open(DATA_PATH, "w") as file:
+                json.dump(data, file)
+            self.manager.current = "main"
+
+    def previous(self, instance):
+        self.manager.current = "registration5"
+
+    def on_enter(self):
+        self.time = algorithms.time_of_change(int(data["weight"]), int(data["goal weight"]))
+        self.suggestedTime.text = "Suggested time: " + str(self.time) + " weeks"
 
 ################################
 
@@ -1134,8 +1226,8 @@ class WindowManager(ScreenManager):
         self.add_widget(Registration1Window(name = "registration1"))
         self.add_widget(Registration2Window(name = "registration2"))
         self.add_widget(Registration3Window(name = "registration3"))
-        self.add_widget(Registration4Window(name = "registration4"))
         self.add_widget(Registration5Window(name = "registration5"))
+        self.add_widget(Registration4Window(name = "registration4"))
         self.add_widget(Registration6Window(name = "registration6"))
         
 class MainApp(App):

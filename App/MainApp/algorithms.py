@@ -91,15 +91,19 @@ def amr(weight, height, age, gender, activity_level):
         return bmr_value * 1.725
     elif activity_level == "extremely active":
         return bmr_value * 1.9
+    else:
+        return 1
 
 def ideal_body_weight(height, gender):
     inch = 0.3937
     height = height * inch
 
     if(gender == "Male"):
-        return round(50 + 2.3 * (height - 60))
+        i = round(50 + 2.3 * (height - 60))
+        return i
     else:
-        return round(45.5 + 2.3 * (height - 60))
+        i = round(45.5 + 2.3 * (height - 60))
+        return i
 
 def weight_change(current_weight, goal_weight):
     return abs(current_weight - goal_weight)
@@ -108,17 +112,16 @@ def time_of_change(current_weight, goal_weight):
     c = weight_change(current_weight, goal_weight)
     return round(260 * c / current_weight)
 
-def weekly_change(current_weight, goal_weight, time):
-    c = weight_change(current_weight, goal_weight)
-    return round(1000 * c / time)
+def weekly_change(current_weight):
+    return round(50 * current_weight / 13)
 
-def daily_calories_change(current_weight, goal_weight):
-    t = weekly_change(current_weight, goal_weight)
-    return round(9 * t / 7)
+def daily_calories_change(current_weight):
+    w = weekly_change(current_weight)
+    return round(9 * w / 7)
 
 def calculate_calories(current_weight, goal_weight, height, age, gender, activity_level):
     a = amr(current_weight, height, age, gender, activity_level)
-    p = daily_calories_change(current_weight, goal_weight)
+    p = daily_calories_change(current_weight)
     i = 1 if current_weight <= goal_weight else -1
     return a + i * p
 
