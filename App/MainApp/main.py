@@ -1,4 +1,4 @@
-# import torch
+import torch
 import json
 import time
 from kivy.app import App
@@ -1481,7 +1481,8 @@ class LoadingWindow(Screen):
         self.build_menu()
 
     def build_menu(self):
-        # build the menu: call the model after changing the vector to tensor
+        # change the vector to tensor
+        # call the model to get the menu
         # set the menu in the json file to the menu from the model
 
         time.sleep(5)
