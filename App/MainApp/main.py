@@ -166,6 +166,9 @@ class MainWindow(Screen):
     def _update_rect(self, instance, value):
         self.rect.pos = instance.pos
         self.rect.size = instance.size
+    
+    def on_enter(self):
+        pass
 
 ################################
 

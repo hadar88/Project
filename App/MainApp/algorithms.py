@@ -112,20 +112,21 @@ def time_of_change(current_weight, goal_weight):
     c = weight_change(current_weight, goal_weight)
     return round(260 * c / current_weight)
 
-def weekly_change(current_weight):
-    return round(50 * current_weight / 13)
+def weekly_change(current_weight, goal_weight, goal_time):
+    c = weight_change(current_weight, goal_weight)
+    return round(1000 * c / goal_time)
 
-def daily_calories_change(current_weight):
-    w = weekly_change(current_weight)
+def daily_calories_change(current_weight, goal_weight, goal_time):
+    w = weekly_change(current_weight, goal_weight, goal_time)
     return round(9 * w / 7)
 
-def calculate_calories(current_weight, goal_weight, height, age, gender, activity_level):
+def calculate_calories(current_weight, goal_weight, goal_time, height, age, gender, activity_level):
     a = amr(current_weight, height, age, gender, activity_level)
-    p = daily_calories_change(current_weight)
+    p = daily_calories_change(current_weight, goal_weight, goal_time)
     i = 1 if current_weight <= goal_weight else -1
     return a + i * p
 
-def get_vector(current_weight, goal_weight, height, age, gender, goal, cardio, strength, muscle, activity, vegeterian, vegan, eggs, milk, nuts, fish, sesame, soy, gluten):
+def get_vector(current_weight, goal_weight, goal_time, height, age, gender, goal, cardio, strength, muscle, activity, vegeterian, vegan, eggs, milk, nuts, fish, sesame, soy, gluten):
     activity_type = []
     if cardio == "1":
         activity_type.append("cardio")
@@ -134,7 +135,7 @@ def get_vector(current_weight, goal_weight, height, age, gender, goal, cardio, s
     if muscle == "1":
         activity_type.append("muscle")
 
-    c = calculate_calories(current_weight, goal_weight, height, age, gender, activity)
+    c = calculate_calories(current_weight, goal_weight, goal_time, height, age, gender, activity)
 
     result = calculate_nutritional_data(goal, activity_type, activity, c)
 
