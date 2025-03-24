@@ -828,6 +828,7 @@ class Registration2Window(Screen):
 
     def previous(self, instance):
         self.manager.current = "registration1"
+        self.errorMessage.text = ""
 
 ################################
 
@@ -953,6 +954,7 @@ class Registration3Window(Screen):
 
     def previous(self, instance):
         self.manager.current = "registration2"
+        self.errorMessage.text = ""
 
 ################################
 
@@ -1277,6 +1279,7 @@ class Registration5Window(Screen):
 
     def previous(self, instance):
         self.manager.current = "registration4"
+        self.errorMessage.text = ""
 
     def on_enter(self):
         idealBodyWeight = ideal_body_weight(int(data["height"]), data["gender"])
@@ -1399,6 +1402,7 @@ class Registration6Window(Screen):
 
     def previous(self, instance):
         self.manager.current = "registration5"
+        self.errorMessage.text = ""
 
     def on_enter(self):
         self.time = time_of_change(int(data["weight"]), int(data["goal weight"]))
