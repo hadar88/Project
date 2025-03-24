@@ -17,6 +17,8 @@ d = open(DATA_PATH, "r")
 data = json.load(d)
 d.close()
 
+MODEL = "model_scripted.pt"
+
 #######################################################################
 
 def calculate_nutritional_data(goal, activity_type, activity_level, daily_calories):    
@@ -1196,8 +1198,8 @@ class Registration5Window(Screen):
         self.title2 = ColoredLabel(
             text = "Target weight", 
             font_size = 80, 
-            size_hint = (0.8, 0.1), 
-            pos_hint = {"x": 0.1, "top": 0.7},
+            size_hint = (0.6, 0.1), 
+            pos_hint = {"x": 0.2, "top": 0.7},
             color=(0, 0, 1, 1),
             text_color=(0, 0, 0, 1)
         )
