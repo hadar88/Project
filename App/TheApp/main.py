@@ -1049,7 +1049,7 @@ class MenuWindow(Screen):
             font_size = 30,
             background_color = (1, 1, 1, 1),
             # background_normal = "",
-            size_hint = (1/7, 0.1),
+            size_hint = (0.12, 0.1),
             pos_hint = {"x": 0.0, "top": 0.8},
             on_press = self.sunday
         )
@@ -1060,8 +1060,8 @@ class MenuWindow(Screen):
             font_size = 30,
             background_color = (1, 1, 1, 1),
             # background_normal = "",
-            size_hint = (1/7, 0.1),
-            pos_hint = {"x": 1/7, "top": 0.8},
+            size_hint = (0.12, 0.1),
+            pos_hint = {"x": 0.12, "top": 0.8},
             on_press = self.monday
         )
         self.window.add_widget(self.mondayButton)
@@ -1071,8 +1071,8 @@ class MenuWindow(Screen):
             font_size = 30,
             background_color = (1, 1, 1, 1),
             # background_normal = "",
-            size_hint = (1/7, 0.1),
-            pos_hint = {"x": 2/7, "top": 0.8},
+            size_hint = (0.14, 0.1),
+            pos_hint = {"x": 0.24, "top": 0.8},
             on_press = self.tuesday
         )
         self.window.add_widget(self.tuesdayButton)
@@ -1082,8 +1082,8 @@ class MenuWindow(Screen):
             font_size = 30,
             background_color = (1, 1, 1, 1),
             # background_normal = "",
-            size_hint = (1/7, 0.1),
-            pos_hint = {"x": 3/7, "top": 0.8},
+            size_hint = (0.18, 0.1),
+            pos_hint = {"x": 0.38, "top": 0.8},
             on_press = self.wednesday
         )
         self.window.add_widget(self.wednesdayButton)
@@ -1093,8 +1093,8 @@ class MenuWindow(Screen):
             font_size = 30,
             background_color = (1, 1, 1, 1),
             # background_normal = "",
-            size_hint = (1/7, 0.1),
-            pos_hint = {"x": 4/7, "top": 0.8},
+            size_hint = (0.16, 0.1),
+            pos_hint = {"x": 0.56, "top": 0.8},
             on_press = self.thursday
         )
         self.window.add_widget(self.thursdayButton)
@@ -1104,8 +1104,8 @@ class MenuWindow(Screen):
             font_size = 30,
             background_color = (1, 1, 1, 1),
             # background_normal = "",
-            size_hint = (1/7, 0.1),
-            pos_hint = {"x": 5/7, "top": 0.8},
+            size_hint = (0.12, 0.1),
+            pos_hint = {"x": 0.72, "top": 0.8},
             on_press = self.friday
         )
         self.window.add_widget(self.fridayButton)
@@ -1115,8 +1115,8 @@ class MenuWindow(Screen):
             font_size = 30,
             background_color = (1, 1, 1, 1),
             # background_normal = "",
-            size_hint = (1/7, 0.1),
-            pos_hint = {"x": 6/7, "top": 0.8},
+            size_hint = (0.16, 0.1),
+            pos_hint = {"x": 0.84, "top": 0.8},
             on_press = self.saturday
         )
         self.window.add_widget(self.saturdayButton)
@@ -2647,8 +2647,8 @@ class MainApp(App):
         return WindowManager()
     
     def end_of_week(self):
-        current_time = datetime.fromisoformat(datetime.now().isoformat(timespec='minutes'))
         if data["last_visit_time"] != "":
+            current_time = datetime.fromisoformat(datetime.now().isoformat(timespec='minutes'))
             last_visit_time = datetime.fromisoformat(data["last_visit_time"])
             while last_visit_time <= current_time:
                 if last_visit_time.weekday() == 5 and last_visit_time.hour == 23 and last_visit_time.minute == 59:
@@ -2657,16 +2657,20 @@ class MainApp(App):
                 last_visit_time += timedelta(minutes=1)
 
     def reset_day(self):
-        entry_time = datetime.now().isoformat(timespec='minutes')
-        last_visit_time = data["last_visit_time"]
-        if last_visit_time != entry_time:
+        entry_time = datetime.now().date().isoformat()
+        last_visit_time = data["last_visit_time"].split("T")[0]
+        
+        if last_visit_time == entry_time:
             data["calories today"] = 0
             data["carbohydrates today"] = 0
             data["sugar today"] = 0
             data["fat today"] = 0
             data["protein today"] = 0
-            data["last_visit_time"] = entry_time
             with open(DATA_PATH, "w") as file:
+                json.dump(data, file)
+
+        data["last_visit_time"] = datetime.now().isoformat(timespec='minutes')
+        with open(DATA_PATH, "w") as file:
                 json.dump(data, file)
 
 if __name__ == "__main__":
