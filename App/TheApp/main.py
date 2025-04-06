@@ -13,6 +13,7 @@ from kivy.uix.spinner import Spinner
 from kivy.uix.checkbox import CheckBox
 from kivy.core.window import Window
 from kivy.uix.scrollview import ScrollView 
+from kivy.clock import Clock
 
 import matplotlib
 matplotlib.use("Agg")
@@ -1016,6 +1017,7 @@ class StatisticsWindow(Screen):
 class MenuWindow(Screen):
     def __init__(self, **kw):
         super(MenuWindow, self).__init__(**kw)
+        self._adjust_label_event = None
         Window.bind(on_keyboard=self.on_keyboard)
         self.cols = 1
 
@@ -1133,7 +1135,6 @@ class MenuWindow(Screen):
         
     def on_leave(self):
         Window.unbind(on_keyboard=self.on_keyboard)
-        self.secondtitle.text = "Select a day"
 
     def on_keyboard(self, window, key, *args):
         if key == 27:
@@ -1148,9 +1149,10 @@ class MenuWindow(Screen):
 
         if day != "" and meal != "":
             foods = get_meal(day, meal)
-            text = '\n'.join([f"[b]{food}[/b] ({amount}gr)" for food, amount in foods.items()])
+            text = '\n'.join([f"[b]{food}[/b] ({amount}g)" for food, amount in foods.items()])
             wrapped_text = self.wrap(text, 45)
-            self.menuLabel.text = wrapped_text
+            if self.menuLabel.text != wrapped_text: 
+                self.menuLabel.text = wrapped_text
 
     def wrap(self, text: str, k: int):
 
@@ -1192,8 +1194,14 @@ class MenuWindow(Screen):
         self.manager.current = "loading"
 
     def _adjust_label_height(self, *args):
+        if self._adjust_label_event:
+            self._adjust_label_event.cancel()
+        self._adjust_label_event = Clock.schedule_once(self._apply_label_height, 0.1)
+
+    def _apply_label_height(self, *args):
         self.menuLabel.height = self.menuLabel.texture_size[1]
         self.menuLabel.text_size = (self.menuLabel.width, None)
+        self.menuLabel.size_hint_y = None
 
 ################################
 
@@ -1277,15 +1285,7 @@ class DictionaryWindow(Screen):
         )
         self.window.add_widget(self.home)
 
-        self.temp = ColoredLabel(
-            text = "Dictionary",
-            font_size = 50,
-            size_hint = (0.4, 0.4),
-            pos_hint = {"x": 0.3, "top": 0.7},
-            color=(0, 0, 1, 1),
-            text_color=(0, 0, 0, 1)
-        )
-        self.window.add_widget(self.temp)
+
 
         ###
 
@@ -2569,7 +2569,7 @@ class MainApp(App):
         entry_time = datetime.now().date().isoformat()
         last_visit_time = data["last_visit_time"].split("T")[0]
         
-        if last_visit_time == entry_time:
+        if last_visit_time != entry_time:
             data["calories today"] = 0
             data["carbohydrates today"] = 0
             data["sugar today"] = 0
