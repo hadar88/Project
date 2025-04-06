@@ -12,6 +12,7 @@ from kivy.uix.image import Image
 from kivy.uix.spinner import Spinner
 from kivy.uix.checkbox import CheckBox
 from kivy.core.window import Window
+from kivy.uix.scrollview import ScrollView 
 
 import matplotlib
 matplotlib.use("Agg")
@@ -576,7 +577,7 @@ class PersonalDataWindow(Screen):
             text = "Personal Data",
             font_size = 100,
             size_hint = (0.8, 0.2),
-            pos_hint = {"x": 0.1, "top": 0.8},
+            pos_hint = {"x": 0.1, "top": 0.975},
             color=(1, 1, 1, 1),
             text_color=(0, 0, 0, 1)
         )
@@ -586,7 +587,7 @@ class PersonalDataWindow(Screen):
             text = "Weight: ",
             font_size = 50,
             size_hint = (0.2, 0.05),
-            pos_hint = {"x": 0.15, "top": 0.5},
+            pos_hint = {"x": 0.15, "top": 0.8},
             color=(1, 1, 1, 1),
             text_color=(0, 1, 0, 1)
         )
@@ -597,7 +598,7 @@ class PersonalDataWindow(Screen):
             font_size = 40,
             text = data["weight"], 
             size_hint=(0.35, 0.05),
-            pos_hint={"x": 0.4, "top": 0.5},
+            pos_hint={"x": 0.4, "top": 0.8},
             input_filter="float",
             disabled = True, 
             halign="center",
@@ -609,7 +610,7 @@ class PersonalDataWindow(Screen):
         self.weightupdateButton = Button(
             background_normal = "pencil.png",
             size_hint=(0.1, 0.05),
-            pos_hint = {"x": 0.8, "top": 0.5},
+            pos_hint = {"x": 0.8, "top": 0.8},
             on_press = self.weightupdate
         )
         self.window.add_widget(self.weightupdateButton)
@@ -618,7 +619,7 @@ class PersonalDataWindow(Screen):
             text = "Height: ",
             font_size = 50,
             size_hint = (0.2, 0.05),
-            pos_hint = {"x": 0.15, "top": 5/12},
+            pos_hint = {"x": 0.15, "top": 0.8 - 1/12},
             color=(1, 1, 1, 1),
             text_color=(0, 1, 0, 1)
         )
@@ -629,7 +630,7 @@ class PersonalDataWindow(Screen):
             font_size = 40,
             text = data["height"],
             size_hint=(0.35, 0.05),
-            pos_hint={"x": 0.4, "top": 5/12},
+            pos_hint={"x": 0.4, "top": 0.8 - 1/12},
             input_filter="float",
             disabled = True,
             halign="center",
@@ -641,7 +642,7 @@ class PersonalDataWindow(Screen):
         self.heightupdateButton = Button(
             background_normal = "pencil.png",
             size_hint=(0.1, 0.05),
-            pos_hint = {"x": 0.8, "top": 5/12},
+            pos_hint = {"x": 0.8, "top": 0.8 - 1/12},
             on_press = self.heightupdate
         )
         self.window.add_widget(self.heightupdateButton)
@@ -650,7 +651,7 @@ class PersonalDataWindow(Screen):
             text = "Target weight: ",
             font_size = 50,
             size_hint = (0.2, 0.05),
-            pos_hint = {"x": 0.15, "top": 4/12},
+            pos_hint = {"x": 0.15, "top": 0.8 - 2/12},
             color=(1, 1, 1, 1),
             text_color=(0, 1, 0, 1)
         )
@@ -661,7 +662,7 @@ class PersonalDataWindow(Screen):
             font_size = 40,
             text = data["goal weight"],
             size_hint=(0.35, 0.05),
-            pos_hint={"x": 0.4, "top": 4/12},
+            pos_hint={"x": 0.4, "top": 0.8 - 2/12},
             input_filter="float",
             disabled = True,
             halign="center",
@@ -673,7 +674,7 @@ class PersonalDataWindow(Screen):
         self.targetweightupdateButton = Button(
             background_normal = "pencil.png",
             size_hint=(0.1, 0.05),
-            pos_hint = {"x": 0.8, "top": 4/12},
+            pos_hint = {"x": 0.8, "top": 0.8 - 2/12},
             on_press = self.targetweightupdate
         )
         self.window.add_widget(self.targetweightupdateButton)
@@ -682,7 +683,7 @@ class PersonalDataWindow(Screen):
             text = "Activity: ",
             font_size = 50,
             size_hint = (0.2, 0.05),
-            pos_hint = {"x": 0.15, "top": 3/12},
+            pos_hint = {"x": 0.15, "top": 0.8 - 3/12},
             color=(1, 1, 1, 1),
             text_color=(0, 1, 0, 1)
         )
@@ -697,7 +698,7 @@ class PersonalDataWindow(Screen):
             "active",
             "extremely active"),
             size_hint=(0.35, 0.05),
-            pos_hint={"x": 0.4, "top": 3/12},
+            pos_hint={"x": 0.4, "top": 0.8 - 3/12},
             disabled=True,
             background_disabled_normal="",
             background_color=(0.68, 0.68, 0.68, 1), 
@@ -708,7 +709,7 @@ class PersonalDataWindow(Screen):
         self.activityupdateButton = Button(
             background_normal = "pencil.png",
             size_hint=(0.1, 0.05),
-            pos_hint = {"x": 0.8, "top": 3/12},
+            pos_hint = {"x": 0.8, "top": 0.8 - 3/12},
             on_press = self.activityupdate
         )
         self.window.add_widget(self.activityupdateButton)
@@ -717,7 +718,7 @@ class PersonalDataWindow(Screen):
             text = "",
             font_size = 50,
             size_hint = (0.8, 0.06),
-            pos_hint = {"x": 0.1, "top": 0.13},
+            pos_hint = {"x": 0.1, "top": 0.8 - 4/12},
             color=(1, 1, 1, 1),
             text_color=(1, 0, 0, 1)
         )
@@ -1044,162 +1045,66 @@ class MenuWindow(Screen):
         )
         self.window.add_widget(self.title)
 
-        self.sundayButton = Button(
-            text = "Sunday",
-            font_size = 30,
-            background_color = (1, 1, 1, 1),
-            # background_normal = "",
-            size_hint = (0.12, 0.1),
-            pos_hint = {"x": 0.0, "top": 0.8},
-            on_press = self.sunday
-        )
-        self.window.add_widget(self.sundayButton)
-
-        self.mondayButton = Button(
-            text = "Monday",
-            font_size = 30,
-            background_color = (1, 1, 1, 1),
-            # background_normal = "",
-            size_hint = (0.12, 0.1),
-            pos_hint = {"x": 0.12, "top": 0.8},
-            on_press = self.monday
-        )
-        self.window.add_widget(self.mondayButton)
-
-        self.tuesdayButton = Button(
-            text = "Tuesday",
-            font_size = 30,
-            background_color = (1, 1, 1, 1),
-            # background_normal = "",
-            size_hint = (0.14, 0.1),
-            pos_hint = {"x": 0.24, "top": 0.8},
-            on_press = self.tuesday
-        )
-        self.window.add_widget(self.tuesdayButton)
-
-        self.wednesdayButton = Button(
-            text = "Wednesday",
-            font_size = 30,
-            background_color = (1, 1, 1, 1),
-            # background_normal = "",
-            size_hint = (0.18, 0.1),
-            pos_hint = {"x": 0.38, "top": 0.8},
-            on_press = self.wednesday
-        )
-        self.window.add_widget(self.wednesdayButton)
-
-        self.thursdayButton = Button(
-            text = "Thursday",
-            font_size = 30,
-            background_color = (1, 1, 1, 1),
-            # background_normal = "",
-            size_hint = (0.16, 0.1),
-            pos_hint = {"x": 0.56, "top": 0.8},
-            on_press = self.thursday
-        )
-        self.window.add_widget(self.thursdayButton)
-
-        self.fridayButton = Button(
-            text = "Friday",
-            font_size = 30,
-            background_color = (1, 1, 1, 1),
-            # background_normal = "",
-            size_hint = (0.12, 0.1),
-            pos_hint = {"x": 0.72, "top": 0.8},
-            on_press = self.friday
-        )
-        self.window.add_widget(self.fridayButton)
-
-        self.saturdayButton = Button(
-            text = "Saturday",
-            font_size = 30,
-            background_color = (1, 1, 1, 1),
-            # background_normal = "",
-            size_hint = (0.16, 0.1),
-            pos_hint = {"x": 0.84, "top": 0.8},
-            on_press = self.saturday
-        )
-        self.window.add_widget(self.saturdayButton)
-
-        self.secondtitle = ColoredLabel(
-            text = "Select a day",
-            font_size = 50,
-            size_hint = (0.8, 0.1),
-            pos_hint = {"x": 0.1, "top": 0.7},
+        self.dayInput = Spinner(
+            font_size=40,
+            text="",
+            values=("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"),
+            size_hint=(0.375, 0.05),
+            pos_hint={"x": 0.1, "top": 0.8},
+            background_normal="",
+            background_color=(0.68, 0.68, 0.68, 1), 
             color=(1, 1, 1, 1),
-            text_color=(0, 0, 0, 1)
         )
-        self.window.add_widget(self.secondtitle)
+        self.dayInput.bind(text=self._update_meal)
+        self.window.add_widget(self.dayInput)
 
-        self.lines = ColoredLabel(
-            text = "",
-            font_size = 40,
-            size_hint = (1, 0.1),
-            pos_hint = {"x": 0, "top": 0.6},
-            color=(0, 0, 0, 1),
-            text_color=(0, 0, 0, 1)
-        )
-        self.window.add_widget(self.lines)
-
-        self.breakfastLabel = ColoredLabel(
-            text = "Breakfast",
-            font_size = 40,
-            size_hint = (0.3315, 0.1),
-            pos_hint = {"x": 0, "top": 0.6},
-            color=(0, 0, 1, 1),
-            text_color=(1, 1, 1, 1)
-        )
-        self.window.add_widget(self.breakfastLabel)
-
-        self.breakfastdata = ColoredLabel(
-            text = "",
-            font_size = 40,
-            size_hint = (0.3315, 0.5),
-            pos_hint = {"x": 0, "top": 0.5},
+        self.mealInput = Spinner(
+            font_size=40,
+            text="",
+            values=("Breakfast", "Lunch", "Dinner"),
+            size_hint=(0.375, 0.05),
+            pos_hint={"x": 0.525, "top": 0.8},
+            background_normal="",
+            background_color=(0.68, 0.68, 0.68, 1), 
             color=(1, 1, 1, 1),
-            text_color=(0, 0, 0, 1)
         )
-        self.window.add_widget(self.breakfastdata)
+        self.mealInput.bind(text=self._update_meal)
+        self.window.add_widget(self.mealInput)
 
-        self.lunchLabel = ColoredLabel(
-            text = "Lunch",
-            font_size = 40,
-            size_hint = (0.3315, 0.1),
-            pos_hint = {"x": 0.33425, "top": 0.6},
-            color=(0, 0, 1, 1),
-            text_color=(1, 1, 1, 1)
+        scroll_view = ScrollView(
+            size_hint=(0.8, 0.5),
+            pos_hint={"x": 0.1, "top": 0.7},
+            do_scroll_x=False,
+            do_scroll_y=True
         )
-        self.window.add_widget(self.lunchLabel)
-
-        self.lunchdata = ColoredLabel(
-            text = "",
-            font_size = 40,
-            size_hint = (0.3315, 0.55),
-            pos_hint = {"x": 0.33425, "top": 0.5},
+        self.menuLabel = ColoredLabel(
+            text="",
+            font_size=45,
+            size_hint=(1, 1),
+            height=0,
             color=(1, 1, 1, 1),
-            text_color=(0, 0, 0, 1)
+            text_color=(0, 0, 0, 1),
+            markup=True,
+            halign="left",
+            valign="top"
         )
-        self.window.add_widget(self.lunchdata)
+        self.menuLabel.bind(
+            size=self._adjust_label_height,
+            text=self._adjust_label_height
+        )
+        scroll_view.add_widget(self.menuLabel)
+        self.window.add_widget(scroll_view)
 
-        self.dinnerLabel = ColoredLabel(
-            text = "Dinner",
+        self.newMenuButton = Button(
+            text = "New Menu",
             font_size = 40,
-            size_hint = (0.3315, 0.1),
-            pos_hint = {"x": 0.6685, "top": 0.6},
-            color=(0, 0, 1, 1),
-            text_color=(1, 1, 1, 1)
+            background_color = (1, 1, 1, 1),
+            # background_normal = "",
+            size_hint = (0.3, 0.05),
+            pos_hint = {"x": 0.35, "top": 0.15},
+            on_press = self.newMenu
         )
-        self.window.add_widget(self.dinnerLabel)
-
-        self.dinnerdata = ColoredLabel(
-            text = "",
-            font_size = 40,
-            size_hint = (0.3315, 0.55),
-            pos_hint = {"x": 0.6685, "top": 0.5},
-            color=(1, 1, 1, 1),
-            text_color=(0, 0, 0, 1)
-        )
-        self.window.add_widget(self.dinnerdata)
+        self.window.add_widget(self.newMenuButton)
 
         ###
 
@@ -1214,6 +1119,17 @@ class MenuWindow(Screen):
 
     def on_enter(self):
         Window.bind(on_keyboard=self.on_keyboard)
+        day = datetime.now().strftime("%A")
+        self.dayInput.text = day
+        hour = int(datetime.now().strftime("%H"))
+        if hour < 11 and hour >= 3:
+            self.mealInput.text = "Breakfast"
+        elif hour < 17:
+            self.mealInput.text = "Lunch"
+        else:
+            self.mealInput.text = "Dinner"
+        
+        self._update_meal(self.dayInput, self.dayInput.text)
         
     def on_leave(self):
         Window.unbind(on_keyboard=self.on_keyboard)
@@ -1226,68 +1142,58 @@ class MenuWindow(Screen):
                 return True
         return False
         
-    def sunday(self, instance):
-        self.secondtitle.text = "Sunday"
-        breakfast = get_meal("sunday", "breakfast")
-        lunch = get_meal("sunday", "lunch")
-        dinner = get_meal("sunday", "dinner")
+    def _update_meal(self, instance, value):
+        day = self.dayInput.text.lower()
+        meal = self.mealInput.text.lower()
 
+        if day != "" and meal != "":
+            foods = get_meal(day, meal)
+            text = '\n'.join([f"[b]{food}[/b] ({amount}gr)" for food, amount in foods.items()])
+            wrapped_text = self.wrap(text, 45)
+            self.menuLabel.text = wrapped_text
+
+    def wrap(self, text: str, k: int):
+
+        sentences = text.split("\n")
+
+        lines = []
+
+        current_line = []
+        current_line_len = 0
         
-        pass
+        for sentence in sentences:
+            words = sentence.strip(' ').split()
 
-    def monday(self, instance):
-        self.secondtitle.text = "Monday"
-        breakfast = get_meal("monday", "breakfast")
-        lunch = get_meal("monday", "lunch")
-        dinner = get_meal("monday", "dinner")
+            if words:
+                for word in words:
+                    if not current_line:
+                        current_line.append(word)
+                        current_line_len += len(word)
+                    elif current_line_len + len(word) + 1 <= k:
+                        current_line.append(word)
+                        current_line_len += len(word) + 1
+                    else:
+                        lines.append(' '.join(current_line))
+                        current_line = [word]
+                        current_line_len = len(word)
+                
+                if current_line:
+                    lines.append(' '.join(current_line))
+                    current_line = []
+                    current_line_len = 0
 
+                lines.append("")
 
-        pass
+            wrapped_text = '\n'.join(lines)
 
-    def tuesday(self, instance):
-        self.secondtitle.text = "Tuesday"
-        breakfast = get_meal("tuesday", "breakfast")
-        lunch = get_meal("tuesday", "lunch")
-        dinner = get_meal("tuesday", "dinner")
+        return wrapped_text
 
+    def newMenu(self, instance):
+        self.manager.current = "loading"
 
-        pass
-
-    def wednesday(self, instance):
-        self.secondtitle.text = "Wednesday"
-        breakfast = get_meal("wednesday", "breakfast")
-        lunch = get_meal("wednesday", "lunch")
-        dinner = get_meal("wednesday", "dinner")
-
-
-        pass
-
-    def thursday(self, instance):
-        self.secondtitle.text = "Thursday"
-        breakfast = get_meal("thursday", "breakfast")
-        lunch = get_meal("thursday", "lunch")
-        dinner = get_meal("thursday", "dinner")
-
-
-        pass
-
-    def friday(self, instance):
-        self.secondtitle.text = "Friday"
-        breakfast = get_meal("friday", "breakfast")
-        lunch = get_meal("friday", "lunch")
-        dinner = get_meal("friday", "dinner")
-
-
-        pass
-
-    def saturday(self, instance):
-        self.secondtitle.text = "Saturday"
-        breakfast = get_meal("saturday", "breakfast")
-        lunch = get_meal("saturday", "lunch")
-        dinner = get_meal("saturday", "dinner")
-
-
-        pass
+    def _adjust_label_height(self, *args):
+        self.menuLabel.height = self.menuLabel.texture_size[1]
+        self.menuLabel.text_size = (self.menuLabel.width, None)
 
 ################################
 
@@ -2544,10 +2450,13 @@ class LoadingWindow(Screen):
         self.rect.size = instance.size
 
     def next(self):
-        data["stage"] = "main"
-        with open(DATA_PATH, "w") as file:
-            json.dump(data, file)
-        self.manager.current = "main"
+        if(data["stage"] != "main"):
+            data["stage"] = "main"
+            with open(DATA_PATH, "w") as file:
+                json.dump(data, file)
+            self.manager.current = "main"
+        else:
+            self.manager.current = "menu"
 
     def on_enter(self):
         current_weight_temp = int(data["weight"])
