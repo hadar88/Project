@@ -21,19 +21,19 @@ import json
 # nf.close()
 # print("done")
 
-with open("food_keys.json", "r") as f:
-    data = json.load(f)
+# with open("food_keys.json", "r") as f:
+#     data = json.load(f)
 
-def distance(a, b):
-    if (len(a) == 0):
-        return len(b)
-    if (len(b) == 0):
-        return len(a)
-    if(a[0] == b[0]):
-        return distance(a[1:], b[1:])
+# def distance(a, b):
+#     if (len(a) == 0):
+#         return len(b)
+#     if (len(b) == 0):
+#         return len(a)
+#     if(a[0] == b[0]):
+#         return distance(a[1:], b[1:])
     
-    sub_ = distance(a[1:], b[1:])
-    del_ = distance(a[1:], b)
-    ins_ = distance(a, b[1:])
-    return 1 + min(min(sub_, del_), ins_)
+#     sub_ = distance(a[1:], b[1:])
+#     del_ = distance(a[1:], b)
+#     ins_ = distance(a, b[1:])
+#     return 1 + min(min(sub_, del_), ins_)
 
