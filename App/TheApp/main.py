@@ -14,6 +14,7 @@ from kivy.uix.checkbox import CheckBox
 from kivy.core.window import Window
 from kivy.uix.scrollview import ScrollView 
 from kivy.clock import Clock
+from kivy.uix.boxlayout import BoxLayout
 
 import matplotlib
 matplotlib.use("Agg")
@@ -1285,6 +1286,49 @@ class DictionaryWindow(Screen):
         )
         self.window.add_widget(self.home)
 
+        self.title = ColoredLabel(
+            text = "Dictionary",
+            font_size = 100,
+            size_hint = (0.8, 0.2),
+            pos_hint = {"x": 0.1, "top": 0.975},
+            color=(1, 1, 1, 1),
+            text_color=(0, 0, 0, 1)
+        )
+        self.window.add_widget(self.title)
+
+        self.input = TextInput(
+            multiline = False,
+            font_size = 40,
+            hint_text = "Search",
+            size_hint=(0.7, 0.1),
+            pos_hint={"x": 0.05, "top": 0.7}
+        )
+        self.window.add_widget(self.input)
+
+        self.search_button = Button(
+            text = "Search",
+            font_size = 40,
+            background_color = (1, 1, 1, 1),
+            # background_normal = "",
+            size_hint=(0.2, 0.1),
+            pos_hint={"x": 0.8, "top": 0.7},
+            on_press = self.perform_search
+        )
+        self.window.add_widget(self.search_button)
+
+        self.scroll_view = ScrollView(
+            size_hint=(0.7, 0.7),
+            pos_hint={"x": 0.05, "top": 0.6},
+            do_scroll_x=False,
+            do_scroll_y=True
+        )
+        self.results_layout = BoxLayout(
+            orientation='vertical',
+            size_hint_y=None
+        )
+        self.results_layout.bind(minimum_height=self.results_layout.setter('height'))
+        self.scroll_view.add_widget(self.results_layout)
+        self.window.add_widget(self.scroll_view)
 
 
         ###
@@ -1303,6 +1347,7 @@ class DictionaryWindow(Screen):
 
     def on_leave(self):
         Window.unbind(on_keyboard=self.on_keyboard)
+        self.results_layout.clear_widgets()
 
     def on_keyboard(self, window, key, *args):
         if key == 27:
@@ -1310,7 +1355,57 @@ class DictionaryWindow(Screen):
                 self.go_home(self)
                 return True
         return False
+
+ #########################################
+
+    def perform_search(self, instance):
+        # Clear previous results if input is empty
+        if not self.input.text.strip():
+            self.results_layout.clear_widgets()
+            return
+
+        # Call the function to get 10 words (replace `get_words` with your actual function)
+        words = self.get_words(self.input.text)
+
+        # Clear previous results
+        self.results_layout.clear_widgets()
+
+        # Display the words as clickable buttons
+        for i, word in enumerate(words):
+            word_button = Button(
+                text=word,
+                font_size=30,
+                size_hint=(1, None),
+                height=50,
+                pos_hint={"x": 0, "top": 1 - (i * 0.1)},
+                on_press=self.word_clicked
+            )
+            self.results_layout.add_widget(word_button)
+
+    def word_clicked(self, instance):
+        # Handle the word click (replace `get_word_details` with your actual function)
+        word_details = self.get_word_details(instance.text)
+        print(f"Clicked on: {instance.text}, Details: {word_details}")
+
+    def get_word_details(self, word):
+        # Mock function to return details for a word
+        # Replace this with your actual function logic
+        return f"Details for {word}"
+    
+    def get_words(self, query):
+        # Mock function to return 10 words based on the query
+        # Replace this with your actual function logic
+        return [f"Word {i+1}" for i in range(10)]
+
+    def on_touch_down(self, touch):
+        # Check if the touch is outside the TextInput, Search button, or results layout
+        if not (self.input.collide_point(*touch.pos) or 
+                self.search_button.collide_point(*touch.pos) or 
+                self.scroll_view.collide_point(*touch.pos)):
+            self.results_layout.clear_widgets()
+        return super(DictionaryWindow, self).on_touch_down(touch)
         
+       
 ################################
 
 class CreateAccountWindow(Screen):

@@ -3,3 +3,4 @@ torch
 requests
 joblib
 scikit-learn
+matplotlib
