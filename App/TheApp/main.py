@@ -1311,13 +1311,13 @@ class DictionaryWindow(Screen):
             background_color = (1, 1, 1, 1),
             # background_normal = "",
             size_hint=(0.2, 0.1),
-            pos_hint={"x": 0.8, "top": 0.7},
+            pos_hint={"x": 0.75, "top": 0.7},
             on_press = self.perform_search
         )
         self.window.add_widget(self.search_button)
 
         self.scroll_view = ScrollView(
-            size_hint=(0.7, 0.7),
+            size_hint=(0.9, 0.7),
             pos_hint={"x": 0.05, "top": 0.6},
             do_scroll_x=False,
             do_scroll_y=True
@@ -1367,6 +1367,8 @@ class DictionaryWindow(Screen):
         # Call the function to get 10 words (replace `get_words` with your actual function)
         words = self.get_words(self.input.text)
 
+
+
         # Clear previous results
         self.results_layout.clear_widgets()
 
@@ -1376,10 +1378,12 @@ class DictionaryWindow(Screen):
                 text=word,
                 font_size=30,
                 size_hint=(1, None),
-                height=50,
-                pos_hint={"x": 0, "top": 1 - (i * 0.1)},
+                halign="left",
+                text_size=(None, None),
+                padding_x=10,
                 on_press=self.word_clicked
             )
+            word_button.bind(size=lambda instance, value: setattr(instance, 'text_size', (instance.width - 20, None)))
             self.results_layout.add_widget(word_button)
 
     def word_clicked(self, instance):
@@ -1395,7 +1399,7 @@ class DictionaryWindow(Screen):
     def get_words(self, query):
         # Mock function to return 10 words based on the query
         # Replace this with your actual function logic
-        return [f"Word {i+1}" for i in range(10)]
+        return ["Coffee, mocha, instant, decaffeinated, pre-lightened and pre-sweetend with low calorie sweetener, not reconstituted" for i in range(10)]
 
     def on_touch_down(self, touch):
         # Check if the touch is outside the TextInput, Search button, or results layout
