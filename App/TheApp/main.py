@@ -16,10 +16,6 @@ from kivy.uix.scrollview import ScrollView
 from kivy.clock import Clock
 from kivy.uix.boxlayout import BoxLayout
 
-# import matplotlib
-# matplotlib.use("Agg")
-# import matplotlib.pyplot as plt
-
 #######################################################################
 
 DATA_PATH = "data.json"
@@ -771,6 +767,8 @@ class PersonalDataWindow(Screen):
             self.errorMessage.text = "Weight must be greater than 40 kg"
         else:
             data["weight"] = self.weightupdateInput.text
+            data["history_weight"] = data["history_weight"][:-1] + [float(data["weight"])]
+            data["history_bmi"] = data["history_bmi"][:-1] + [bmi(float(data["weight"]), float(data["height"]))]    
             with open(DATA_PATH, "w") as file:
                 json.dump(data, file)
             self.weightupdateButton.background_normal = "pencil.png"
@@ -995,13 +993,13 @@ class StatisticsWindow(Screen):
 
             requests.get(server_url + "wakeup")
 
-            response = requests.post(server_url + "wgraph", json=wgraph_data)
+            response = requests.get(server_url + "wgraph", json=wgraph_data)
 
             if response.status_code == 200:
                 with open("weight_history.png", "wb") as file:
                     file.write(response.content)
             else:
-                print("Error: " + str(response.status_code))
+                print("Error:", response.json())
 
         except Exception as e:
             print("Error: " + str(e))
@@ -2599,7 +2597,7 @@ class LoadingWindow(Screen):
         bmi_temp = bmi(current_weight_temp, height_temp)
 
         if data["history_times"] and today in data["history_times"]:
-            data["history_weight"] = data["history_weight"][:-1] + [current_weight_temp]
+            data["history_weight"] = data["history_weight"][:-1] + [float(current_weight_temp)]
             data["history_bmi"] = data["history_bmi"][:-1] + [bmi_temp] 
         else:
             data["history_weight"] = data["history_weight"] + [current_weight_temp]
