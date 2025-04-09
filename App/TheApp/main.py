@@ -767,8 +767,15 @@ class PersonalDataWindow(Screen):
             self.errorMessage.text = "Weight must be greater than 40 kg"
         else:
             data["weight"] = self.weightupdateInput.text
-            data["history_weight"] = data["history_weight"][:-1] + [float(data["weight"])]
-            data["history_bmi"] = data["history_bmi"][:-1] + [bmi(float(data["weight"]), float(data["height"]))]    
+            day = datetime.now().date().isoformat()
+            if data["history_times"] and day in data["history_times"]:
+                data["history_weight"] = data["history_weight"][:-1] + [float(data["weight"])]
+                data["history_bmi"] = data["history_bmi"][:-1] + [bmi(float(data["weight"]), float(data["height"]))]
+            else:
+                data["history_weight"] = data["history_weight"] + [float(data["weight"])]
+                data["history_bmi"] = data["history_bmi"] + [bmi(float(data["weight"]), float(data["height"]))]
+                data["history_times"] = data["history_times"] + [day]
+            
             with open(DATA_PATH, "w") as file:
                 json.dump(data, file)
             self.weightupdateButton.background_normal = "pencil.png"
@@ -783,6 +790,14 @@ class PersonalDataWindow(Screen):
             self.errorMessage.text = "Height must be between 140 and 250 cm"
         else:
             data["height"] = self.heightupdateInput.text
+            day = datetime.now().date().isoformat()
+            if data["history_times"] and day in data["history_times"]:
+                data["history_weight"] = data["history_weight"][:-1] + [float(data["weight"])]
+                data["history_bmi"] = data["history_bmi"][:-1] + [bmi(float(data["weight"]), float(data["height"]))]
+            else:
+                data["history_weight"] = data["history_weight"] + [float(data["weight"])]
+                data["history_bmi"] = data["history_bmi"] + [bmi(float(data["weight"]), float(data["height"]))]
+                data["history_times"] = data["history_times"] + [day]
             with open(DATA_PATH, "w") as file:
                 json.dump(data, file)
             self.heightupdateButton.background_normal = "pencil.png"
