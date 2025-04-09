@@ -4,10 +4,13 @@ import time
 import requests
 import joblib
 import json
-import matplotlib
+import matplotlib.pyplot as plt
 from collections import defaultdict 
 from utils import merge_ids_and_amounts
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_file
+from datetime import datetime, timedelta
+import io
+
 
 class Server:
     def __init__(self, model):
@@ -24,6 +27,38 @@ class Server:
         @self.app.route("/wakeup", methods=["GET"])
         def wakeup():
             return jsonify({"message": "Server is awake!"})
+        
+        @self.app.route("/wgraph", methods=["GET"])
+        def make_graph():
+            data: dict = request.json
+
+            weights = data.get("weights", None)
+            bmis = data.get("bmis", None)
+            times = data.get("times", None)
+
+            if not weights or not bmis or not times:
+                return jsonify({"error": "Missing weights/bmis/times"}), 400
+            
+            times = [datetime.strptime(date, "%Y-%m-%d") for date in times]
+
+            plt.figure()
+
+            for i in range(len(bmis) - 1):
+                color = self.__bmi_decs_and_color(bmis[i + 1])[1]
+                plt.plot(times[i:i+2], weights[i:i+2], color=color)
+
+            plt.xticks([times[0], times[-1]], 
+                [times[0].strftime("%d-%m-%Y"), times[-1].strftime("%d-%m-%Y")], fontsize=15)
+            plt.yticks(fontsize=15) 
+            
+            img_buffer = io.BytesIO()
+
+            plt.savefig(img_buffer, format="png")
+            plt.close()
+
+            img_buffer.seek(0)
+
+            return send_file(img_buffer, mimetype="image/png")
 
         @self.app.route("/predict", methods=["POST"])
         def predict():
@@ -48,6 +83,20 @@ class Server:
 
             return jsonify({"output": merged_pred.tolist()})
         
+    def __bmi_decs_and_color(self, bmi_val):
+        if bmi_val < 16:
+            return ("Severely underweight", (0, 0, 1, 1))
+        elif bmi_val < 18.5:
+            return ("Underweight", (0, 1, 0.9, 1))
+        elif bmi_val < 25:
+            return ("Healthy", (0, 1, 0, 1))
+        elif bmi_val < 30:
+            return ("Overweight", (1, 0.9, 0, 1))
+        elif bmi_val < 40:
+            return ("Obese", (1, 0.5, 0, 1))
+        else:
+            return ("Extremely obese", (1, 0, 0, 1))
+        
     def start_wakeup_thread(self):
         def send_wakeup_request():
             while True:
@@ -62,3 +111,54 @@ class Server:
 
     def run(self, host="0.0.0.0", port=5000):
         self.app.run(host=host, port=port, debug=False)
+
+
+"""
+        @self.app.route("/wgraph", methods=["GET"])
+        def make_graph():
+            data: dict = request.json
+
+            levels = [16, 18.5, 25, 30, 40]
+
+            weights = data.get("weights", None)
+            bmis = data.get("bmis", None)
+            times = data.get("times", None)
+
+            if not weights or not bmis or not times:
+                return jsonify({"error": "Missing weights/bmis/times"}), 400
+            
+            times = [datetime.strptime(date, "%Y-%m-%d") for date in times]
+
+            plt.figure()
+
+            for i in range(len(bmis) - 1):
+                # color = self.__bmi_decs_and_color(bmis[i + 1])[1]
+
+                m = (bmis[i + 1] - bmis[i]) / (times[i + 1] - times[i]).days
+                x0, y0 = times[i], weights[i]
+
+                for level in levels:
+                    
+
+                if bmis[i] < 16 and bmis[i + 1] < 16:
+                    color = (0, 0, 1, 1)
+                    y1 = 16
+                    x1 = (y1 - y0 - m * x0) / m
+                    plt.plot([x0, x1], [y0, y1], color=color)
+                    x0, y0 = x1, y1
+
+                plt.plot(times[i:i+2], weights[i:i+2], color=color)
+
+            plt.xticks([times[0], times[-1]], 
+                [times[0].strftime("%d-%m-%Y"), times[-1].strftime("%d-%m-%Y")], fontsize=15)
+            plt.yticks(fontsize=15) 
+            
+            img_buffer = io.BytesIO()
+
+            plt.savefig(img_buffer, format="png")
+            plt.close()
+
+            img_buffer.seek(0)
+
+            return send_file(img_buffer, mimetype="image/png")
+"""

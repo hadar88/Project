@@ -1,10 +1,18 @@
 import requests
 
-SERVER_URL = "https://simple-server-6wry.onrender.com"
+SERVER_URL = "http://127.0.0.1:5000"
 
-def greet(name):
-    """Sends a greeting to the server."""
-    response = requests.get(f"{SERVER_URL}/greet?name={name}")
-    return response.text
+data = {
+    "weights": [60, 61, 62, 70, 80],
+    "bmis": [12, 20.2, 20.5, 27, 30],
+    "times": ["2025-04-09", "2025-04-10", "2025-04-17", "2025-04-18", "2025-04-20"]
+}
 
-print(greet("Alice"))  # Example usage, replace "Alice" with any name you want to greet
+response = requests.get(f"{SERVER_URL}/wgraph", json=data)
+
+if response.status_code == 200:
+    with open("plot.png", "wb") as file:
+        file.write(response.content)
+    print("Saved")
+else:
+    print(response.json())

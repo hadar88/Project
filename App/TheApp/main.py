@@ -16,9 +16,9 @@ from kivy.uix.scrollview import ScrollView
 from kivy.clock import Clock
 from kivy.uix.boxlayout import BoxLayout
 
-import matplotlib
-matplotlib.use("Agg")
-import matplotlib.pyplot as plt
+# import matplotlib
+# matplotlib.use("Agg")
+# import matplotlib.pyplot as plt
 
 #######################################################################
 
@@ -984,21 +984,27 @@ class StatisticsWindow(Screen):
         self.fatLabel.text = fat_today + "/" + fat + " g Fat today"
         self.proteinLabel.text = protein_today + "/" + protein + " g Protein today"
 
-        history_times = [datetime.strptime(date, "%Y-%m-%d") for date in history_times]
+        try:
+            server_url = "https://cs-project-m5hy.onrender.com/"
 
-        plt.figure() 
+            wgraph_data = {
+                "weights": history_weight,
+                "bmis": history_bmi,
+                "times": history_times
+            }
 
-        for i in range(len(history_bmi)):
-            color = bmi_decs_and_color(history_bmi[i])[1]
-            plt.plot(history_times[i:i+2], history_weight[i:i+2], color=color)
+            requests.get(server_url + "wakeup")
 
-        plt.xticks([history_times[0], history_times[-1]], 
-               [history_times[0].strftime("%d-%m-%Y"), history_times[-1].strftime("%d-%m-%Y")], fontsize=15)
-        plt.yticks(fontsize=15) 
-        
-        plt.title("Weight History", fontsize=20)
-        plt.savefig("weight_history.png")
-        plt.close()
+            response = requests.post(server_url + "wgraph", json=wgraph_data)
+
+            if response.status_code == 200:
+                with open("weight_history.png", "wb") as file:
+                    file.write(response.content)
+            else:
+                print("Error: " + str(response.status_code))
+
+        except Exception as e:
+            print("Error: " + str(e))
 
         self.graphWeight.source = "weight_history.png"
         self.graphWeight.reload()
@@ -1409,7 +1415,6 @@ class DictionaryWindow(Screen):
             self.results_layout.clear_widgets()
         return super(DictionaryWindow, self).on_touch_down(touch)
         
-       
 ################################
 
 class CreateAccountWindow(Screen):
