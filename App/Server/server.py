@@ -32,8 +32,6 @@ class Server:
         def make_graph():
             data: dict = request.json
 
-            levels = [16, 18.5, 25, 30, 40]
-
             weights = data.get("weights", None)
             bmis = data.get("bmis", None)
             times = data.get("times", None)
@@ -64,11 +62,16 @@ class Server:
                 t_0, w_0, b_0 = times[i], weights[i], bmis[i]
                 t_1, w_1, b_1 = times[i + 1], weights[i + 1], bmis[i + 1]
 
-                for level in levels:
-                    color = self.__bmi_decs_and_color(b_0)[1]
+                print(b_0, b_1)
 
+                if b_0 < b_1:
+                    levels = [16, 18.5, 25, 30, 40]
+                else:
+                    levels = [40, 30, 25, 18.5, 16]
+
+                for level in levels:
                     # We should split the line into two lines if the BMI level is crossed
-                    if b_0 < level < b_1:
+                    if b_0 < level < b_1 or b_1 < level < b_0:
                         # Calculate the intersection point
                         b_ = level
                         t_delta = (
@@ -78,11 +81,24 @@ class Server:
                             seconds=t_delta
                         )  # Add the time difference to t_0
                         w_ = w_0 + w_m * (t_ - t_0).total_seconds()
-                        plt.plot([t_0, t_], [w_0, w_], color=color)
+                        print("if", f"({t_0}, {w_0}, {b_0})", f"({t_}, {w_}, {b_})")
+                        plt.plot(
+                            [t_0, t_],
+                            [w_0, w_],
+                            color=self.__bmi_decs_and_color((b_0 + b_) / 2)[1],
+                        )
 
                         t_0, w_0, b_0 = t_, w_, b_
+                    elif b_ == b_0 or b_ == b_1:
+                        break
                     else:
-                        plt.plot([t_0, t_1], [w_0, w_1], color=color)
+                        continue
+                print("out", f"({t_0}, {w_0}, {b_0})", f"({t_1}, {w_1}, {b_1})")
+                plt.plot(
+                    [t_0, t_1],
+                    [w_0, w_1],
+                    color=self.__bmi_decs_and_color((b_0 + b_1) / 2)[1],
+                )
 
             plt.xticks(
                 [times[0], times[-1]],
@@ -125,17 +141,17 @@ class Server:
 
     def __bmi_decs_and_color(self, bmi_val):
         if bmi_val < 16:
-            return ("Severely underweight", (0, 0, 1, 1))
+            return ("Severely underweight", (0, 0, 1, 1))  # blue
         elif bmi_val < 18.5:
-            return ("Underweight", (0, 1, 0.9, 1))
+            return ("Underweight", (0, 1, 0.9, 1))  # cyan
         elif bmi_val < 25:
-            return ("Healthy", (0, 1, 0, 1))
+            return ("Healthy", (0, 1, 0, 1))  # green
         elif bmi_val < 30:
-            return ("Overweight", (1, 0.9, 0, 1))
+            return ("Overweight", (1, 0.9, 0, 1))  # yellow
         elif bmi_val < 40:
-            return ("Obese", (1, 0.5, 0, 1))
+            return ("Obese", (1, 0.5, 0, 1))  # orange
         else:
-            return ("Extremely obese", (1, 0, 0, 1))
+            return ("Extremely obese", (1, 0, 0, 1))  # red
 
     def start_wakeup_thread(self):
         def send_wakeup_request():
