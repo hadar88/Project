@@ -2,8 +2,6 @@ import torch
 import threading
 import time
 import requests
-import joblib
-import json
 import matplotlib.pyplot as plt
 from collections import defaultdict
 from utils import merge_ids_and_amounts
@@ -13,11 +11,16 @@ import io
 
 
 class Server:
-    def __init__(self, model):
+    def __init__(self, model, food_names, char_vec, char_nn, word_vec, word_nn):
         self.model = model
         self.app = Flask(__name__)
         self.setup_routes()
         self.start_wakeup_thread()
+        self.food_names = food_names
+        self.char_vec = char_vec
+        self.char_nn = char_nn
+        self.word_vec = word_vec
+        self.word_nn = word_nn
 
     def setup_routes(self):
         @self.app.route("/")
@@ -27,6 +30,35 @@ class Server:
         @self.app.route("/wakeup", methods=["GET"])
         def wakeup():
             return jsonify({"message": "Server is awake!"})
+
+        @self.app.route("/search", methods=["GET"])
+        def find_closest_foods():
+            data = request.json
+            query = data.get("query", None)
+
+            if not query:
+                return jsonify({"error": "Missing query parameter"}), 400
+
+            query_char_vec = self.char_vec.transform([query])
+            char_distances, char_indices = self.char_nn.kneighbors(query_char_vec)
+            query_word_vec = self.word_vec.transform([query])
+            word_distances, word_indices = self.word_nn.kneighbors(query_word_vec)
+
+            combined = defaultdict(float)
+
+            for i in range(len(char_distances[0])):
+                char_food = self.food_names[char_indices[0][i]]
+                word_food = self.food_names[word_indices[0][i]]
+
+                char_distance = 1 - char_distances[0][i]
+                word_distance = 1 - word_distances[0][i]
+
+                combined[char_food] += 0.5 * char_distance
+                combined[word_food] += 0.5 * word_distance
+
+            sorted_results = sorted(combined.items(), key=lambda x: x[1], reverse=True)
+
+            return jsonify({"results": [food for food, _ in sorted_results][:10]})
 
         @self.app.route("/wgraph", methods=["GET"])
         def make_graph():
