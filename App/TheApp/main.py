@@ -1319,35 +1319,37 @@ class DictionaryWindow(Screen):
             multiline = False,
             font_size = 40,
             hint_text = "Search",
-            size_hint=(0.7, 0.1),
-            pos_hint={"x": 0.05, "top": 0.7}
+            size_hint=(0.675, 0.05),
+            pos_hint={"x": 0.1, "top": 0.75}
         )
         self.window.add_widget(self.input)
 
         self.search_button = Button(
-            text = "Search",
+            background_normal = "search.png",
             font_size = 40,
             background_color = (1, 1, 1, 1),
-            # background_normal = "",
-            size_hint=(0.2, 0.1),
-            pos_hint={"x": 0.75, "top": 0.7},
+            size_hint=(0.1, 0.05),
+            pos_hint={"x": 0.8, "top": 0.75},
             on_press = self.perform_search
         )
         self.window.add_widget(self.search_button)
 
-        self.scroll_view = ScrollView(
-            size_hint=(0.9, 0.7),
-            pos_hint={"x": 0.05, "top": 0.6},
-            do_scroll_x=False,
-            do_scroll_y=True
-        )
-        self.results_layout = BoxLayout(
-            orientation='vertical',
-            size_hint_y=None
-        )
-        self.results_layout.bind(minimum_height=self.results_layout.setter('height'))
-        self.scroll_view.add_widget(self.results_layout)
-        self.window.add_widget(self.scroll_view)
+        self.result_buttons = []
+        for i in range(10):
+            button = Button(
+                text="",
+                font_size=30,
+                size_hint=(0.675, 0.07),
+                pos_hint={"x": 0.1, "top": 0.7 - i * 0.07},
+                on_press=self.word_clicked,
+                halign="left",
+                opacity=0,  # Initially invisible
+                disabled=True  # Initially not interactable
+            )
+            button.bind(size=lambda instance, vlaue: setattr(instance, 'text_size', (instance.width - 15, None)))
+            self.result_buttons.append(button)
+            self.window.add_widget(button)
+
 
 
         ###
@@ -1363,10 +1365,15 @@ class DictionaryWindow(Screen):
 
     def on_enter(self):
         Window.bind(on_keyboard=self.on_keyboard)
+        for button in self.result_buttons:
+            button.opacity = 0
+            button.disabled = True
 
     def on_leave(self):
         Window.unbind(on_keyboard=self.on_keyboard)
-        self.results_layout.clear_widgets()
+        for button in self.result_buttons:
+            button.opacity = 0
+            button.disabled = True
 
     def on_keyboard(self, window, key, *args):
         if key == 27:
@@ -1375,57 +1382,60 @@ class DictionaryWindow(Screen):
                 return True
         return False
 
- #########################################
-
     def perform_search(self, instance):
-        # Clear previous results if input is empty
         if not self.input.text.strip():
-            self.results_layout.clear_widgets()
+            for button in self.result_buttons:
+                button.opacity = 0
+                button.disabled = True
             return
 
-        # Call the function to get 10 words (replace `get_words` with your actual function)
         words = self.get_words(self.input.text)
 
-
-
-        # Clear previous results
-        self.results_layout.clear_widgets()
-
-        # Display the words as clickable buttons
-        for i, word in enumerate(words):
-            word_button = Button(
-                text=word,
-                font_size=30,
-                size_hint=(1, None),
-                halign="left",
-                text_size=(None, None),
-                padding_x=10,
-                on_press=self.word_clicked
-            )
-            word_button.bind(size=lambda instance, value: setattr(instance, 'text_size', (instance.width - 20, None)))
-            self.results_layout.add_widget(word_button)
+        for i, button in enumerate(self.result_buttons):
+            if i < len(words):
+                button.text = words[i]
+                button.opacity = 1  # Make visible
+                button.disabled = False  # Make interactable
+            else:
+                button.opacity = 0  # Hide unused buttons
+                button.disabled = True
 
     def word_clicked(self, instance):
-        # Handle the word click (replace `get_word_details` with your actual function)
-        word_details = self.get_word_details(instance.text)
-        print(f"Clicked on: {instance.text}, Details: {word_details}")
-
-    def get_word_details(self, word):
-        # Mock function to return details for a word
-        # Replace this with your actual function logic
-        return f"Details for {word}"
-    
+        # use foods_dict and units
+        food = instance.text
+        print(f"Clicked on: {food}")
+        
     def get_words(self, query):
-        # Mock function to return 10 words based on the query
-        # Replace this with your actual function logic
-        return ["Coffee, mocha, instant, decaffeinated, pre-lightened and pre-sweetend with low calorie sweetener, not reconstituted" for i in range(10)]
+        return ["Coffee, mocha, instant, decaffeinated, pre-lightened and pre-sweetened with low calorie sweetener, reconstituted" for i in range(10)]
+        try:
+            server_url = "https://cs-project-m5hy.onrender.com/"
+
+            requests.get(server_url + "wakeup")
+
+            query = {
+            "query": query
+            }
+
+            response = requests.get(server_url + "search", json=query)
+
+            if response.status_code == 200:
+                return response.json().get("results", [])
+            else:
+                print("Error:", response.json())
+
+        except Exception as e:
+            print("Error: " + str(e))
 
     def on_touch_down(self, touch):
-        # Check if the touch is outside the TextInput, Search button, or results layout
-        if not (self.input.collide_point(*touch.pos) or 
-                self.search_button.collide_point(*touch.pos) or 
-                self.scroll_view.collide_point(*touch.pos)):
-            self.results_layout.clear_widgets()
+        if (self.input.collide_point(*touch.pos) or 
+            self.search_button.collide_point(*touch.pos) or 
+            any(button.collide_point(*touch.pos) for button in self.result_buttons)):
+            return super(DictionaryWindow, self).on_touch_down(touch)
+
+        for button in self.result_buttons:
+            button.opacity = 0
+            button.disabled = True
+
         return super(DictionaryWindow, self).on_touch_down(touch)
         
 ################################
