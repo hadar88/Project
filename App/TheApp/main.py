@@ -14,7 +14,6 @@ from kivy.uix.checkbox import CheckBox
 from kivy.core.window import Window
 from kivy.uix.scrollview import ScrollView 
 from kivy.clock import Clock
-from kivy.uix.boxlayout import BoxLayout
 
 #######################################################################
 
@@ -700,7 +699,7 @@ class PersonalDataWindow(Screen):
             disabled=True,
             background_disabled_normal="",
             background_color=(0.68, 0.68, 0.68, 1), 
-            disabled_color=(0.376, 0.376, 0.376, 1),  
+            disabled_color=(0.376, 0.376, 0.376, 1)  
         )
         self.window.add_widget(self.activityupdateInput)
 
@@ -1338,13 +1337,16 @@ class DictionaryWindow(Screen):
         for i in range(10):
             button = Button(
                 text="",
-                font_size=30,
+                font_size=35,
                 size_hint=(0.675, 0.07),
                 pos_hint={"x": 0.1, "top": 0.7 - i * 0.07},
                 on_press=self.word_clicked,
                 halign="left",
-                opacity=0,  # Initially invisible
-                disabled=True  # Initially not interactable
+                opacity=0,
+                disabled=True,
+                background_normal="",
+                background_color=(0.78, 0.78, 0.78, 1), 
+                color=(0.376, 0.376, 0.376, 1) 
             )
             button.bind(size=lambda instance, vlaue: setattr(instance, 'text_size', (instance.width - 15, None)))
             self.result_buttons.append(button)
@@ -1371,6 +1373,7 @@ class DictionaryWindow(Screen):
 
     def on_leave(self):
         Window.unbind(on_keyboard=self.on_keyboard)
+        self.input.text = ""
         for button in self.result_buttons:
             button.opacity = 0
             button.disabled = True
@@ -1406,7 +1409,7 @@ class DictionaryWindow(Screen):
         print(f"Clicked on: {food}")
         
     def get_words(self, query):
-        return ["Coffee, mocha, instant, decaffeinated, pre-lightened and pre-sweetened with low calorie sweetener, reconstituted" for i in range(10)]
+        #return ["Coffee, mocha, instant, decaffeinated, pre-lightened and pre-sweetened with low calorie sweetener, reconstituted" for i in range(10)]
         try:
             server_url = "https://cs-project-m5hy.onrender.com/"
 
@@ -1443,6 +1446,7 @@ class DictionaryWindow(Screen):
 class CreateAccountWindow(Screen):
     def __init__(self, **kw):
         super(CreateAccountWindow, self).__init__(**kw)
+        Window.bind(on_keyboard=self.on_keyboard)
         self.cols = 1
 
         self.window = FloatLayout(size_hint=(1, 1))
@@ -1547,6 +1551,12 @@ class CreateAccountWindow(Screen):
         self.errorMassage.text = ""
         self.showpasswordInput.active = False
 
+    def on_enter(self):
+        Window.bind(on_keyboard=self.on_keyboard)
+
+    def on_leave(self):
+        Window.unbind(on_keyboard=self.on_keyboard)
+
     def registration(self, instance):
         username = self.userName.text
         password = self.password.text
@@ -1569,6 +1579,13 @@ class CreateAccountWindow(Screen):
     def show_password(self, instance):
         self.password.password = not self.password.password
 
+    def on_keyboard(self, window, key, *args):
+        if key == 27:
+            if self.manager.current == "createAccount":
+                self.log_in(self)
+                return True
+        return False
+    
 ################################
 
 class Registration1Window(Screen):
