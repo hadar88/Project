@@ -14,7 +14,6 @@ from kivy.uix.checkbox import CheckBox
 from kivy.core.window import Window
 from kivy.uix.scrollview import ScrollView 
 from kivy.clock import Clock
-import time
 
 #######################################################################
 
@@ -373,9 +372,15 @@ class LoginWindow(Screen):
             font_size = 50,
             hint_text = "Username",
             size_hint=(0.8, 0.1),
-            pos_hint={"x": 0.1, "top": 0.68}
+            pos_hint={"x": 0.1, "top": 0.68},
+            background_normal="",
+            background_color=(0.95, 0.95, 0.95, 1),
         )
         self.window.add_widget(self.userName)
+        with self.userName.canvas.before:
+            Color(0, 0, 0, 1)  # Black color for the border
+            self.border = Line(rectangle=(self.userName.x, self.userName.y, self.userName.width, self.userName.height), width=1.0)
+        self.userName.bind(size=self._update_border, pos=self._update_border)
 
         self.password = TextInput(
             multiline = False,
@@ -383,9 +388,15 @@ class LoginWindow(Screen):
             hint_text = "Password",
             size_hint=(0.8, 0.1),
             pos_hint={"x": 0.1, "top": 0.56},
-            password=True
+            password=True,
+            background_normal="",
+            background_color=(0.95, 0.95, 0.95, 1),
         )
         self.window.add_widget(self.password)
+        with self.password.canvas.before:
+            Color(0, 0, 0, 1)  # Black color for the border
+            self.border2 = Line(rectangle=(self.password.x, self.password.y, self.password.width, self.password.height), width=1.0)
+        self.password.bind(size=self._update_border2, pos=self._update_border2)
 
         self.showpassword = ColoredLabel(
             text = "Show password",
@@ -440,6 +451,12 @@ class LoginWindow(Screen):
         ###
 
         self.add_widget(self.window)
+
+    def _update_border(self, instance, value):
+        self.border.rectangle = (instance.x, instance.y, instance.width, instance.height)
+
+    def _update_border2(self, instance, value):
+        self.border2.rectangle = (instance.x, instance.y, instance.width, instance.height)
 
     def _update_rect(self, instance, value):
         self.rect.pos = instance.pos
@@ -617,10 +634,15 @@ class PersonalDataWindow(Screen):
             input_filter="float",
             disabled = True, 
             halign="center",
-            # disabled_foreground_color=(0, 0, 0, 1)
+            background_normal="",
+            background_color=(0.95, 0.95, 0.95, 1),
         )
         self.weightupdateInput.bind(size=self._update_text_padding)
         self.window.add_widget(self.weightupdateInput)
+        with self.weightupdateInput.canvas.before:
+            Color(0, 0, 0, 1)  # Black color for the border
+            self.border = Line(rectangle=(self.weightupdateInput.x, self.weightupdateInput.y, self.weightupdateInput.width, self.weightupdateInput.height), width=1.0)
+        self.weightupdateInput.bind(size=self._update_border, pos=self._update_border)
 
         self.weightupdateButton = Button(
             background_normal = "pencil.png",
@@ -649,10 +671,15 @@ class PersonalDataWindow(Screen):
             input_filter="float",
             disabled = True,
             halign="center",
-            # disabled_foreground_color=(0, 0, 0, 1)
+            background_normal="",
+            background_color=(0.95, 0.95, 0.95, 1),
         )
         self.heightupdateInput.bind(size=self._update_text_padding)
         self.window.add_widget(self.heightupdateInput)
+        with self.heightupdateInput.canvas.before:
+            Color(0, 0, 0, 1)  # Black color for the border
+            self.border2 = Line(rectangle=(self.heightupdateInput.x, self.heightupdateInput.y, self.heightupdateInput.width, self.heightupdateInput.height), width=1.0)
+        self.heightupdateInput.bind(size=self._update_border2, pos=self._update_border2)
 
         self.heightupdateButton = Button(
             background_normal = "pencil.png",
@@ -681,10 +708,15 @@ class PersonalDataWindow(Screen):
             input_filter="float",
             disabled = True,
             halign="center",
-            # disabled_foreground_color=(0, 0, 0, 1)
+            background_normal="",
+            background_color=(0.95, 0.95, 0.95, 1),
         )
         self.targetweightupdateInput.bind(size=self._update_text_padding)
         self.window.add_widget(self.targetweightupdateInput)
+        with self.targetweightupdateInput.canvas.before:
+            Color(0, 0, 0, 1)  # Black color for the border
+            self.border3 = Line(rectangle=(self.targetweightupdateInput.x, self.targetweightupdateInput.y, self.targetweightupdateInput.width, self.targetweightupdateInput.height), width=1.0)
+        self.targetweightupdateInput.bind(size=self._update_border3, pos=self._update_border3)
 
         self.targetweightupdateButton = Button(
             background_normal = "pencil.png",
@@ -861,6 +893,15 @@ class PersonalDataWindow(Screen):
                 self.go_home(self)
                 return True
         return False
+
+    def _update_border(self, instance, value):
+        self.border.rectangle = (instance.x, instance.y, instance.width, instance.height)
+
+    def _update_border2(self, instance, value):
+        self.border2.rectangle = (instance.x, instance.y, instance.width, instance.height)
+
+    def _update_border3(self, instance, value):
+        self.border3.rectangle = (instance.x, instance.y, instance.width, instance.height)
 
 ################################
 
@@ -2405,9 +2446,15 @@ class CreateAccountWindow(Screen):
             font_size = 50,
             hint_text = "Username",
             size_hint=(0.8, 0.1),
-            pos_hint={"x": 0.1, "top": 0.68}
+            pos_hint={"x": 0.1, "top": 0.68},
+            background_normal="",
+            background_color=(0.95, 0.95, 0.95, 1),
         )
         self.window.add_widget(self.userName)
+        with self.userName.canvas.before:
+            Color(0, 0, 0, 1)  # Black color for the border
+            self.border = Line(rectangle=(self.userName.x, self.userName.y, self.userName.width, self.userName.height), width=1.0)
+        self.userName.bind(size=self._update_border, pos=self._update_border)
 
         self.password = TextInput(
             multiline = False,
@@ -2415,9 +2462,15 @@ class CreateAccountWindow(Screen):
             hint_text = "Password",
             size_hint=(0.8, 0.1),
             pos_hint={"x": 0.1, "top": 0.56},
-            password=True
+            password=True,
+            background_normal="",
+            background_color=(0.95, 0.95, 0.95, 1),
         )
         self.window.add_widget(self.password)
+        with self.password.canvas.before:
+            Color(0, 0, 0, 1)  # Black color for the border
+            self.border2 = Line(rectangle=(self.password.x, self.password.y, self.password.width, self.password.height), width=1.0)
+        self.password.bind(size=self._update_border2, pos=self._update_border2)
 
         self.showpassword = ColoredLabel(
             text = "Show password",
@@ -2519,6 +2572,12 @@ class CreateAccountWindow(Screen):
                 return True
         return False
     
+    def _update_border(self, instance, value):
+        self.border.rectangle = (instance.x, instance.y, instance.width, instance.height)
+
+    def _update_border2(self, instance, value):
+        self.border2.rectangle = (instance.x, instance.y, instance.width, instance.height)
+
 ################################
 
 class Registration1Window(Screen):
@@ -2560,9 +2619,15 @@ class Registration1Window(Screen):
             hint_text = "Kg",
             size_hint=(0.44, 0.1),
             pos_hint={"x": 0.51, "top": 0.7},
-            input_filter="float"
+            input_filter="float",
+            background_normal="",
+            background_color=(0.95, 0.95, 0.95, 1),
         )
         self.window.add_widget(self.weightInput)
+        with self.weightInput.canvas.before:
+            Color(0, 0, 0, 1)  # Black color for the border
+            self.border = Line(rectangle=(self.weightInput.x, self.weightInput.y, self.weightInput.width, self.weightInput.height), width=1.0)
+        self.weightInput.bind(size=self._update_border, pos=self._update_border)
 
         self.heightLabel = ColoredLabel(
             text = "Height:",
@@ -2580,9 +2645,15 @@ class Registration1Window(Screen):
             hint_text = "cm",
             size_hint=(0.44, 0.1),
             pos_hint={"x": 0.51, "top": 0.58},
-            input_filter="int"
+            input_filter="int",
+            background_normal="",
+            background_color=(0.95, 0.95, 0.95, 1),
         )
         self.window.add_widget(self.heightInput)
+        with self.heightInput.canvas.before:
+            Color(0, 0, 0, 1)  # Black color for the border
+            self.border2 = Line(rectangle=(self.heightInput.x, self.heightInput.y, self.heightInput.width, self.heightInput.height), width=1.0)
+        self.heightInput.bind(size=self._update_border2, pos=self._update_border2)
 
         self.AgeLabel = ColoredLabel(
             text = "Age:",
@@ -2600,9 +2671,15 @@ class Registration1Window(Screen):
             hint_text = "years",
             size_hint=(0.44, 0.1),
             pos_hint={"x": 0.51, "top": 0.46},
-            input_filter="int"
+            input_filter="int",
+            background_normal="",
+            background_color=(0.95, 0.95, 0.95, 1),
         )
         self.window.add_widget(self.AgeInput)
+        with self.AgeInput.canvas.before:
+            Color(0, 0, 0, 1)  # Black color for the border
+            self.border3 = Line(rectangle=(self.AgeInput.x, self.AgeInput.y, self.AgeInput.width, self.AgeInput.height), width=1.0)
+        self.AgeInput.bind(size=self._update_border3, pos=self._update_border3)
 
         self.genderLabel = ColoredLabel(
             text = "Gender:",
@@ -2675,6 +2752,15 @@ class Registration1Window(Screen):
                 json.dump(data, file)
             self.manager.current = "registration2"
             self.errorMessage.text = ""
+
+    def _update_border(self, instance, value):
+        self.border.rectangle = (instance.x, instance.y, instance.width, instance.height)
+
+    def _update_border2(self, instance, value):
+        self.border2.rectangle = (instance.x, instance.y, instance.width, instance.height)
+
+    def _update_border3(self, instance, value):
+        self.border3.rectangle = (instance.x, instance.y, instance.width, instance.height)
 
 ################################
 
@@ -3290,9 +3376,15 @@ class Registration5Window(Screen):
             hint_text = "Kg",
             size_hint=(0.44, 0.1),
             pos_hint={"x": 0.51, "top": 0.44},
-            input_filter="int"
+            input_filter="int",
+            background_normal="",
+            background_color=(0.95, 0.95, 0.95, 1),
         )
         self.window.add_widget(self.goalweightInput)
+        with self.goalweightInput.canvas.before:
+            Color(0, 0, 0, 1)  # Black color for the border
+            self.border = Line(rectangle=(self.goalweightInput.x, self.goalweightInput.y, self.goalweightInput.width, self.goalweightInput.height), width=1.0)
+        self.goalweightInput.bind(size=self._update_border, pos=self._update_border)
 
         self.errorMessage = ColoredLabel(
             text = "",
@@ -3352,6 +3444,9 @@ class Registration5Window(Screen):
                 self.previous(self)
                 return True
         return False
+
+    def _update_border(self, instance, value):
+        self.border.rectangle = (instance.x, instance.y, instance.width, instance.height)
 
 ################################
 
@@ -3425,9 +3520,15 @@ class Registration6Window(Screen):
             hint_text = "Weeks",
             size_hint=(0.44, 0.1),
             pos_hint={"x": 0.51, "top": 0.44},
-            input_filter="int"
+            input_filter="int",
+            background_normal="",
+            background_color=(0.95, 0.95, 0.95, 1),
         )
         self.window.add_widget(self.timeInput)
+        with self.timeInput.canvas.before:
+            Color(0, 0, 0, 1)  # Black color for the border
+            self.border = Line(rectangle=(self.timeInput.x, self.timeInput.y, self.timeInput.width, self.timeInput.height), width=1.0)
+        self.timeInput.bind(size=self._update_border, pos=self._update_border)
 
         self.errorMessage = ColoredLabel(
             text = "",
@@ -3490,6 +3591,9 @@ class Registration6Window(Screen):
                 self.previous(self)
                 return True
         return False 
+
+    def _update_border(self, instance, value):
+        self.border.rectangle = (instance.x, instance.y, instance.width, instance.height)
 
 ################################
 
