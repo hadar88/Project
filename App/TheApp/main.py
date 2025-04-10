@@ -5,7 +5,7 @@ from kivy.app import App
 from kivy.uix.button import Button
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.label import Label
-from kivy.graphics import Color, Rectangle
+from kivy.graphics import Color, Rectangle, Line
 from kivy.uix.textinput import TextInput
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.image import Image
@@ -329,6 +329,26 @@ class ColoredLabel(Label):
     def _update_bg(self, instance, value):
         self.bg_rect.size = self.size
         self.bg_rect.pos = self.pos
+
+class ColoredLabel1(Label):
+    def __init__(self, color=(0, 0, 0, 1), text_color=(0, 0, 0, 1), border_color=(0, 0, 0, 1), border_width=2, **kw):
+        super(ColoredLabel1, self).__init__(**kw)
+        self.color = text_color  # Set the text color
+        self.border_color = border_color
+        self.border_width = border_width
+
+        with self.canvas.before:
+            self.bg_color = Color(*color)  # Use the provided background color
+            self.bg_rect = Rectangle(size=self.size, pos=self.pos)
+            self.border_color_instruction = Color(*self.border_color)  # Border color
+            self.border_line = Line(rectangle=(self.x, self.y, self.width, self.height), width=self.border_width)
+
+        self.bind(size=self._update_bg, pos=self._update_bg)
+
+    def _update_bg(self, instance, value):
+        self.bg_rect.size = self.size
+        self.bg_rect.pos = self.pos
+        self.border_line.rectangle = (self.x, self.y, self.width, self.height)
 
 #######################################################################
 
@@ -1320,16 +1340,22 @@ class DictionaryWindow(Screen):
             font_size = 40,
             hint_text = "Search",
             size_hint=(0.675, 0.05),
-            pos_hint={"x": 0.1, "top": 0.75}
+            pos_hint={"x": 0.1, "top": 0.775},
+            background_normal="",
+            background_color=(0.95, 0.95, 0.95, 1),
         )
         self.window.add_widget(self.input)
+        with self.input.canvas.before:
+            Color(0, 0, 0, 1)  # Black color for the border
+            self.border = Line(rectangle=(self.input.x, self.input.y, self.input.width, self.input.height), width=1.0)
+        self.input.bind(size=self._update_border, pos=self._update_border)
 
         self.search_button = Button(
             background_normal = "search.png",
             font_size = 40,
             background_color = (1, 1, 1, 1),
             size_hint=(0.1, 0.05),
-            pos_hint={"x": 0.8, "top": 0.75},
+            pos_hint={"x": 0.8, "top": 0.775},
             on_press = self.perform_search
         )
         self.window.add_widget(self.search_button)
@@ -1340,7 +1366,7 @@ class DictionaryWindow(Screen):
                 text="",
                 font_size=35,
                 size_hint=(0.675, 0.065),
-                pos_hint={"x": 0.1, "top": 0.7 - i * (0.065 + 5/900)},
+                pos_hint={"x": 0.1, "top": 0.725 - i * (0.065 + 5/900)},
                 on_press=self.word_clicked,
                 halign="left",
                 opacity=0,
@@ -1353,11 +1379,628 @@ class DictionaryWindow(Screen):
             self.result_buttons.append(button)
             self.window.add_widget(button)
 
+        self.labels = []
+        self.title1 = ColoredLabel1(
+            text = "Macronutrients",
+            font_size = 25,
+            size_hint = (0.8, 0.04),
+            pos_hint = {"x": 0.1, "top": 0.7},
+            color=(0.86, 0.94, 0.98, 1),
+            text_color=(0, 0, 0, 1),
+            border_color=(0, 0, 0, 1),
+            border_width=1,
+            opacity=0,
+            disabled=True
+        )
+        self.window.add_widget(self.title1)
+        self.labels.append(self.title1)
 
+        self.Calories = ColoredLabel1(
+            text = "Calories",
+            font_size = 20,
+            size_hint = (0.2, 0.04),
+            pos_hint = {"x": 0.1, "top": 0.66},
+            color=(0.93, 0.97, 0.99, 1),
+            text_color=(0, 0, 0, 1),
+            border_color=(0, 0, 0, 1),
+            border_width=1,
+            opacity=0,
+            disabled=True
+        )
+        self.window.add_widget(self.Calories)
+        self.labels.append(self.Calories)
+
+        self.Caloriesdata = ColoredLabel1(
+            text = "",
+            font_size = 20,
+            size_hint = (0.2, 0.04),
+            pos_hint = {"x": 0.1, "top": 0.62},
+            color=(1, 1, 1, 1),
+            text_color=(0, 0, 0, 1),
+            border_color=(0, 0, 0, 1),
+            border_width=1,
+            opacity=0,
+            disabled=True
+        )
+        self.window.add_widget(self.Caloriesdata)
+        self.labels.append(self.Caloriesdata)
+
+        self.Protein = ColoredLabel1(
+            text = "Protein",
+            font_size = 20,
+            size_hint = (0.2, 0.04),
+            pos_hint = {"x": 0.3, "top": 0.66},
+            color=(0.93, 0.97, 0.99, 1),
+            text_color=(0, 0, 0, 1),
+            border_color=(0, 0, 0, 1),
+            border_width=1,
+            opacity=0,
+            disabled=True
+        )
+        self.window.add_widget(self.Protein)
+        self.labels.append(self.Protein)
+
+        self.Proteindata = ColoredLabel1(
+            text = "",
+            font_size = 20,
+            size_hint = (0.2, 0.04),
+            pos_hint = {"x": 0.3, "top": 0.62},
+            color=(1, 1, 1, 1),
+            text_color=(0, 0, 0, 1),
+            border_color=(0, 0, 0, 1),
+            border_width=1,
+            opacity=0,
+            disabled=True
+        )
+        self.window.add_widget(self.Proteindata)
+        self.labels.append(self.Proteindata)
+
+        self.Carbohydrate = ColoredLabel1(
+            text = "Carbohydrate",
+            font_size = 20,
+            size_hint = (0.2, 0.04),
+            pos_hint = {"x": 0.5, "top": 0.66},
+            color=(0.93, 0.97, 0.99, 1),
+            text_color=(0, 0, 0, 1),
+            border_color=(0, 0, 0, 1),
+            border_width=1,
+            opacity=0,
+            disabled=True
+        )
+        self.window.add_widget(self.Carbohydrate)
+        self.labels.append(self.Carbohydrate)
+
+        self.Carbohydratedata = ColoredLabel1(
+            text = "",
+            font_size = 20,
+            size_hint = (0.2, 0.04),
+            pos_hint = {"x": 0.5, "top": 0.62},
+            color=(1, 1, 1, 1),
+            text_color=(0, 0, 0, 1),
+            border_color=(0, 0, 0, 1),
+            border_width=1,
+            opacity=0,
+            disabled=True
+        )
+        self.window.add_widget(self.Carbohydratedata)
+        self.labels.append(self.Carbohydratedata)
+
+        self.Fat = ColoredLabel1(
+            text = "Fat",
+            font_size = 20,
+            size_hint = (0.2, 0.04),
+            pos_hint = {"x": 0.7, "top": 0.66},
+            color=(0.93, 0.97, 0.99, 1),
+            text_color=(0, 0, 0, 1),
+            border_color=(0, 0, 0, 1),
+            border_width=1,
+            opacity=0,
+            disabled=True
+        )
+        self.window.add_widget(self.Fat)
+        self.labels.append(self.Fat)
+
+        self.Fatdata = ColoredLabel1(
+            text = "",
+            font_size = 20,
+            size_hint = (0.2, 0.04),
+            pos_hint = {"x": 0.7, "top": 0.62},
+            color=(1, 1, 1, 1),
+            text_color=(0, 0, 0, 1),
+            border_color=(0, 0, 0, 1),
+            border_width=1,
+            opacity=0,
+            disabled=True
+        )
+        self.window.add_widget(self.Fatdata)
+        self.labels.append(self.Fatdata)
+
+        self.Sugars = ColoredLabel1(
+            text = "Sugars",
+            font_size = 20,
+            size_hint = (0.2, 0.04),
+            pos_hint = {"x": 0.1, "top": 0.58},
+            color=(0.93, 0.97, 0.99, 1),
+            text_color=(0, 0, 0, 1),
+            border_color=(0, 0, 0, 1),
+            border_width=1,
+            opacity=0,
+            disabled=True
+        )
+        self.window.add_widget(self.Sugars)
+        self.labels.append(self.Sugars)
+
+        self.Sugarsdata = ColoredLabel1(
+            text = "",
+            font_size = 20,
+            size_hint = (0.2, 0.04),
+            pos_hint = {"x": 0.1, "top": 0.54},
+            color=(1, 1, 1, 1),
+            text_color=(0, 0, 0, 1),
+            border_color=(0, 0, 0, 1),
+            border_width=1,
+            opacity=0,
+            disabled=True
+        )
+        self.window.add_widget(self.Sugarsdata)
+        self.labels.append(self.Sugarsdata)
+
+        self.Water = ColoredLabel1(
+            text = "Water",
+            font_size = 20,
+            size_hint = (0.2, 0.04),
+            pos_hint = {"x": 0.3, "top": 0.58},
+            color=(0.93, 0.97, 0.99, 1),
+            text_color=(0, 0, 0, 1),
+            border_color=(0, 0, 0, 1),
+            border_width=1,
+            opacity=0,
+            disabled=True
+        )
+        self.window.add_widget(self.Water)
+        self.labels.append(self.Water)
+
+        self.Waterdata = ColoredLabel1(
+            text = "",
+            font_size = 20,
+            size_hint = (0.2, 0.04),
+            pos_hint = {"x": 0.3, "top": 0.54},
+            color=(1, 1, 1, 1),
+            text_color=(0, 0, 0, 1),
+            border_color=(0, 0, 0, 1),
+            border_width=1,
+            opacity=0,
+            disabled=True
+        )
+        self.window.add_widget(self.Waterdata)
+        self.labels.append(self.Waterdata)
+
+        self.Fiber = ColoredLabel1(
+            text = "Fiber",
+            font_size = 20,
+            size_hint = (0.2, 0.04),
+            pos_hint = {"x": 0.5, "top": 0.58},
+            color=(0.93, 0.97, 0.99, 1),
+            text_color=(0, 0, 0, 1),
+            border_color=(0, 0, 0, 1),
+            border_width=1,
+            opacity=0,
+            disabled=True
+        )
+        self.window.add_widget(self.Fiber)
+        self.labels.append(self.Fiber)
+
+        self.Fiberdata = ColoredLabel1(
+            text = "",
+            font_size = 20,
+            size_hint = (0.2, 0.04),
+            pos_hint = {"x": 0.5, "top": 0.54},
+            color=(1, 1, 1, 1),
+            text_color=(0, 0, 0, 1),
+            border_color=(0, 0, 0, 1),
+            border_width=1,
+            opacity=0,
+            disabled=True
+        )
+        self.window.add_widget(self.Fiberdata)
+        self.labels.append(self.Fiberdata)
+
+        self.Saturatedfat = ColoredLabel1(
+            text = "Saturated fat",
+            font_size = 20,
+            size_hint = (0.2, 0.04),
+            pos_hint = {"x": 0.7, "top": 0.58},
+            color=(0.93, 0.97, 0.99, 1),
+            text_color=(0, 0, 0, 1),
+            border_color=(0, 0, 0, 1),
+            border_width=1,
+            opacity=0,
+            disabled=True
+        )
+        self.window.add_widget(self.Saturatedfat)
+        self.labels.append(self.Saturatedfat)
+
+        self.Saturatedfatdata = ColoredLabel1(
+            text = "",
+            font_size = 20,
+            size_hint = (0.2, 0.04),
+            pos_hint = {"x": 0.7, "top": 0.54},
+            color=(1, 1, 1, 1),
+            text_color=(0, 0, 0, 1),
+            border_color=(0, 0, 0, 1),
+            border_width=1,
+            opacity=0,
+            disabled=True
+        )
+        self.window.add_widget(self.Saturatedfatdata)
+        self.labels.append(self.Saturatedfatdata)
+
+        self.title2 = ColoredLabel1(
+            text = "Micronutrients",
+            font_size = 25,
+            size_hint = (0.8, 0.04),
+            pos_hint = {"x": 0.1, "top": 0.5},
+            color=(0.86, 0.94, 0.98, 1),
+            text_color=(0, 0, 0, 1),
+            border_color=(0, 0, 0, 1),
+            border_width=1,
+            opacity=0,
+            disabled=True
+        )
+        self.window.add_widget(self.title2)
+        self.labels.append(self.title2)
+
+        self.Cholesterol = ColoredLabel1(
+            text = "Cholesterol",
+            font_size = 20,
+            size_hint = (0.8 / 3, 0.04),
+            pos_hint = {"x": 0.1, "top": 0.46},
+            color=(0.93, 0.97, 0.99, 1),
+            text_color=(0, 0, 0, 1),
+            border_color=(0, 0, 0, 1),
+            border_width=1,
+            opacity=0,
+            disabled=True
+        )
+        self.window.add_widget(self.Cholesterol)
+        self.labels.append(self.Cholesterol)
+
+        self.Cholesteroldata = ColoredLabel1(
+            text = "",
+            font_size = 20,
+            size_hint = (0.8 / 3, 0.04),
+            pos_hint = {"x": 0.1, "top": 0.42},
+            color=(1, 1, 1, 1),
+            text_color=(0, 0, 0, 1),
+            border_color=(0, 0, 0, 1),
+            border_width=1,
+            opacity=0,
+            disabled=True
+        )
+        self.window.add_widget(self.Cholesteroldata)
+        self.labels.append(self.Cholesteroldata)
+
+        self.Calcium = ColoredLabel1(
+            text = "Calcium",
+            font_size = 20,
+            size_hint = (0.8 / 3, 0.04),
+            pos_hint = {"x": 0.1 + 0.8 / 3, "top": 0.46},
+            color=(0.93, 0.97, 0.99, 1),
+            text_color=(0, 0, 0, 1),
+            border_color=(0, 0, 0, 1),
+            border_width=1,
+            opacity=0,
+            disabled=True
+        )
+        self.window.add_widget(self.Calcium)
+        self.labels.append(self.Calcium)
+
+        self.Calciumdata = ColoredLabel1(
+            text = "",
+            font_size = 20,
+            size_hint = (0.8 / 3, 0.04),
+            pos_hint = {"x": 0.1 + 0.8 / 3, "top": 0.42},
+            color=(1, 1, 1, 1),
+            text_color=(0, 0, 0, 1),
+            border_color=(0, 0, 0, 1),
+            border_width=1,
+            opacity=0,
+            disabled=True
+        )
+        self.window.add_widget(self.Calciumdata)
+        self.labels.append(self.Calciumdata)
+
+        self.Iron = ColoredLabel1(
+            text = "Iron",
+            font_size = 20,
+            size_hint = (0.8/3, 0.04),
+            pos_hint = {"x": 0.1 + 2 * 0.8 / 3, "top": 0.46},
+            color=(0.93, 0.97, 0.99, 1),
+            text_color=(0, 0, 0, 1),
+            border_color=(0, 0, 0, 1),
+            border_width=1,
+            opacity=0,
+            disabled=True
+        )
+        self.window.add_widget(self.Iron)
+        self.labels.append(self.Iron)
+
+        self.Irondata = ColoredLabel1(
+            text = "",
+            font_size = 20,
+            size_hint = (0.8/3, 0.04),
+            pos_hint = {"x": 0.1 + 2 * 0.8 / 3, "top": 0.42},
+            color=(1, 1, 1, 1),
+            text_color=(0, 0, 0, 1),
+            border_color=(0, 0, 0, 1),
+            border_width=1,
+            opacity=0,
+            disabled=True
+        )
+        self.window.add_widget(self.Irondata)
+        self.labels.append(self.Irondata)
+
+        self.Sodium = ColoredLabel1(
+            text = "Sodium",
+            font_size = 20,
+            size_hint = (0.4, 0.04),
+            pos_hint = {"x": 0.1, "top": 0.38},
+            color=(0.93, 0.97, 0.99, 1),
+            text_color=(0, 0, 0, 1),
+            border_color=(0, 0, 0, 1),
+            border_width=1,
+            opacity=0,
+            disabled=True
+        )
+        self.window.add_widget(self.Sodium)
+        self.labels.append(self.Sodium)
+
+        self.Sodiumdata = ColoredLabel1(
+            text = "",
+            font_size = 20,
+            size_hint = (0.4, 0.04),
+            pos_hint = {"x": 0.1, "top": 0.34},
+            color=(1, 1, 1, 1),
+            text_color=(0, 0, 0, 1),
+            border_color=(0, 0, 0, 1),
+            border_width=1,
+            opacity=0,
+            disabled=True
+        )
+        self.window.add_widget(self.Sodiumdata)
+        self.labels.append(self.Sodiumdata)
+
+        self.Magnesium = ColoredLabel1(
+            text = "Magnesium",
+            font_size = 20,
+            size_hint = (0.4, 0.04),
+            pos_hint = {"x": 0.5, "top": 0.38},
+            color=(0.93, 0.97, 0.99, 1),
+            text_color=(0, 0, 0, 1),
+            border_color=(0, 0, 0, 1),
+            border_width=1,
+            opacity=0,
+            disabled=True
+        )
+        self.window.add_widget(self.Magnesium)
+        self.labels.append(self.Magnesium)
+
+        self.Magnesiumdata = ColoredLabel1(
+            text = "",
+            font_size = 20,
+            size_hint = (0.4, 0.04),
+            pos_hint = {"x": 0.5, "top": 0.34},
+            color=(1, 1, 1, 1),
+            text_color=(0, 0, 0, 1),
+            border_color=(0, 0, 0, 1),
+            border_width=1,
+            opacity=0,
+            disabled=True
+        )
+        self.window.add_widget(self.Magnesiumdata)
+        self.labels.append(self.Magnesiumdata)
+
+        self.title3 = ColoredLabel1(
+            text = "Vitamins",
+            font_size = 25,
+            size_hint = (0.8, 0.04),
+            pos_hint = {"x": 0.1, "top": 0.3},
+            color=(0.86, 0.94, 0.98, 1),
+            text_color=(0, 0, 0, 1),
+            border_color=(0, 0, 0, 1),
+            border_width=1,
+            opacity=0,
+            disabled=True
+        )
+        self.window.add_widget(self.title3)
+        self.labels.append(self.title3)
+
+        self.VitaminA = ColoredLabel1(
+            text = "A",
+            font_size = 20,
+            size_hint = (0.8 / 3, 0.04),
+            pos_hint = {"x": 0.1, "top": 0.26},
+            color=(0.93, 0.97, 0.99, 1),
+            text_color=(0, 0, 0, 1),
+            border_color=(0, 0, 0, 1),
+            border_width=1,
+            opacity=0,
+            disabled=True
+        )
+        self.window.add_widget(self.VitaminA)
+        self.labels.append(self.VitaminA)
+
+        self.VitaminAdata = ColoredLabel1(
+            text = "",
+            font_size = 20,
+            size_hint = (0.8 / 3, 0.04),
+            pos_hint = {"x": 0.1, "top": 0.22},
+            color=(1, 1, 1, 1),
+            text_color=(0, 0, 0, 1),
+            border_color=(0, 0, 0, 1),
+            border_width=1,
+            opacity=0,
+            disabled=True
+        )
+        self.window.add_widget(self.VitaminAdata)
+        self.labels.append(self.VitaminAdata)
+
+        self.VitaminB12 = ColoredLabel1(
+            text = "B12",
+            font_size = 20,
+            size_hint = (0.8 / 3, 0.04),
+            pos_hint = {"x": 0.1 + 0.8 / 3, "top": 0.26},
+            color=(0.93, 0.97, 0.99, 1),
+            text_color=(0, 0, 0, 1),
+            border_color=(0, 0, 0, 1),
+            border_width=1,
+            opacity=0,
+            disabled=True
+        )
+        self.window.add_widget(self.VitaminB12)
+        self.labels.append(self.VitaminB12)
+
+        self.VitaminB12data = ColoredLabel1(
+            text = "",
+            font_size = 20,
+            size_hint = (0.8 / 3, 0.04),
+            pos_hint = {"x": 0.1 + 0.8 / 3, "top": 0.22},
+            color=(1, 1, 1, 1),
+            text_color=(0, 0, 0, 1),
+            border_color=(0, 0, 0, 1),
+            border_width=1,
+            opacity=0,
+            disabled=True
+        )
+        self.window.add_widget(self.VitaminB12data)
+        self.labels.append(self.VitaminB12data)
+
+        self.VitaminC = ColoredLabel1(
+            text = "C",
+            font_size = 20,
+            size_hint = (0.8/3, 0.04),
+            pos_hint = {"x": 0.1 + 2 * 0.8 / 3, "top": 0.26},
+            color=(0.93, 0.97, 0.99, 1),
+            text_color=(0, 0, 0, 1),
+            border_color=(0, 0, 0, 1),
+            border_width=1,
+            opacity=0,
+            disabled=True
+        )
+        self.window.add_widget(self.VitaminC)
+        self.labels.append(self.VitaminC)
+
+        self.VitaminCdata = ColoredLabel1(
+            text = "",
+            font_size = 20,
+            size_hint = (0.8/3, 0.04),
+            pos_hint = {"x": 0.1 + 2 * 0.8 / 3, "top": 0.22},
+            color=(1, 1, 1, 1),
+            text_color=(0, 0, 0, 1),
+            border_color=(0, 0, 0, 1),
+            border_width=1,
+            opacity=0,
+            disabled=True
+        )
+        self.window.add_widget(self.VitaminCdata)
+        self.labels.append(self.VitaminCdata)
+
+        self.VitaminD = ColoredLabel1(
+            text = "D",
+            font_size = 20,
+            size_hint = (0.8 / 3, 0.04),
+            pos_hint = {"x": 0.1, "top": 0.18},
+            color=(0.93, 0.97, 0.99, 1),
+            text_color=(0, 0, 0, 1),
+            border_color=(0, 0, 0, 1),
+            border_width=1,
+            opacity=0,
+            disabled=True
+        )
+        self.window.add_widget(self.VitaminD)
+        self.labels.append(self.VitaminD)
+
+        self.VitaminDdata = ColoredLabel1(
+            text = "",
+            font_size = 20,
+            size_hint = (0.8 / 3, 0.04),
+            pos_hint = {"x": 0.1, "top": 0.14},
+            color=(1, 1, 1, 1),
+            text_color=(0, 0, 0, 1),
+            border_color=(0, 0, 0, 1),
+            border_width=1,
+            opacity=0,
+            disabled=True
+        )
+        self.window.add_widget(self.VitaminDdata)
+        self.labels.append(self.VitaminDdata)
+
+        self.VitaminE = ColoredLabel1(
+            text = "E",
+            font_size = 20,
+            size_hint = (0.8 / 3, 0.04),
+            pos_hint = {"x": 0.1 + 0.8 / 3, "top": 0.18},
+            color=(0.93, 0.97, 0.99, 1),
+            text_color=(0, 0, 0, 1),
+            border_color=(0, 0, 0, 1),
+            border_width=1,
+            opacity=0,
+            disabled=True
+        )
+        self.window.add_widget(self.VitaminE)
+        self.labels.append(self.VitaminE)
+
+        self.VitaminEdata = ColoredLabel1(
+            text = "",
+            font_size = 20,
+            size_hint = (0.8 / 3, 0.04),
+            pos_hint = {"x": 0.1 + 0.8 / 3, "top": 0.14},
+            color=(1, 1, 1, 1),
+            text_color=(0, 0, 0, 1),
+            border_color=(0, 0, 0, 1),
+            border_width=1,
+            opacity=0,
+            disabled=True
+        )
+        self.window.add_widget(self.VitaminEdata)
+        self.labels.append(self.VitaminEdata)
+
+        self.VitaminK = ColoredLabel1(
+            text = "K",
+            font_size = 20,
+            size_hint = (0.8/3, 0.04),
+            pos_hint = {"x": 0.1 + 2 * 0.8 / 3, "top": 0.18},
+            color=(0.93, 0.97, 0.99, 1),
+            text_color=(0, 0, 0, 1),
+            border_color=(0, 0, 0, 1),
+            border_width=1,
+            opacity=0,
+            disabled=True
+        )
+        self.window.add_widget(self.VitaminK)
+        self.labels.append(self.VitaminK)
+
+        self.VitaminKdata = ColoredLabel1(
+            text = "",
+            font_size = 20,
+            size_hint = (0.8/3, 0.04),
+            pos_hint = {"x": 0.1 + 2 * 0.8 / 3, "top": 0.14},
+            color=(1, 1, 1, 1),
+            text_color=(0, 0, 0, 1),
+            border_color=(0, 0, 0, 1),
+            border_width=1,
+            opacity=0,
+            disabled=True
+        )
+        self.window.add_widget(self.VitaminKdata)
+        self.labels.append(self.VitaminKdata)
 
         ###
 
         self.add_widget(self.window)
+
+    def _update_border(self, instance, value):
+        self.border.rectangle = (instance.x, instance.y, instance.width, instance.height)
 
     def _update_rect(self, instance, value):
         self.rect.pos = instance.pos
@@ -1372,12 +2015,21 @@ class DictionaryWindow(Screen):
             button.opacity = 0
             button.disabled = True
 
+        for label in self.labels:
+            label.opacity = 0
+            label.disabled = True
+
     def on_leave(self):
         Window.unbind(on_keyboard=self.on_keyboard)
         self.input.text = ""
         for button in self.result_buttons:
             button.opacity = 0
             button.disabled = True
+            
+
+        for label in self.labels:
+            label.opacity = 0
+            label.disabled = True
 
     def on_keyboard(self, window, key, *args):
         if key == 27:
@@ -1386,12 +2038,16 @@ class DictionaryWindow(Screen):
                 return True
         return False
 
-    def perform_search(self, instance):
+    def perform_search(self, instance):    
         if not self.input.text.strip():
             for button in self.result_buttons:
                 button.opacity = 0
                 button.disabled = True
             return
+
+        for label in self.labels:
+            label.opacity = 0
+            label.disabled = True
 
         words = self.get_words(self.input.text)
 
@@ -1405,12 +2061,38 @@ class DictionaryWindow(Screen):
                 button.disabled = True
 
     def word_clicked(self, instance):
-        # use foods_dict and units
+        for button in self.result_buttons:
+            button.opacity = 0
+            button.disabled = True
+
         food = instance.text
-        print(f"Clicked on: {food}")
+        food = foods_dict[food]
+        
+        self.Proteindata.text = str(food["Protein"]) + " " + units["Protein"]
+        self.Caloriesdata.text = str(food["Calories"]) + " " + units["Calories"]
+        self.Carbohydratedata.text = str(food["Carbohydrate"]) + " " + units["Carbohydrate"]
+        self.Fatdata.text = str(food["Fat"]) + " " + units["Fat"]
+        self.Sugarsdata.text = str(food["Sugars"]) + " " + units["Sugars"]
+        self.Waterdata.text = str(food["Water"]) + " " + units["Water"]
+        self.Fiberdata.text = str(food["Fiber"]) + " " + units["Fiber"]
+        self.Saturatedfatdata.text = str(food["Saturated fat"]) + " " + units["Saturated fat"]
+        self.Cholesteroldata.text = str(food["Cholesterol"]) + " " + units["Cholesterol"]
+        self.Calciumdata.text = str(food["Calcium"]) + " " + units["Calcium"]
+        self.Irondata.text = str(food["Iron"]) + " " + units["Iron"]
+        self.Sodiumdata.text = str(food["Sodium"]) + " " + units["Sodium"]
+        self.Magnesiumdata.text = str(food["Magnesium"]) + " " + units["Magnesium"]
+        self.VitaminAdata.text = str(food["Vitamin A"]) + " " + units["Vitamin A"]
+        self.VitaminB12data.text = str(food["Vitamin B-12"]) + " " + units["Vitamin B-12"]
+        self.VitaminCdata.text = str(food["Vitamin C"]) + " " + units["Vitamin C"]
+        self.VitaminDdata.text = str(food["Vitamin D"]) + " " + units["Vitamin D"]
+        self.VitaminEdata.text = str(food["Vitamin E"]) + " " + units["Vitamin E"]
+        self.VitaminKdata.text = str(food["Vitamin K"]) + " " + units["Vitamin K"]
+
+        for label in self.labels:
+            label.opacity = 1
+            label.disabled = False
         
     def get_words(self, query):
-        # return ["Coffee, mocha, instant, decaffeinated, pre-lightened and pre-sweetened with low calorie sweetener, reconstituted" for i in range(10)]
         try:
             server_url = "https://cs-project-m5hy.onrender.com/"
 
