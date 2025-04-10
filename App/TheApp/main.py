@@ -313,9 +313,6 @@ def add_food(day, meal, food_name, amount):
     with open(DATA_PATH, "w") as file:
         json.dump(data, file)
 
-def get_food_data(food_name):
-    return foods_dict[food_name]
-
 #######################################################################
 
 class ColoredLabel(Label):
@@ -1260,6 +1257,8 @@ class WeeklymenuWindow(Screen):
 
         ###
 
+        self.temp_food = ""
+
         self.home = Button(
             background_normal="home.png",
             size_hint=(0.1125, 0.07),
@@ -1268,15 +1267,127 @@ class WeeklymenuWindow(Screen):
         )
         self.window.add_widget(self.home)
 
-        self.temp = ColoredLabel(
-            text = "Weekly menu",
-            font_size = 50,
-            size_hint = (0.4, 0.4),
-            pos_hint = {"x": 0.3, "top": 0.7},
-            color=(0, 0, 1, 1),
+        self.title = ColoredLabel(
+            text = "Weekly Menu",
+            font_size = 100,
+            size_hint = (0.8, 0.2),
+            pos_hint = {"x": 0.1, "top": 0.975},
+            color=(1, 1, 1, 1),
             text_color=(0, 0, 0, 1)
         )
-        self.window.add_widget(self.temp)
+        self.window.add_widget(self.title)
+
+        self.dayInput = Spinner(
+            font_size=40,
+            text="",
+            values=("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"),
+            size_hint=(0.375, 0.05),
+            pos_hint={"x": 0.1, "top": 0.8},
+            background_normal="",
+            background_color=(0.68, 0.68, 0.68, 1), 
+            color=(1, 1, 1, 1),
+        )
+        self.dayInput.bind(text=self._update_meal)
+        self.window.add_widget(self.dayInput)
+
+        self.mealInput = Spinner(
+            font_size=40,
+            text="",
+            values=("Breakfast", "Lunch", "Dinner"),
+            size_hint=(0.375, 0.05),
+            pos_hint={"x": 0.525, "top": 0.8},
+            background_normal="",
+            background_color=(0.68, 0.68, 0.68, 1), 
+            color=(1, 1, 1, 1),
+        )
+        self.mealInput.bind(text=self._update_meal)
+        self.window.add_widget(self.mealInput)
+
+        self.input = TextInput(
+            multiline = False,
+            font_size = 40,
+            hint_text = "Search",
+            size_hint=(0.3, 0.06),
+            pos_hint={"x": 0.1, "top": 0.725},
+            background_normal="",
+            background_color=(0.95, 0.95, 0.95, 1),
+        )
+        self.window.add_widget(self.input)
+        with self.input.canvas.before:
+            Color(0, 0, 0, 1)  # Black color for the border
+            self.border = Line(rectangle=(self.input.x, self.input.y, self.input.width, self.input.height), width=1.0)
+        self.input.bind(size=self._update_border, pos=self._update_border)
+
+        self.search_button = Button(
+            background_normal = "search.png",
+            font_size = 40,
+            background_color = (1, 1, 1, 1),
+            size_hint=(0.1, 0.06),
+            pos_hint={"x": 0.4, "top": 0.725},
+            on_press = self.perform_search
+        )
+        self.window.add_widget(self.search_button)
+
+        self.amount_input = TextInput(
+            multiline = False,
+            font_size = 40,
+            hint_text = "Amount in grams",
+            size_hint=(0.3, 0.06),
+            pos_hint={"x": 0.5, "top": 0.725},
+            background_normal="",
+            background_color=(0.95, 0.95, 0.95, 1),
+            input_filter="float",
+        )
+        self.window.add_widget(self.amount_input)
+        with self.amount_input.canvas.before:
+            Color(0, 0, 0, 1)  # Black color for the border
+            self.border2 = Line(rectangle=(self.amount_input.x, self.amount_input.y, self.amount_input.width, self.amount_input.height), width=1.0)
+        self.amount_input.bind(size=self._update_border2, pos=self._update_border2)
+
+        self.add_button = Button(
+            background_normal = "plus.png",
+            font_size = 40,
+            background_color = (1, 1, 1, 1),
+            size_hint=(0.1, 0.06),
+            pos_hint={"x": 0.8, "top": 0.725},
+            on_press = self._add_food
+        )
+        self.window.add_widget(self.add_button)
+
+        self.labels = []
+        for i in range(10):
+            label = ColoredLabel(
+                text="",
+                font_size=35,
+                size_hint=(0.8, 0.06),
+                pos_hint={"x": 0.1, "top": 0.665 - i * (0.06 + 5/900)},
+                color=(1, 1, 1, 1),
+                text_color=(0, 0, 0, 1),
+                halign="left",
+                markup=True
+            )
+            label.bind(size=lambda instance, value: setattr(instance, 'text_size', (instance.width - 15, None)))
+            self.labels.append(label)
+            self.window.add_widget(label)
+
+        self.result_buttons = []
+        for i in range(10):
+            button = Button(
+                text="",
+                font_size=35,
+                size_hint=(0.8, 0.06),
+                pos_hint={"x": 0.1, "top": 0.665 - i * (0.06 + 5/900)},
+                on_press=self.word_clicked,
+                halign="left",
+                opacity=0,
+                disabled=True,
+                background_normal="",
+                background_color=(0.85, 0.85, 0.85, 1), 
+                color=(0.376, 0.376, 0.376, 1)
+            )
+            button.bind(size=lambda instance, vlaue: setattr(instance, 'text_size', (instance.width - 15, None)))
+            self.result_buttons.append(button)
+            self.window.add_widget(button)
 
         ###
 
@@ -1291,9 +1402,29 @@ class WeeklymenuWindow(Screen):
 
     def on_enter(self):
         Window.bind(on_keyboard=self.on_keyboard)
+        day = datetime.now().strftime("%A")
+        self.dayInput.text = day
+        hour = int(datetime.now().strftime("%H"))
+        
+        if hour < 11 and hour >= 3:
+            self.mealInput.text = "Breakfast"
+        elif hour < 17:
+            self.mealInput.text = "Lunch"
+        else:
+            self.mealInput.text = "Dinner"
+
+        for button in self.result_buttons:
+            button.opacity = 0
+            button.disabled = True
 
     def on_leave(self):
         Window.unbind(on_keyboard=self.on_keyboard)
+        self.input.text = ""
+        self.amount_input.text = ""
+        self.temp_food = ""
+        for button in self.result_buttons:
+            button.opacity = 0
+            button.disabled = True
 
     def on_keyboard(self, window, key, *args):
         if key == 27:
@@ -1302,6 +1433,115 @@ class WeeklymenuWindow(Screen):
                 return True
         return False
         
+    def _update_meal(self, instance, value):
+        day = self.dayInput.text.lower()
+        meal = self.mealInput.text.lower()
+
+        for label in self.labels:
+            label.text = ""
+
+        if day != "" and meal != "":
+            foods = data["self_menu"][day][meal]
+            for food, amount in foods.items():
+                for label in self.labels:
+                    if label.text == "":
+                        label.text = f"[b]{food}[/b] ({amount}g)"
+                        break
+
+    def _add_food(self, instance):
+        amount = self.amount_input.text
+        food = self.temp_food
+
+        if (amount == ""):
+            return
+        
+        amount = float(amount)
+
+        if(amount <= 0 or food == ""):
+            return
+
+        day = self.dayInput.text.lower()
+        meal = self.mealInput.text.lower()
+
+        add_food(day, meal, food, amount)
+
+        self._update_meal()
+        self.input.text = ""
+        self.amount_input.text = ""
+        self.temp_food = ""
+
+    def word_clicked(self, instance):
+        for button in self.result_buttons:
+            button.opacity = 0
+            button.disabled = True
+
+        self.temp_food = instance.text   
+        self.input.text = instance.text   
+
+    def on_touch_down(self, touch):
+        if (self.input.collide_point(*touch.pos) or 
+            self.search_button.collide_point(*touch.pos) or 
+            any(button.collide_point(*touch.pos) for button in self.result_buttons)):
+            return super(WeeklymenuWindow, self).on_touch_down(touch)
+
+        for button in self.result_buttons:
+            button.opacity = 0
+            button.disabled = True
+
+        return super(WeeklymenuWindow, self).on_touch_down(touch)
+    
+    def _update_border(self, instance, value):
+        self.border.rectangle = (instance.x, instance.y, instance.width, instance.height)
+
+    def _update_border2(self, instance, value):
+        self.border2.rectangle = (instance.x, instance.y, instance.width, instance.height)
+
+    def perform_search(self, instance):    
+        if not self.input.text.strip():
+            for button in self.result_buttons:
+                button.opacity = 0
+                button.disabled = True
+            return
+        
+        self.search_button.background_normal = "hourglass.png"
+        self.search_button.background_down = "hourglass.png"
+
+        def cont(dt):
+            words = self.get_words(self.input.text)
+
+            self.search_button.background_normal = "search.png"
+
+            for i, button in enumerate(self.result_buttons):
+                if i < len(words):
+                    button.text = words[i]
+                    button.opacity = 1
+                    button.disabled = False
+                else:
+                    button.opacity = 0
+                    button.disabled = True
+
+        Clock.schedule_once(cont, 0)
+
+    def get_words(self, query):
+        try:
+            server_url = "https://cs-project-m5hy.onrender.com/"
+
+            requests.get(server_url + "wakeup")
+
+            query = {
+            "query": query
+            }
+
+            response = requests.get(server_url + "search", json=query)
+
+            if response.status_code == 200:
+                return response.json().get("results", [])
+            else:
+                print("Error:", response.json())
+
+        except Exception as e:
+            print("Error: " + str(e))
+
 ################################
 
 class DictionaryWindow(Screen):
@@ -1364,7 +1604,7 @@ class DictionaryWindow(Screen):
         self.labels = []
         self.title1 = ColoredLabel1(
             text = "Macronutrients",
-            font_size = 25,
+            font_size = 35,
             size_hint = (0.8, 0.04),
             pos_hint = {"x": 0.1, "top": 0.7},
             color=(0.86, 0.94, 0.98, 1),
@@ -1379,7 +1619,7 @@ class DictionaryWindow(Screen):
 
         self.Calories = ColoredLabel1(
             text = "Calories",
-            font_size = 20,
+            font_size = 30,
             size_hint = (0.2, 0.04),
             pos_hint = {"x": 0.1, "top": 0.66},
             color=(0.93, 0.97, 0.99, 1),
@@ -1394,7 +1634,7 @@ class DictionaryWindow(Screen):
 
         self.Caloriesdata = ColoredLabel1(
             text = "",
-            font_size = 20,
+            font_size = 30,
             size_hint = (0.2, 0.04),
             pos_hint = {"x": 0.1, "top": 0.62},
             color=(1, 1, 1, 1),
@@ -1409,7 +1649,7 @@ class DictionaryWindow(Screen):
 
         self.Protein = ColoredLabel1(
             text = "Protein",
-            font_size = 20,
+            font_size = 30,
             size_hint = (0.2, 0.04),
             pos_hint = {"x": 0.3, "top": 0.66},
             color=(0.93, 0.97, 0.99, 1),
@@ -1424,7 +1664,7 @@ class DictionaryWindow(Screen):
 
         self.Proteindata = ColoredLabel1(
             text = "",
-            font_size = 20,
+            font_size = 30,
             size_hint = (0.2, 0.04),
             pos_hint = {"x": 0.3, "top": 0.62},
             color=(1, 1, 1, 1),
@@ -1439,7 +1679,7 @@ class DictionaryWindow(Screen):
 
         self.Carbohydrate = ColoredLabel1(
             text = "Carbohydrate",
-            font_size = 20,
+            font_size = 30,
             size_hint = (0.2, 0.04),
             pos_hint = {"x": 0.5, "top": 0.66},
             color=(0.93, 0.97, 0.99, 1),
@@ -1454,7 +1694,7 @@ class DictionaryWindow(Screen):
 
         self.Carbohydratedata = ColoredLabel1(
             text = "",
-            font_size = 20,
+            font_size = 30,
             size_hint = (0.2, 0.04),
             pos_hint = {"x": 0.5, "top": 0.62},
             color=(1, 1, 1, 1),
@@ -1469,7 +1709,7 @@ class DictionaryWindow(Screen):
 
         self.Fat = ColoredLabel1(
             text = "Fat",
-            font_size = 20,
+            font_size = 30,
             size_hint = (0.2, 0.04),
             pos_hint = {"x": 0.7, "top": 0.66},
             color=(0.93, 0.97, 0.99, 1),
@@ -1484,7 +1724,7 @@ class DictionaryWindow(Screen):
 
         self.Fatdata = ColoredLabel1(
             text = "",
-            font_size = 20,
+            font_size = 30,
             size_hint = (0.2, 0.04),
             pos_hint = {"x": 0.7, "top": 0.62},
             color=(1, 1, 1, 1),
@@ -1499,7 +1739,7 @@ class DictionaryWindow(Screen):
 
         self.Sugars = ColoredLabel1(
             text = "Sugars",
-            font_size = 20,
+            font_size = 30,
             size_hint = (0.2, 0.04),
             pos_hint = {"x": 0.1, "top": 0.58},
             color=(0.93, 0.97, 0.99, 1),
@@ -1514,7 +1754,7 @@ class DictionaryWindow(Screen):
 
         self.Sugarsdata = ColoredLabel1(
             text = "",
-            font_size = 20,
+            font_size = 30,
             size_hint = (0.2, 0.04),
             pos_hint = {"x": 0.1, "top": 0.54},
             color=(1, 1, 1, 1),
@@ -1529,7 +1769,7 @@ class DictionaryWindow(Screen):
 
         self.Water = ColoredLabel1(
             text = "Water",
-            font_size = 20,
+            font_size = 30,
             size_hint = (0.2, 0.04),
             pos_hint = {"x": 0.3, "top": 0.58},
             color=(0.93, 0.97, 0.99, 1),
@@ -1544,7 +1784,7 @@ class DictionaryWindow(Screen):
 
         self.Waterdata = ColoredLabel1(
             text = "",
-            font_size = 20,
+            font_size = 30,
             size_hint = (0.2, 0.04),
             pos_hint = {"x": 0.3, "top": 0.54},
             color=(1, 1, 1, 1),
@@ -1559,7 +1799,7 @@ class DictionaryWindow(Screen):
 
         self.Fiber = ColoredLabel1(
             text = "Fiber",
-            font_size = 20,
+            font_size = 30,
             size_hint = (0.2, 0.04),
             pos_hint = {"x": 0.5, "top": 0.58},
             color=(0.93, 0.97, 0.99, 1),
@@ -1574,7 +1814,7 @@ class DictionaryWindow(Screen):
 
         self.Fiberdata = ColoredLabel1(
             text = "",
-            font_size = 20,
+            font_size = 30,
             size_hint = (0.2, 0.04),
             pos_hint = {"x": 0.5, "top": 0.54},
             color=(1, 1, 1, 1),
@@ -1589,7 +1829,7 @@ class DictionaryWindow(Screen):
 
         self.Saturatedfat = ColoredLabel1(
             text = "Saturated fat",
-            font_size = 20,
+            font_size = 30,
             size_hint = (0.2, 0.04),
             pos_hint = {"x": 0.7, "top": 0.58},
             color=(0.93, 0.97, 0.99, 1),
@@ -1604,7 +1844,7 @@ class DictionaryWindow(Screen):
 
         self.Saturatedfatdata = ColoredLabel1(
             text = "",
-            font_size = 20,
+            font_size = 30,
             size_hint = (0.2, 0.04),
             pos_hint = {"x": 0.7, "top": 0.54},
             color=(1, 1, 1, 1),
@@ -1619,7 +1859,7 @@ class DictionaryWindow(Screen):
 
         self.title2 = ColoredLabel1(
             text = "Micronutrients",
-            font_size = 25,
+            font_size = 35,
             size_hint = (0.8, 0.04),
             pos_hint = {"x": 0.1, "top": 0.5},
             color=(0.86, 0.94, 0.98, 1),
@@ -1634,7 +1874,7 @@ class DictionaryWindow(Screen):
 
         self.Cholesterol = ColoredLabel1(
             text = "Cholesterol",
-            font_size = 20,
+            font_size = 30,
             size_hint = (0.8 / 3, 0.04),
             pos_hint = {"x": 0.1, "top": 0.46},
             color=(0.93, 0.97, 0.99, 1),
@@ -1649,7 +1889,7 @@ class DictionaryWindow(Screen):
 
         self.Cholesteroldata = ColoredLabel1(
             text = "",
-            font_size = 20,
+            font_size = 30,
             size_hint = (0.8 / 3, 0.04),
             pos_hint = {"x": 0.1, "top": 0.42},
             color=(1, 1, 1, 1),
@@ -1664,7 +1904,7 @@ class DictionaryWindow(Screen):
 
         self.Calcium = ColoredLabel1(
             text = "Calcium",
-            font_size = 20,
+            font_size = 30,
             size_hint = (0.8 / 3, 0.04),
             pos_hint = {"x": 0.1 + 0.8 / 3, "top": 0.46},
             color=(0.93, 0.97, 0.99, 1),
@@ -1679,7 +1919,7 @@ class DictionaryWindow(Screen):
 
         self.Calciumdata = ColoredLabel1(
             text = "",
-            font_size = 20,
+            font_size = 30,
             size_hint = (0.8 / 3, 0.04),
             pos_hint = {"x": 0.1 + 0.8 / 3, "top": 0.42},
             color=(1, 1, 1, 1),
@@ -1694,7 +1934,7 @@ class DictionaryWindow(Screen):
 
         self.Iron = ColoredLabel1(
             text = "Iron",
-            font_size = 20,
+            font_size = 30,
             size_hint = (0.8/3, 0.04),
             pos_hint = {"x": 0.1 + 2 * 0.8 / 3, "top": 0.46},
             color=(0.93, 0.97, 0.99, 1),
@@ -1709,7 +1949,7 @@ class DictionaryWindow(Screen):
 
         self.Irondata = ColoredLabel1(
             text = "",
-            font_size = 20,
+            font_size = 30,
             size_hint = (0.8/3, 0.04),
             pos_hint = {"x": 0.1 + 2 * 0.8 / 3, "top": 0.42},
             color=(1, 1, 1, 1),
@@ -1724,7 +1964,7 @@ class DictionaryWindow(Screen):
 
         self.Sodium = ColoredLabel1(
             text = "Sodium",
-            font_size = 20,
+            font_size = 30,
             size_hint = (0.4, 0.04),
             pos_hint = {"x": 0.1, "top": 0.38},
             color=(0.93, 0.97, 0.99, 1),
@@ -1739,7 +1979,7 @@ class DictionaryWindow(Screen):
 
         self.Sodiumdata = ColoredLabel1(
             text = "",
-            font_size = 20,
+            font_size = 30,
             size_hint = (0.4, 0.04),
             pos_hint = {"x": 0.1, "top": 0.34},
             color=(1, 1, 1, 1),
@@ -1754,7 +1994,7 @@ class DictionaryWindow(Screen):
 
         self.Magnesium = ColoredLabel1(
             text = "Magnesium",
-            font_size = 20,
+            font_size = 30,
             size_hint = (0.4, 0.04),
             pos_hint = {"x": 0.5, "top": 0.38},
             color=(0.93, 0.97, 0.99, 1),
@@ -1769,7 +2009,7 @@ class DictionaryWindow(Screen):
 
         self.Magnesiumdata = ColoredLabel1(
             text = "",
-            font_size = 20,
+            font_size = 30,
             size_hint = (0.4, 0.04),
             pos_hint = {"x": 0.5, "top": 0.34},
             color=(1, 1, 1, 1),
@@ -1784,7 +2024,7 @@ class DictionaryWindow(Screen):
 
         self.title3 = ColoredLabel1(
             text = "Vitamins",
-            font_size = 25,
+            font_size = 35,
             size_hint = (0.8, 0.04),
             pos_hint = {"x": 0.1, "top": 0.3},
             color=(0.86, 0.94, 0.98, 1),
@@ -1799,7 +2039,7 @@ class DictionaryWindow(Screen):
 
         self.VitaminA = ColoredLabel1(
             text = "A",
-            font_size = 20,
+            font_size = 30,
             size_hint = (0.8 / 3, 0.04),
             pos_hint = {"x": 0.1, "top": 0.26},
             color=(0.93, 0.97, 0.99, 1),
@@ -1814,7 +2054,7 @@ class DictionaryWindow(Screen):
 
         self.VitaminAdata = ColoredLabel1(
             text = "",
-            font_size = 20,
+            font_size = 30,
             size_hint = (0.8 / 3, 0.04),
             pos_hint = {"x": 0.1, "top": 0.22},
             color=(1, 1, 1, 1),
@@ -1829,7 +2069,7 @@ class DictionaryWindow(Screen):
 
         self.VitaminB12 = ColoredLabel1(
             text = "B12",
-            font_size = 20,
+            font_size = 30,
             size_hint = (0.8 / 3, 0.04),
             pos_hint = {"x": 0.1 + 0.8 / 3, "top": 0.26},
             color=(0.93, 0.97, 0.99, 1),
@@ -1844,7 +2084,7 @@ class DictionaryWindow(Screen):
 
         self.VitaminB12data = ColoredLabel1(
             text = "",
-            font_size = 20,
+            font_size = 30,
             size_hint = (0.8 / 3, 0.04),
             pos_hint = {"x": 0.1 + 0.8 / 3, "top": 0.22},
             color=(1, 1, 1, 1),
@@ -1859,7 +2099,7 @@ class DictionaryWindow(Screen):
 
         self.VitaminC = ColoredLabel1(
             text = "C",
-            font_size = 20,
+            font_size = 30,
             size_hint = (0.8/3, 0.04),
             pos_hint = {"x": 0.1 + 2 * 0.8 / 3, "top": 0.26},
             color=(0.93, 0.97, 0.99, 1),
@@ -1874,7 +2114,7 @@ class DictionaryWindow(Screen):
 
         self.VitaminCdata = ColoredLabel1(
             text = "",
-            font_size = 20,
+            font_size = 30,
             size_hint = (0.8/3, 0.04),
             pos_hint = {"x": 0.1 + 2 * 0.8 / 3, "top": 0.22},
             color=(1, 1, 1, 1),
@@ -1889,7 +2129,7 @@ class DictionaryWindow(Screen):
 
         self.VitaminD = ColoredLabel1(
             text = "D",
-            font_size = 20,
+            font_size = 30,
             size_hint = (0.8 / 3, 0.04),
             pos_hint = {"x": 0.1, "top": 0.18},
             color=(0.93, 0.97, 0.99, 1),
@@ -1904,7 +2144,7 @@ class DictionaryWindow(Screen):
 
         self.VitaminDdata = ColoredLabel1(
             text = "",
-            font_size = 20,
+            font_size = 30,
             size_hint = (0.8 / 3, 0.04),
             pos_hint = {"x": 0.1, "top": 0.14},
             color=(1, 1, 1, 1),
@@ -1919,7 +2159,7 @@ class DictionaryWindow(Screen):
 
         self.VitaminE = ColoredLabel1(
             text = "E",
-            font_size = 20,
+            font_size = 30,
             size_hint = (0.8 / 3, 0.04),
             pos_hint = {"x": 0.1 + 0.8 / 3, "top": 0.18},
             color=(0.93, 0.97, 0.99, 1),
@@ -1934,7 +2174,7 @@ class DictionaryWindow(Screen):
 
         self.VitaminEdata = ColoredLabel1(
             text = "",
-            font_size = 20,
+            font_size = 30,
             size_hint = (0.8 / 3, 0.04),
             pos_hint = {"x": 0.1 + 0.8 / 3, "top": 0.14},
             color=(1, 1, 1, 1),
@@ -1949,7 +2189,7 @@ class DictionaryWindow(Screen):
 
         self.VitaminK = ColoredLabel1(
             text = "K",
-            font_size = 20,
+            font_size = 30,
             size_hint = (0.8/3, 0.04),
             pos_hint = {"x": 0.1 + 2 * 0.8 / 3, "top": 0.18},
             color=(0.93, 0.97, 0.99, 1),
@@ -1964,7 +2204,7 @@ class DictionaryWindow(Screen):
 
         self.VitaminKdata = ColoredLabel1(
             text = "",
-            font_size = 20,
+            font_size = 30,
             size_hint = (0.8/3, 0.04),
             pos_hint = {"x": 0.1 + 2 * 0.8 / 3, "top": 0.14},
             color=(1, 1, 1, 1),
@@ -2027,9 +2267,8 @@ class DictionaryWindow(Screen):
             button.opacity = 0
             button.disabled = True
             
-
         for label in self.labels:
-            labelopacity = 0
+            label.opacity = 0
             label.disabled = True
 
     def on_keyboard(self, window, key, *args):
@@ -2070,6 +2309,8 @@ class DictionaryWindow(Screen):
         Clock.schedule_once(cont, 0)
 
     def word_clicked(self, instance):
+        self.input.text = instance.text
+
         for button in self.result_buttons:
             button.opacity = 0
             button.disabled = True
@@ -2081,7 +2322,7 @@ class DictionaryWindow(Screen):
         self.Caloriesdata.text = str(food["Calories"]) + " " + units["Calories"]
         self.Carbohydratedata.text = str(food["Carbohydrate"]) + " " + units["Carbohydrate"]
         self.Fatdata.text = str(food["Fat"]) + " " + units["Fat"]
-        self.Sugarsdata.text = str(food["Sugars"]) + " " + units["Sugars"]
+        self.Sugarsdata.text = str(food["Sugars"]) + " " + units["Sugars"] + f' ({(food["Sugars"] / 4):.1f} spoons)'
         self.Waterdata.text = str(food["Water"]) + " " + units["Water"]
         self.Fiberdata.text = str(food["Fiber"]) + " " + units["Fiber"]
         self.Saturatedfatdata.text = str(food["Saturated fat"]) + " " + units["Saturated fat"]
