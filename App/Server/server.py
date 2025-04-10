@@ -94,8 +94,6 @@ class Server:
                 t_0, w_0, b_0 = times[i], weights[i], bmis[i]
                 t_1, w_1, b_1 = times[i + 1], weights[i + 1], bmis[i + 1]
 
-                print(b_0, b_1)
-
                 if b_0 < b_1:
                     levels = [16, 18.5, 25, 30, 40]
                 else:
@@ -113,7 +111,7 @@ class Server:
                             seconds=t_delta
                         )  # Add the time difference to t_0
                         w_ = w_0 + w_m * (t_ - t_0).total_seconds()
-                        print("if", f"({t_0}, {w_0}, {b_0})", f"({t_}, {w_}, {b_})")
+
                         plt.plot(
                             [t_0, t_],
                             [w_0, w_],
@@ -121,11 +119,7 @@ class Server:
                         )
 
                         t_0, w_0, b_0 = t_, w_, b_
-                    elif b_ == b_0 or b_ == b_1:
-                        break
-                    else:
-                        continue
-                print("out", f"({t_0}, {w_0}, {b_0})", f"({t_1}, {w_1}, {b_1})")
+
                 plt.plot(
                     [t_0, t_1],
                     [w_0, w_1],

@@ -1012,6 +1012,7 @@ class StatisticsWindow(Screen):
             if response.status_code == 200:
                 with open("weight_history.png", "wb") as file:
                     file.write(response.content)
+                    
             else:
                 print("Error:", response.json())
 
@@ -1338,15 +1339,15 @@ class DictionaryWindow(Screen):
             button = Button(
                 text="",
                 font_size=35,
-                size_hint=(0.675, 0.07),
-                pos_hint={"x": 0.1, "top": 0.7 - i * 0.07},
+                size_hint=(0.675, 0.065),
+                pos_hint={"x": 0.1, "top": 0.7 - i * (0.065 + 5/900)},
                 on_press=self.word_clicked,
                 halign="left",
                 opacity=0,
                 disabled=True,
                 background_normal="",
                 background_color=(0.78, 0.78, 0.78, 1), 
-                color=(0.376, 0.376, 0.376, 1) 
+                color=(0.376, 0.376, 0.376, 1)
             )
             button.bind(size=lambda instance, vlaue: setattr(instance, 'text_size', (instance.width - 15, None)))
             self.result_buttons.append(button)
@@ -1409,7 +1410,7 @@ class DictionaryWindow(Screen):
         print(f"Clicked on: {food}")
         
     def get_words(self, query):
-        #return ["Coffee, mocha, instant, decaffeinated, pre-lightened and pre-sweetened with low calorie sweetener, reconstituted" for i in range(10)]
+        # return ["Coffee, mocha, instant, decaffeinated, pre-lightened and pre-sweetened with low calorie sweetener, reconstituted" for i in range(10)]
         try:
             server_url = "https://cs-project-m5hy.onrender.com/"
 
@@ -2642,7 +2643,7 @@ class LoadingWindow(Screen):
             data["history_weight"] = data["history_weight"][:-1] + [float(current_weight_temp)]
             data["history_bmi"] = data["history_bmi"][:-1] + [bmi_temp] 
         else:
-            data["history_weight"] = data["history_weight"] + [current_weight_temp]
+            data["history_weight"] = data["history_weight"] + [float(current_weight_temp)]
             data["history_bmi"] = data["history_bmi"] + [bmi_temp]
             data["history_times"] = data["history_times"] + [today] 
 
