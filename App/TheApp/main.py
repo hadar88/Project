@@ -14,6 +14,7 @@ from kivy.uix.checkbox import CheckBox
 from kivy.core.window import Window
 from kivy.uix.scrollview import ScrollView 
 from kivy.clock import Clock
+import time
 
 #######################################################################
 
@@ -1360,25 +1361,6 @@ class DictionaryWindow(Screen):
         )
         self.window.add_widget(self.search_button)
 
-        self.result_buttons = []
-        for i in range(10):
-            button = Button(
-                text="",
-                font_size=35,
-                size_hint=(0.675, 0.065),
-                pos_hint={"x": 0.1, "top": 0.725 - i * (0.065 + 5/900)},
-                on_press=self.word_clicked,
-                halign="left",
-                opacity=0,
-                disabled=True,
-                background_normal="",
-                background_color=(0.78, 0.78, 0.78, 1), 
-                color=(0.376, 0.376, 0.376, 1)
-            )
-            button.bind(size=lambda instance, vlaue: setattr(instance, 'text_size', (instance.width - 15, None)))
-            self.result_buttons.append(button)
-            self.window.add_widget(button)
-
         self.labels = []
         self.title1 = ColoredLabel1(
             text = "Macronutrients",
@@ -1995,6 +1977,25 @@ class DictionaryWindow(Screen):
         self.window.add_widget(self.VitaminKdata)
         self.labels.append(self.VitaminKdata)
 
+        self.result_buttons = []
+        for i in range(10):
+            button = Button(
+                text="",
+                font_size=35,
+                size_hint=(0.675, 0.065),
+                pos_hint={"x": 0.1, "top": 0.725 - i * (0.065 + 5/900)},
+                on_press=self.word_clicked,
+                halign="left",
+                opacity=0,
+                disabled=True,
+                background_normal="",
+                background_color=(0.85, 0.85, 0.85, 1), 
+                color=(0.376, 0.376, 0.376, 1)
+            )
+            button.bind(size=lambda instance, vlaue: setattr(instance, 'text_size', (instance.width - 15, None)))
+            self.result_buttons.append(button)
+            self.window.add_widget(button)
+
         ###
 
         self.add_widget(self.window)
@@ -2028,7 +2029,7 @@ class DictionaryWindow(Screen):
             
 
         for label in self.labels:
-            label.opacity = 0
+            labelopacity = 0
             label.disabled = True
 
     def on_keyboard(self, window, key, *args):
@@ -2044,21 +2045,29 @@ class DictionaryWindow(Screen):
                 button.opacity = 0
                 button.disabled = True
             return
+        
+        self.search_button.background_normal = "hourglass.png"
+        self.search_button.background_down = "hourglass.png"
 
-        for label in self.labels:
-            label.opacity = 0
-            label.disabled = True
+        def cont(dt):
+            for label in self.labels:
+                label.opacity = 0
+                label.disabled = True
 
-        words = self.get_words(self.input.text)
+            words = self.get_words(self.input.text)
 
-        for i, button in enumerate(self.result_buttons):
-            if i < len(words):
-                button.text = words[i]
-                button.opacity = 1  # Make visible
-                button.disabled = False  # Make interactable
-            else:
-                button.opacity = 0  # Hide unused buttons
-                button.disabled = True
+            self.search_button.background_normal = "search.png"
+
+            for i, button in enumerate(self.result_buttons):
+                if i < len(words):
+                    button.text = words[i]
+                    button.opacity = 1
+                    button.disabled = False
+                else:
+                    button.opacity = 0
+                    button.disabled = True
+
+        Clock.schedule_once(cont, 0)
 
     def word_clicked(self, instance):
         for button in self.result_buttons:
