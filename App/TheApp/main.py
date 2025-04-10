@@ -1510,7 +1510,6 @@ class WeeklymenuWindow(Screen):
         foods = data["self_menu"][day][meal]
         if len(foods) >= 10:
             return
-            
         
         if food in foods:
             return
