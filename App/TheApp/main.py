@@ -1475,6 +1475,9 @@ class WeeklymenuWindow(Screen):
         return False
         
     def _update_meal(self, instance, value):
+        self.temp_food = ""
+        self.input.text = ""
+        self.amount_input.text = ""
         day = self.dayInput.text.lower()
         meal = self.mealInput.text.lower()
 
@@ -1506,6 +1509,9 @@ class WeeklymenuWindow(Screen):
 
         foods = data["self_menu"][day][meal]
         if len(foods) >= 10:
+            return
+        
+        if food in foods:
             return
 
         add_food(day, meal, food, amount)
