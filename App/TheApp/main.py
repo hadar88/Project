@@ -1203,9 +1203,9 @@ class MenuWindow(Screen):
         day = datetime.now().strftime("%A")
         self.dayInput.text = day
         hour = int(datetime.now().strftime("%H"))
-        if hour < 11 and hour >= 3:
+        if 3 <= hour < 11:
             self.mealInput.text = "Breakfast"
-        elif hour < 17:
+        elif 11 <= hour < 17:
             self.mealInput.text = "Lunch"
         else:
             self.mealInput.text = "Dinner"
@@ -1347,11 +1347,11 @@ class WeeklymenuWindow(Screen):
         self.input = TextInput(
             multiline = False,
             font_size = 40,
-            hint_text = "Search",
+            hint_text = "Add food",
             size_hint=(0.3, 0.06),
             pos_hint={"x": 0.1, "top": 0.725},
             background_normal="",
-            background_color=(0.95, 0.95, 0.95, 1),
+            background_color=(0.95, 0.95, 0.95, 1)
         )
         self.window.add_widget(self.input)
         with self.input.canvas.before:
@@ -1447,13 +1447,13 @@ class WeeklymenuWindow(Screen):
         self.dayInput.text = day
         hour = int(datetime.now().strftime("%H"))
         
-        if hour < 11 and hour >= 3:
+        if 3 <= hour < 11:
             self.mealInput.text = "Breakfast"
-        elif hour < 17:
+        elif 11 <= hour < 17:
             self.mealInput.text = "Lunch"
         else:
             self.mealInput.text = "Dinner"
-
+            
         for button in self.result_buttons:
             button.opacity = 0
             button.disabled = True
@@ -2373,7 +2373,7 @@ class DictionaryWindow(Screen):
         self.Caloriesdata.text = str(food["Calories"]) + " " + units["Calories"]
         self.Carbohydratedata.text = str(food["Carbohydrate"]) + " " + units["Carbohydrate"]
         self.Fatdata.text = str(food["Fat"]) + " " + units["Fat"]
-        self.Sugarsdata.text = str(food["Sugars"]) + " " + units["Sugars"] + f' ({(food["Sugars"] / 4):.1f} spoons)'
+        self.Sugarsdata.text = str(food["Sugars"]) + " " + units["Sugars"] + f' ({round(food["Sugars"] / 4)} tbsp)'
         self.Waterdata.text = str(food["Water"]) + " " + units["Water"]
         self.Fiberdata.text = str(food["Fiber"]) + " " + units["Fiber"]
         self.Saturatedfatdata.text = str(food["Saturated fat"]) + " " + units["Saturated fat"]
