@@ -1453,7 +1453,7 @@ class WeeklymenuWindow(Screen):
             self.mealInput.text = "Lunch"
         else:
             self.mealInput.text = "Dinner"
-            
+
         for button in self.result_buttons:
             button.opacity = 0
             button.disabled = True
@@ -2373,7 +2373,7 @@ class DictionaryWindow(Screen):
         self.Caloriesdata.text = str(food["Calories"]) + " " + units["Calories"]
         self.Carbohydratedata.text = str(food["Carbohydrate"]) + " " + units["Carbohydrate"]
         self.Fatdata.text = str(food["Fat"]) + " " + units["Fat"]
-        self.Sugarsdata.text = str(food["Sugars"]) + " " + units["Sugars"] + f' ({round(food["Sugars"] / 4)} tbsp)'
+        self.Sugarsdata.text = str(food["Sugars"]) + " " + units["Sugars"] + f' ({(food["Sugars"] / 4):.1f} tbsp)'
         self.Waterdata.text = str(food["Water"]) + " " + units["Water"]
         self.Fiberdata.text = str(food["Fiber"]) + " " + units["Fiber"]
         self.Saturatedfatdata.text = str(food["Saturated fat"]) + " " + units["Saturated fat"]
